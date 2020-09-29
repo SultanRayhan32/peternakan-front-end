@@ -1,0 +1,135 @@
+// MODULE
+import React , { useEffect , useState } from 'react'
+import axios from 'axios'
+
+// COMPONENT
+import Table from './Table'
+
+// SERVER
+import SERVER from '../../../helper/server/index'
+
+// STYLE
+import '../style.css'
+
+function Kandang (props) {
+
+    const [dataRows,setDataRows] = useState(null)
+    const [showInput,setShowInput] = useState(false)
+    const [rowsName,setRowsName] = useState(null)
+
+    const { idUnit , idLocation } = props.match.params
+
+    let getDataRows = () => {
+        axios({
+            method : "POST",
+            url : `${SERVER}kandang/get-data-rows`,
+            headers : {
+                token : localStorage.getItem('token')
+            },
+            data : {
+                id_location : idLocation,
+                id_unit : idUnit
+            }
+        })
+        .then(({data})=>{
+            setDataRows(data)
+            console.log(data)
+        })
+        .catch((err)=>{
+            console.log(' ERROR' , err)
+        })
+    }
+
+    useEffect(()=>{
+        getDataRows()
+    },[])
+
+    let saverowsName = () => {
+        axios({
+            method : "POST",
+            url : `${SERVER}kandang/add-rows`,
+            data : {
+                rows_name : rowsName,
+                id_location : idLocation,
+                id_unit : idUnit
+            },
+            headers : {
+                token : localStorage.getItem('token')
+            }
+        })
+        .then(({data})=>{
+            console.log(data)
+            alert('SUKSES !!')
+            getDataRows()
+        })
+        .catch(err=>{
+            console.log(err , '  <<< ERROR')
+        })
+    }
+
+    return (
+        <div>
+            
+            <h2>Baris</h2>
+
+            <div className="search-kandang-container">
+
+                <input type="text" className="search-kandang" placeholder="Cari Lokasi"/>
+
+                <button 
+                    className="plus-kandang"
+                    onClick={e=>setShowInput(true)}
+                >
+                    Tambah
+                </button>
+
+            </div>
+
+            {
+                showInput &&
+                <div className="input-kandang-container">
+
+                    <h3>Input Baris Baru</h3>
+                    <input 
+                        type="text" 
+                        className="input-kandang"
+                        // onChangeT={e=>console.log(e.target)}
+                        onChange={e=>setRowsName(e.target.value)}
+                    />
+
+                    <div style={{display : "flex", marginTop : 20}}>
+                        <button
+                            onClick={e=>saverowsName()}
+                        >
+                            Save
+                        </button>
+                        <button 
+                            style={{marginLeft : 10}}
+                            onClick={e=>setShowInput(false)}
+                        >
+                            Cancel
+                        </button>
+                    </div>
+
+                </div>
+            }
+
+
+
+            {
+                dataRows &&
+                <Table
+                    dataRows={dataRows}
+                    idUnit={idUnit}
+                    idLocation={idLocation}
+                    getDataRows={getDataRows}
+                />
+            }
+
+
+        </div>
+    )
+
+}
+
+export default Kandang
