@@ -56,33 +56,40 @@ function Kandang (props) {
     },[])
 
     let saveDaysReport = () => {
-        axios({
-            method : "POST",
-            url : `${SERVER}kandang/add-days-record-report`,
-            data : {
-                rows_name : rowsName,
-                id_location : idLocation,
-                id_unit : idUnit,
-                id_rows : idBaris,
-                kg,
-                jumlah_butir,
-                mati_afkir,
-                ayam ,
-                pakan
-                
-            },
-            headers : {
-                token : localStorage.getItem('token')
-            }
-        })
-        .then(({data})=>{
-            console.log(data)
-            alert('SUKSES !!')
-            getDataDaysReport()
-        })
-        .catch(err=>{
-            console.log(err , '  <<< ERROR')
-        })
+        if (kg && jumlah_butir && mati_afkir ) {
+            axios({
+                method : "POST",
+                url : `${SERVER}kandang/add-days-record-report`,
+                data : {
+                    rows_name : rowsName,
+                    id_location : idLocation,
+                    id_unit : idUnit,
+                    id_rows : idBaris,
+                    kg,
+                    jumlah_butir,
+                    mati_afkir,
+                    ayam ,
+                    pakan
+                    
+                },
+                headers : {
+                    token : localStorage.getItem('token')
+                }
+            })
+            .then(({data})=>{
+                console.log(data)
+                alert('SUKSES !!')
+                setKg(null)
+                setJumlahButir(null)
+                setMatiAfkir(null)
+                getDataDaysReport()
+            })
+            .catch(err=>{
+                console.log(err , '  <<< ERROR')
+            })
+        }else {
+            alert('HARAP ISI SEMUA FORM')
+        }
     }
 
     return (

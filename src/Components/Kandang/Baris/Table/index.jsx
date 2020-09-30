@@ -98,14 +98,16 @@ function TableLocation (props) {
   }
 
   return (
-    <TableContainer component={Paper} style={{marginTop : 40}}>
+    <TableContainer component={Paper} style={{marginTop : 40,marginBottom : 40}}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>NOMOR</TableCell>
             <TableCell >BARIS</TableCell>
-            <TableCell>Jumlah Ayam</TableCell>
-            <TableCell>Jumlah Pakan</TableCell>
+            <TableCell>Jumlah Ayam (ekor)</TableCell>
+            <TableCell>Jumlah Pakan (kg)</TableCell>
+            <TableCell>Presentase/%</TableCell>
+            <TableCell>FCR</TableCell>
             <TableCell>Edit/Delete</TableCell>
             <TableCell align="right">DETAIL</TableCell>
           </TableRow>
@@ -126,6 +128,12 @@ function TableLocation (props) {
                 {
                   renderData(row.pakan,row.id_rows,setValuePakan,valuePakan)
                 }
+              </TableCell>
+              <TableCell>
+               {row.presentase}
+              </TableCell>
+              <TableCell>
+                {row.fcr}
               </TableCell>
               <TableCell>
                 <></>

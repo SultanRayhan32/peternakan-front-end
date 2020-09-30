@@ -3,7 +3,7 @@ import React , { useEffect , useState } from 'react'
 import axios from 'axios'
 
 // COMPONENT
-import Table from './Table'
+import Table from './Table/index'
 import Loader from '../../Loader'
 
 // SERVER
