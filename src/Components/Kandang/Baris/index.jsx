@@ -4,6 +4,8 @@ import axios from 'axios'
 
 // COMPONENT
 import Table from './Table'
+import Loader from '../../Loader'
+
 
 // SERVER
 import SERVER from '../../../helper/server/index'
@@ -117,6 +119,18 @@ function Kandang (props) {
 
                 </div>
             }
+
+            <div style={{ display: 'flex', width: '100%'  }}>
+                {
+                    !dataRows
+                    ?
+                    <div style={{ marginTop: '24px', marginLeft: '10px' , display : "flex" , justifyContent : "center" , alignItems : "center" , width : "100%" , height : 100 }}>
+                        <Loader />
+                    </div>
+                    :
+                    null
+                }
+            </div>
 
 
 

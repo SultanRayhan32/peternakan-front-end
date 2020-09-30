@@ -2,6 +2,10 @@
 import React , { useEffect , useState } from 'react'
 import axios from 'axios'
 
+// TOAST
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 // COMPONENT
 import Table from './Table/index'
 import Loader from '../../Loader'
@@ -14,11 +18,18 @@ import '../style.css'
 
 function Kandang () {
 
+    // LOCAL STATE
     const [dataLocation,setDataLocation] = useState(null)
     const [showInput,setShowInput] = useState(false)
     const [locationName,setLocationName] = useState(null)
     const [isError,setIsError] = useState(false)
     const [isInputLoading,setInputLoading] = useState(false)
+    const [isClick,SetIsClick] = useState(false)
+
+    // TOAST NOTIFICATION
+    const succesNotify = () => toast.success("Berhasil Menambah Lokasi")
+    const errorNotify = () => toast.error("Internal Server Error")
+    const blankNotift = () => toast.error('Harap Isi Semua Form')
 
     let getDataLocation = () => {
         axios({
@@ -34,7 +45,6 @@ function Kandang () {
         })
         .catch((err)=>{
             console.log(' ERROR' , err)
-            setIsError(true)
         })
     }
 
@@ -43,6 +53,7 @@ function Kandang () {
     },[])
 
     let saveLocationName = () => {
+        SetIsClick(true)
         setInputLoading(true)
         axios({
             method : "POST",
@@ -56,19 +67,32 @@ function Kandang () {
         })
         .then(({data})=>{
             console.log(data)
-            alert('SUKSES !!')
+            succesNotify()
+            // errorNotify()
             getDataLocation()
             setInputLoading(false)
+            SetIsClick(false)
         })
         .catch(err=>{
+            SetIsClick(false)
+            errorNotify()
             setInputLoading(false)
             console.log(err , '  <<< ERROR')
         })
     }
 
+    useEffect(()=>{
+        if (!locationName&& isClick) {
+            blankNotift()
+            SetIsClick(false)
+        }
+    },[isClick,locationName])
+
     return (
         <div>
             
+            <ToastContainer />
+
             <h2> Lokasi Kandang</h2>
 
 
@@ -99,7 +123,7 @@ function Kandang () {
 
                     <div style={{display : "flex", marginTop : 20}}>
                         <button
-                            onClick={e=>saveLocationName()}
+                            onClick={e=> locationName ? saveLocationName() : SetIsClick(true)}
                         >
                          {
                              isInputLoading ?
