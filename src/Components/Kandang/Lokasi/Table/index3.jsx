@@ -43,19 +43,19 @@ function TableLocation (props) {
         <TableHead>
           <TableRow>
             <TableCell>NOMOR</TableCell>
-            <TableCell >UNIT</TableCell>
+            <TableCell >NAMA</TableCell>
             <TableCell align="right">DETAIL</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.dataUnit.map((row,index) => (
+          {props.dataLocation.map((row,index) => (
             <TableRow key={row.name}>
               <TableCell component="th" scope="row">
                 {index + 1}
               </TableCell>
-              <TableCell >{row.unit_name}</TableCell>
+              <TableCell >{row.location_name}</TableCell>
               <TableCell align="right">
-                <button onClick={e=>history.push(`/${props.idUnit}/baris/${row.id_unit}`)}>
+                <button onClick={e=>history.push(`/unit-kandang/${row.id_location}`)}>
                   Detail
                 </button>
               </TableCell>
