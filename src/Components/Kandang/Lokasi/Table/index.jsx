@@ -97,18 +97,18 @@ function Row(props) {
                   <TableCell>FCR</TableCell>
                 </TableHead>
                 <TableBody>
-                  <TableCell>{row.jumlah_butir}</TableCell>
-                  <TableCell >{row.kg}</TableCell>
-                  <TableCell >{row.tray}</TableCell>
-                  <TableCell >{row.tara}</TableCell>
-                  <TableCell >{ Math.min(row.netto) }</TableCell>
-                  <TableCell>{row.ayam}</TableCell>
-                  <TableCell >{row.mati_afkir}</TableCell>
-                  <TableCell >{row.sisa_ekor}</TableCell>
-                  <TableCell >{row.presentase}</TableCell>
-                  <TableCell >{row["100/kg"]}</TableCell>
-                  <TableCell>{row.pakan}</TableCell>
-                  <TableCell >{row.fcr}</TableCell>
+                  <TableCell>{row.jumlah_butir?row.jumlah_butir:"0"}</TableCell>
+                  <TableCell >{row.kg?row.kg:"0"}</TableCell>
+                  <TableCell >{row.tray?row.tray:"0"}</TableCell>
+                  <TableCell >{row.tara?row.tara:"0"}</TableCell>
+                  <TableCell >{ row.netto ? Math.min(row.netto) : "0" }</TableCell>
+                  <TableCell>{row.ayam ? row.ayam : "0"}</TableCell>
+                  <TableCell >{row.mati_afkir ? row.mati_afkir : "0"}</TableCell>
+                  <TableCell >{row.sisa_ekor ? row.sisa_ekor : "0"}</TableCell>
+                  <TableCell >{row.presentase ? row.presentase : "0" }</TableCell>
+                  <TableCell >{row["100/kg"] ? row["100/kg"] : "0"}</TableCell>
+                  <TableCell>{row.pakan ? row.pakan : "0"}</TableCell>
+                  <TableCell >{row.fcr ? row.fcr : "0"}</TableCell>
                 </TableBody>
               </Table>
             </Box>

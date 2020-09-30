@@ -16,7 +16,7 @@ function Unit (props) {
     const [showInput,setShowInput] = useState(false)
     const [unitName,setUnitName] = useState(null)
     const [isInputLoading,setInputLoading] = useState(false)
-
+    const [locationName,setLocationName] = useState("")
 
     const paramsId = props.match.params.id
 
@@ -30,7 +30,8 @@ function Unit (props) {
             }
         })
         .then(({data})=>{
-            setDataUnit(data)
+            setDataUnit(data.data)
+            setLocationName(data.locationName)
             console.log(data , ' DATAAAAA')
             console.log('WKWKWKWKWKWK')
         })
@@ -71,7 +72,7 @@ function Unit (props) {
     return (
         <div>
             
-            <h2> Lokasi Kandang</h2>
+            <h2> Lokasi Kandang {locationName}</h2>
 
 
             <div className="search-kandang-container">

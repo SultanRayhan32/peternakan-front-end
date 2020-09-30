@@ -16,6 +16,8 @@ function Kandang (props) {
     const [dataRows,setDataRows] = useState(null)
     const [showInput,setShowInput] = useState(false)
     const [rowsName,setRowsName] = useState(null)
+    const [locationName,setLocationName] = useState("")
+    const [unitName,setUnitName] = useState("")
 
     const { idUnit , idLocation } = props.match.params
 
@@ -32,8 +34,10 @@ function Kandang (props) {
             }
         })
         .then(({data})=>{
-            setDataRows(data)
+            setDataRows(data.data)
             console.log(data)
+            setLocationName(data.locationName)
+            setUnitName(data.unitName)
         })
         .catch((err)=>{
             console.log(' ERROR' , err)
@@ -70,7 +74,7 @@ function Kandang (props) {
     return (
         <div>
             
-            <h2>Baris</h2>
+            <h2>Baris {unitName} Lokasi {locationName}</h2>
 
             <div className="search-kandang-container">
 

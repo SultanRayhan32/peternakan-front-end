@@ -80,7 +80,9 @@ function TableLocation (props) {
       data : {
         ayam : valueAyam,
         pakan : valuePakan,
-        id_rows
+        id_rows,
+        id_location : idLocation,
+        id_unit : idUnit
       },
       headers : {
           token : localStorage.getItem('token')
