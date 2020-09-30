@@ -15,6 +15,8 @@ function Unit (props) {
     const [dataUnit,setDataUnit] = useState(null)
     const [showInput,setShowInput] = useState(false)
     const [unitName,setUnitName] = useState(null)
+    const [isInputLoading,setInputLoading] = useState(false)
+
 
     const paramsId = props.match.params.id
 
@@ -42,6 +44,7 @@ function Unit (props) {
     },[])
 
     let saveLocationName = () => {
+        setInputLoading(true)
         axios({
             method : "POST",
             url : `${SERVER}kandang/add-kandang`,
@@ -57,8 +60,10 @@ function Unit (props) {
             console.log(data)
             alert('SUKSES !!')
             getDataUnit()
+            setInputLoading(false)
         })
         .catch(err=>{
+            setInputLoading(false)
             console.log(err , '  <<< ERROR')
         })
     }
@@ -98,7 +103,12 @@ function Unit (props) {
                         <button
                             onClick={e=>saveLocationName()}
                         >
-                            Save
+                            {
+                             isInputLoading ?
+                             <Loader />
+                             :
+                             "Save"
+                            }   
                         </button>
                         <button 
                             style={{marginLeft : 10}}
