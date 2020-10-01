@@ -72,6 +72,7 @@ function Kandang () {
             getDataLocation()
             setInputLoading(false)
             SetIsClick(false)
+            setShowInput(false)
         })
         .catch(err=>{
             SetIsClick(false)

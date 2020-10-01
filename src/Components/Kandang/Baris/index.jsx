@@ -2,10 +2,12 @@
 import React , { useEffect , useState } from 'react'
 import axios from 'axios'
 
+// TOAST
+import { ToastContainer, toast } from 'react-toastify';
+
 // COMPONENT
 import Table from './Table'
 import Loader from '../../Loader'
-
 
 // SERVER
 import SERVER from '../../../helper/server/index'
@@ -20,6 +22,16 @@ function Kandang (props) {
     const [rowsName,setRowsName] = useState(null)
     const [locationName,setLocationName] = useState("")
     const [unitName,setUnitName] = useState("")
+    const [isInputLoading,setInputLoading] = useState(false)
+    const [isClick,SetIsClick] = useState(false)
+
+    // TOAST NOTIFICATION
+    const succesNotify = () => toast.success("Berhasil Menambah Baris Baru")
+    const errorNotify = () => toast.error("Internal Server Error")
+    const blankNotift = () => toast.error('Harap Isi Semua Form')
+    const succesEdit = () => toast.success("Berhasil Edit")
+    const errorEdit = () => toast.error("Gagal Edit")
+    const blankEdit = () => toast.error("Harap Isi Semua Form")
 
     const { idUnit , idLocation } = props.match.params
 
@@ -51,6 +63,8 @@ function Kandang (props) {
     },[])
 
     let saverowsName = () => {
+        setInputLoading(true)
+        SetIsClick(true)
         axios({
             method : "POST",
             url : `${SERVER}kandang/add-rows`,
@@ -64,17 +78,29 @@ function Kandang (props) {
             }
         })
         .then(({data})=>{
-            console.log(data)
-            alert('SUKSES !!')
             getDataRows()
+            succesNotify()
+            setInputLoading(false)
+            SetIsClick(false)
         })
         .catch(err=>{
-            console.log(err , '  <<< ERROR')
+            errorNotify()
+            setInputLoading(false)
+            SetIsClick(false)
         })
     }
 
+    useEffect(()=>{
+        if (!rowsName&& isClick) {
+            blankNotift()
+            SetIsClick(false)
+        }
+    },[isClick,rowsName])
+
     return (
         <div>
+
+            <ToastContainer />
             
             <h2>Baris {unitName} Lokasi {locationName}</h2>
 
@@ -105,9 +131,15 @@ function Kandang (props) {
 
                     <div style={{display : "flex", marginTop : 20}}>
                         <button
-                            onClick={e=>saverowsName()}
+                            // onClick={e=>saverowsName()}
+                            onClick={e=> rowsName ? saverowsName() : SetIsClick(true)}
                         >
-                            Save
+                            {
+                             isInputLoading ?
+                             <Loader />
+                             :
+                             "Save"
+                            }   
                         </button>
                         <button 
                             style={{marginLeft : 10}}
@@ -141,6 +173,10 @@ function Kandang (props) {
                     idUnit={idUnit}
                     idLocation={idLocation}
                     getDataRows={getDataRows}
+                    Loader={Loader}
+                    succesEdit={succesEdit}
+                    errorEdit={errorEdit}
+                    blankEdit={blankEdit}
                 />
             }
 

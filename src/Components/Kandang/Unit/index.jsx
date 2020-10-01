@@ -6,6 +6,8 @@ import axios from 'axios'
 import Table from './Table'
 import Loader from '../../Loader'
 
+// TOAST
+import { ToastContainer, toast } from 'react-toastify';
 
 // SERVER
 import SERVER from '../../../helper/server/index'
@@ -17,6 +19,12 @@ function Unit (props) {
     const [unitName,setUnitName] = useState(null)
     const [isInputLoading,setInputLoading] = useState(false)
     const [locationName,setLocationName] = useState("")
+    const [isClick,SetIsClick] = useState(false)
+
+    // TOAST NOTIFICATION
+    const succesNotify = () => toast.success("Berhasil Menambah Unit Kandang")
+    const errorNotify = () => toast.error("Internal Server Error")
+    const blankNotift = () => toast.error('Harap Isi Semua Form')
 
     const paramsId = props.match.params.id
 
@@ -45,6 +53,7 @@ function Unit (props) {
     },[])
 
     let saveLocationName = () => {
+        SetIsClick(true)
         setInputLoading(true)
         axios({
             method : "POST",
@@ -59,18 +68,31 @@ function Unit (props) {
         })
         .then(({data})=>{
             console.log(data)
-            alert('SUKSES !!')
+            succesNotify()
             getDataUnit()
             setInputLoading(false)
+            SetIsClick(false)
+            setShowInput(false)
         })
         .catch(err=>{
+            SetIsClick(false)
+            errorNotify()
             setInputLoading(false)
             console.log(err , '  <<< ERROR')
         })
     }
 
+    useEffect(()=>{
+        if (!unitName&& isClick) {
+            blankNotift()
+            SetIsClick(false)
+        }
+    },[isClick,unitName])
+
     return (
         <div>
+
+            <ToastContainer />
             
             <h2> Lokasi Kandang {locationName}</h2>
 
@@ -102,7 +124,8 @@ function Unit (props) {
 
                     <div style={{display : "flex", marginTop : 20}}>
                         <button
-                            onClick={e=>saveLocationName()}
+                            // onClick={e=>saveLocationName()}
+                            onClick={e=> unitName ? saveLocationName() : SetIsClick(true)}
                         >
                             {
                              isInputLoading ?
