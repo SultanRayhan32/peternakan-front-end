@@ -76,7 +76,7 @@ function Kandang (props) {
     return (
         <div>
             
-            <h2>Baris {unitName} Lokasi {locationName}</h2>
+            <h2>Kandang {unitName} Lokasi {locationName}</h2>
 
             <div className="search-kandang-container">
 
@@ -105,12 +105,14 @@ function Kandang (props) {
 
                     <div style={{display : "flex", marginTop : 20}}>
                         <button
+                            className="save-button"
                             onClick={e=>saverowsName()}
                         >
                             Save
                         </button>
                         <button 
                             style={{marginLeft : 10}}
+                            className="cancel-button"
                             onClick={e=>setShowInput(false)}
                         >
                             Cancel

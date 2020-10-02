@@ -14,14 +14,19 @@
 }
 
 .plus-kandang {
-    background-color: #00698C;
+    background-color: green;
     width: 120px;
     height: 38px;
     border: none;
     color: white;
     outline: none;
-    border-radius: 2px;
+    border-radius: 5px;
     cursor: pointer;
+    transition: 0.5s;
+}
+
+.plus-kandang:hover {
+    background-color: #003b02;
 }
 
 .input-kandang-container {
@@ -35,12 +40,102 @@
 }
 
 .input-kandang {
-    /* border: none; */
+    border: 0.5px solid grey;
     /* border-bottom: 1px solid #00698C; */
     outline: none;
-    width: 220px;
+    width: 250px;
+    height: 35px;
     /* background-color: #FAFAFA; */
-    padding-left: 5px;
+    padding-left: 10px;
     padding-bottom: 5px;
     padding-top: 5px;
+    border-radius: 2px;
+}
+
+.save-button {
+    background-color: green;
+    width: 85px;
+    height:30px;
+    border: none;
+    color: white;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.save-button:hover {
+ background-color: #003b02;   
+}
+
+.cancel-button {
+    background-color: red;
+    width: 85px;
+    height:30px;
+    border: none;
+    color: white;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.cancel-button:hover {
+    background-color: #78000c;
+}
+
+.input-days-report {
+    border: 0.5px solid grey;
+    outline: none;
+    width: 250px;
+    height: 35px;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    border-radius: 2px;
+}
+
+.detail-button {
+    background-color: #00698C;
+    border: none;
+    padding: 5px;
+    color: white;
+    border-radius: 3px;
+    width: 60px;
+    font-weight: 600;
+    outline: none;
+}
+
+.detail-button:hover {
+    cursor: pointer;
+}
+
+.edit-button {
+    background-color: green;
+    border: none;
+    padding: 5px;
+    color: white;
+    border-radius: 3px;
+    width: 60px;
+    font-weight: 600;
+    outline: none;
+}
+
+.edit-button:hover {
+    cursor: pointer;
+}
+
+.cancel-button-rows {
+    background-color: red;
+    border: none;
+    padding: 5px;
+    color: white;
+    border-radius: 3px;
+    width: 60px;
+    font-weight: 600;
+    outline: none;
+}
+
+.cancel-button-rows:hover {
+    cursor: pointer;
 }

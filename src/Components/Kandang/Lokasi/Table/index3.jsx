@@ -55,7 +55,7 @@ function TableLocation (props) {
               </TableCell>
               <TableCell >{row.location_name}</TableCell>
               <TableCell align="right">
-                <button onClick={e=>history.push(`/unit-kandang/${row.id_location}`)}>
+                <button onClick={e=>history.push(`/unit-kandang/${row.id_location}`)} className="detail-button">
                   Detail
                 </button>
               </TableCell>

@@ -93,7 +93,7 @@ function Kandang () {
             
             <ToastContainer />
 
-            <h2> Lokasi Kandang</h2>
+            <h2>Lokasi</h2>
 
 
             <div className="search-kandang-container">
@@ -124,6 +124,7 @@ function Kandang () {
                     <div style={{display : "flex", marginTop : 20}}>
                         <button
                             onClick={e=> locationName ? saveLocationName() : SetIsClick(true)}
+                            className="save-button"
                         >
                          {
                              isInputLoading ?
@@ -136,6 +137,7 @@ function Kandang () {
                         <button 
                             style={{marginLeft : 10}}
                             onClick={e=>setShowInput(false)}
+                            className="cancel-button"
                         >
                             Cancel
                         </button>

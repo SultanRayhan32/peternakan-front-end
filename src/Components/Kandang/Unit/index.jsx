@@ -72,7 +72,7 @@ function Unit (props) {
     return (
         <div>
             
-            <h2> Lokasi Kandang {locationName}</h2>
+            <h2>Kandang {locationName}</h2>
 
 
             <div className="search-kandang-container">
@@ -102,6 +102,7 @@ function Unit (props) {
 
                     <div style={{display : "flex", marginTop : 20}}>
                         <button
+                            className="save-button"
                             onClick={e=>saveLocationName()}
                         >
                             {
@@ -113,6 +114,7 @@ function Unit (props) {
                         </button>
                         <button 
                             style={{marginLeft : 10}}
+                            className="cancel-button"
                             onClick={e=>setShowInput(false)}
                         >
                             Cancel

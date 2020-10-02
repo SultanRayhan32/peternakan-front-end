@@ -95,7 +95,7 @@ function Kandang (props) {
     return (
         <div>
             
-            <h2>Laporan Harian</h2>
+            <h2>Recording Harian</h2>
 
             <div className="search-kandang-container">
 
@@ -112,42 +112,41 @@ function Kandang (props) {
 
             <div className="input-kandang-container">
 
-                <h3>Input Baris Baru</h3>
+                <h3>Input Recording Harian</h3>
                 <input 
                     type="number" 
-                    className="input-kandang"
+                    className="input-days-report"
                     placeholder="Masukkan Berat"
-                    // onChangeT={e=>console.log(e.target)}
                     onChange={e=>setKg(e.target.value)}
+                    style={{
+                        marginBottom: "15px"
+                    }}
                 />
-
                 <input 
                     type="number" 
-                    className="input-kandang"
-                    placeholder={"Mati Afkir"}
-                    // onChangeT={e=>console.log(e.target)}
-                    onChange={e=>setMatiAfkir(e.target.value)}
-                />
-
-                <input 
-                    type="number" 
-                    className="input-kandang"
+                    className="input-days-report"
                     placeholder={"Jumlah Butir"}
-                    // onChangeT={e=>console.log(e.target)}
                     onChange={e=>setJumlahButir(e.target.value)}
+                    style={{
+                        marginBottom: "15px"
+                    }}
+                />
+                <input 
+                    type="number" 
+                    className="input-days-report"
+                    placeholder={"Mati Afkir"}
+                    onChange={e=>setMatiAfkir(e.target.value)}
                 />
 
                 <div style={{display : "flex", marginTop : 20}}>
                     <button
+                        className="save-button"
                         onClick={e=>saveDaysReport()}
+                        style={{
+                            width: "250px"
+                        }}
                     >
-                        Save
-                    </button>
-                    <button 
-                        style={{marginLeft : 10}}
-                        onClick={e=>setShowInput(false)}
-                    >
-                        Cancel
+                        Input
                     </button>
                 </div>
 
