@@ -2,8 +2,12 @@
 import React , { useEffect , useState } from 'react'
 import axios from 'axios'
 
+// TOAST
+import { ToastContainer, toast } from 'react-toastify';
+
 // COMPONENT
 import Table from './Table'
+import Loader from '../../Loader'
 
 // SERVER
 import SERVER from '../../../helper/server/index'
@@ -16,12 +20,19 @@ function Kandang (props) {
     const [dataRows,setDataRows] = useState(null)
     const [showInput,setShowInput] = useState(false)
     const [rowsName,setRowsName] = useState(null)
+    const [isInputLoading,setInputLoading] = useState(false)
+    const [isClick,setIsClick] = useState(false)
 
     const [kg,setKg] = useState(null)
     const [mati_afkir,setMatiAfkir] = useState(null)
     const [jumlah_butir,setJumlahButir] = useState(null)
     const [ayam,setAyam] = useState(null)
     const [pakan,setPakan] = useState(null)
+
+    // TOAST NOTIFICATION
+    const succesNotify = () => toast.success("Berhasil Menambah Baris Baru")
+    const errorNotify = () => toast.error("Internal Server Error")
+    const blankNotift = () => toast.error('Harap Isi Semua Form')
 
     const { idUnit , idLocation , idBaris } = props.match.params
 
@@ -55,7 +66,10 @@ function Kandang (props) {
         getDataDaysReport()
     },[])
 
-    let saveDaysReport = () => {
+    let saveDaysReport = (e) => {
+        e.preventDefault()
+        setIsClick(true)
+        setInputLoading(true)
         if (kg && jumlah_butir && mati_afkir ) {
             axios({
                 method : "POST",
@@ -77,23 +91,29 @@ function Kandang (props) {
                 }
             })
             .then(({data})=>{
-                console.log(data)
-                alert('SUKSES !!')
+                succesNotify()
                 setKg(null)
                 setJumlahButir(null)
                 setMatiAfkir(null)
                 getDataDaysReport()
+                setInputLoading(false)
+                setIsClick(false)
             })
             .catch(err=>{
-                console.log(err , '  <<< ERROR')
+                errorNotify()
+                setInputLoading(false)
+                setIsClick(false)
             })
         }else {
-            alert('HARAP ISI SEMUA FORM')
+            blankNotift()
+            setInputLoading(false)
         }
     }
 
     return (
         <div>
+
+            <ToastContainer />
             
             <h2>Recording Harian</h2>
 
@@ -110,7 +130,7 @@ function Kandang (props) {
 
             </div>
 
-            <div className="input-kandang-container">
+            <form className="input-kandang-container" onSubmit={e=>saveDaysReport(e)}>
 
                 <h3>Input Recording Harian</h3>
                 <input 
@@ -140,17 +160,28 @@ function Kandang (props) {
 
                 <div style={{display : "flex", marginTop : 20}}>
                     <button
+                        onClick={e=>saveDaysReport(e)}
                         className="save-button"
-                        onClick={e=>saveDaysReport()}
                         style={{
                             width: "250px"
                         }}
                     >
-                        Input
+                        {
+                            isInputLoading ?
+                            <Loader />
+                            :
+                            "Save"
+                        }   
+                    </button>
+                    <button 
+                        style={{marginLeft : 10}}
+                        onClick={e=>setShowInput(false)}
+                    >
+                        Cancel
                     </button>
                 </div>
 
-            </div>
+            </form>
 
             {
                 dataRows &&

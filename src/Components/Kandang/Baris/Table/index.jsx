@@ -1,5 +1,5 @@
 // MODULE
-import React , { useState } from 'react';
+import React , { useState , useEffect } from 'react';
 import { useHistory } from 'react-router-dom'
 import axios from 'axios'
 
@@ -40,11 +40,13 @@ function TableLocation (props) {
 
   const history = useHistory()
 
-  const { idUnit , idLocation  } = props
+  const { idUnit , idLocation , Loader , succesEdit , errorEdit , blankEdit } = props
 
   const [editedId, setEditedId] = useState(null)
   const [valueAyam,setValueAyam] = useState(null)
   const [valuePakan,setValuePakan] = useState(null)
+  const [editLoading,setEditLoading] = useState(false)
+  const [isEditClick,setIsEditClick] = useState(false)
 
   let renderData = (data,id,fn,inputData) => {
     if (data && id !== editedId ) {
@@ -55,7 +57,7 @@ function TableLocation (props) {
         <>
           <input
             value={inputData}
-            type={"text"}
+            type={"number"}
             style={{
               paddingLeft : 5,
               paddingTop : 3,
@@ -74,6 +76,8 @@ function TableLocation (props) {
   }
   
   let editPakanAyam = (id_rows) => {
+    setEditLoading(true)
+    setIsEditClick(true)
     axios({
       method : "POST",
       url : `${SERVER}kandang/edit-ayam-pakan-rows`,
@@ -89,15 +93,29 @@ function TableLocation (props) {
       }
     })
     .then(({data})=>{
-      alert("Berhasil Edit")
-      console.log(data)
+      setEditLoading(false)
       props.getDataRows()
       setEditedId(null)
+      succesEdit()
+      setIsEditClick(false)
     })
     .catch(err=>{
-        console.log(err , '  <<< ERROR')
+      setEditLoading(false)
+      errorEdit()
+      setIsEditClick(false)
     })
   }
+
+  useEffect(()=>{
+
+    if (!valueAyam || !valuePakan) { 
+      if (isEditClick) {
+        blankEdit()
+        setIsEditClick(false)
+      }
+    }
+
+  },[isEditClick,valuePakan,valueAyam])
 
   return (
     <TableContainer component={Paper} style={{marginTop : 40,marginBottom : 40}}>
@@ -143,10 +161,15 @@ function TableLocation (props) {
                   row.id_rows === editedId ?
                   <div style={{display : "flex"}}>
                     <button
-                      onClick={e=>editPakanAyam(row.id_rows)}
+                      onClick={e=> valueAyam && valuePakan ? editPakanAyam(row.id_rows) : setIsEditClick(true)}
                       className="edit-button"
                     >
-                      Save
+                      {
+                        editLoading ?
+                        <Loader />
+                        :
+                        "Save"
+                      }
                     </button>
                     <button 
                       style={{marginLeft : 5}}
