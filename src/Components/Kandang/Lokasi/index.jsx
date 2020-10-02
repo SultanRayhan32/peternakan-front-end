@@ -114,7 +114,7 @@ function Kandang () {
                 showInput &&
                 <div className="input-kandang-container">
 
-                    <h3>Input Kandang Baru</h3>
+                    <h3>Input Lokasi Baru</h3>
                     <input 
                         type="text" 
                         className="input-kandang"

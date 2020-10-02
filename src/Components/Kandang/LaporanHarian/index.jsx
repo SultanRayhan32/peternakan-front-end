@@ -121,13 +121,6 @@ function Kandang (props) {
 
                 <input type="text" className="search-kandang" placeholder="Cari Lokasi"/>
 
-                <button 
-                    className="plus-kandang"
-                    onClick={e=>setShowInput(true)}
-                >
-                    Tambah
-                </button>
-
             </div>
 
             <form className="input-kandang-container" onSubmit={e=>saveDaysReport(e)}>
@@ -172,12 +165,6 @@ function Kandang (props) {
                             :
                             "Save"
                         }   
-                    </button>
-                    <button 
-                        style={{marginLeft : 10}}
-                        onClick={e=>setShowInput(false)}
-                    >
-                        Cancel
                     </button>
                 </div>
 
