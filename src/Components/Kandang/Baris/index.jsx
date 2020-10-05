@@ -49,7 +49,6 @@ function Kandang (props) {
         })
         .then(({data})=>{
             setDataRows(data.data)
-            console.log(data)
             setLocationName(data.locationName)
             setUnitName(data.unitName)
         })

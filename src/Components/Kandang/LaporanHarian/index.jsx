@@ -36,8 +36,6 @@ function Kandang (props) {
 
     const { idUnit , idLocation , idBaris } = props.match.params
 
-    console.log(props , ' <<< VALUE PROPS JJJJKJ')
-
     let getDataDaysReport = () => {
         axios({
             method : "GET",
@@ -54,8 +52,8 @@ function Kandang (props) {
             setDataRows(data)
             setAyam(data.ayam)
             setPakan(data.pakan)
-            console.log(data , ' <<< yuuuhu')
-            console.log('BERSJFNDSJFNDSJFN')
+            console.log(data.ayam , ' << AYAM')
+            console.log(data.pakan , ' << PAKAN')
         })
         .catch((err)=>{
             console.log(' ERROR' , err)
@@ -130,53 +128,78 @@ function Kandang (props) {
 
             </div>
 
-            <form className="input-kandang-container" onSubmit={e=>saveDaysReport(e)}>
+            {
+                dataRows &&
 
-                <h3>Input Baris Baru</h3>
-                <input 
-                    type="number" 
-                    className="input-kandang"
-                    placeholder="Masukkan Berat"
-                    // onChangeT={e=>console.log(e.target)}
-                    onChange={e=>setKg(e.target.value)}
-                />
+                <form className="input-kandang-container" onSubmit={e=>saveDaysReport(e)}>
 
-                <input 
-                    type="number" 
-                    className="input-kandang"
-                    placeholder={"Mati Afkir"}
-                    // onChangeT={e=>console.log(e.target)}
-                    onChange={e=>setMatiAfkir(e.target.value)}
-                />
+                    <h3>Input Baris Baru</h3>
 
-                <input 
-                    type="number" 
-                    className="input-kandang"
-                    placeholder={"Jumlah Butir"}
-                    // onChangeT={e=>console.log(e.target)}
-                    onChange={e=>setJumlahButir(e.target.value)}
-                />
+                    {
+                        ayam === 0 || !ayam || pakan === 0 || !pakan  ?<h4 style={{color : "#ff0033", fontWeight : "bold"}}>Harap Isi Data Ayam dan Pakan Terlebih Dahulu</h4>
+                        : <></>
+                        
+                    } 
 
-                <div style={{display : "flex", marginTop : 20}}>
-                    <button
-                        onClick={e=>saveDaysReport(e)}
-                    >
-                        {
-                            isInputLoading ?
-                            <Loader />
-                            :
-                            "Save"
-                        }   
-                    </button>
-                    <button 
-                        style={{marginLeft : 10}}
-                        onClick={e=>setShowInput(false)}
-                    >
-                        Cancel
-                    </button>
-                </div>
+                    <input 
+                        type="number" 
+                        className="input-kandang"
+                        placeholder="Masukkan Berat"
+                        // onChangeT={e=>console.log(e.target)}
+                        onChange={e=>setKg(e.target.value)}
+                    />
 
-            </form>
+                    <input 
+                        type="number" 
+                        className="input-kandang"
+                        placeholder={"Mati Afkir"}
+                        // onChangeT={e=>console.log(e.target)}
+                        onChange={e=>setMatiAfkir(e.target.value)}
+                    />
+
+                    <input 
+                        type="number" 
+                        className="input-kandang"
+                        placeholder={"Jumlah Butir"}
+                        // onChangeT={e=>console.log(e.target)}
+                        onChange={e=>setJumlahButir(e.target.value)}
+                    />
+
+                    <div style={{display : "flex", marginTop : 20}}>
+                        <button
+                            onClick={e=>saveDaysReport(e)}
+                            // disabled={ayam === 0 || !ayam || pakan === 0 || !pakan ? true : false }
+                        >
+                            {
+                                isInputLoading ?
+                                <Loader />
+                                :
+                                "Save"
+                            }   
+                        </button>
+                        <button 
+                            style={{marginLeft : 10}}
+                            onClick={e=>setShowInput(false)}
+                        >
+                            Cancel
+                        </button>
+                    </div>
+
+                </form>
+
+            }
+
+            <div style={{ display: 'flex', width: '100%'  }}>
+                {
+                    !dataRows
+                    ?
+                    <div style={{ marginTop: '24px', marginLeft: '10px' , display : "flex" , justifyContent : "center" , alignItems : "center" , width : "100%" , height : 100 }}>
+                        <Loader />
+                    </div>
+                    :
+                    null
+                }
+            </div>
 
             {
                 dataRows &&
