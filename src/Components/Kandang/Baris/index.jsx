@@ -101,11 +101,11 @@ function Kandang (props) {
 
             <ToastContainer />
             
-            <h2>Baris {unitName} Lokasi {locationName}</h2>
+            <h2>Kandang {unitName} Lokasi {locationName}</h2>
 
             <div className="search-kandang-container">
 
-                <input type="text" className="search-kandang" placeholder="Cari Lokasi"/>
+                <div/>
 
                 <button 
                     className="plus-kandang"
@@ -132,6 +132,7 @@ function Kandang (props) {
                         <button
                             // onClick={e=>saverowsName()}
                             onClick={e=> rowsName ? saverowsName() : SetIsClick(true)}
+                            className="save-button"
                         >
                             {
                              isInputLoading ?
@@ -142,6 +143,7 @@ function Kandang (props) {
                         </button>
                         <button 
                             style={{marginLeft : 10}}
+                            className="cancel-button"
                             onClick={e=>setShowInput(false)}
                         >
                             Cancel

@@ -14,13 +14,19 @@
 }
 
 .plus-kandang {
-    background-color: #00698C;
-    width: 120px;
-    height: 38px;
+    background-color: #20A8D8;
+    width: 100px;
+    height: 35px;
     border: none;
     color: white;
+    font-weight: bold;
     outline: none;
-    border-radius: 2px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.plus-kandang:hover {
     cursor: pointer;
 }
 
@@ -35,12 +41,145 @@
 }
 
 .input-kandang {
-    /* border: none; */
-    /* border-bottom: 1px solid #00698C; */
+    border: none;
     outline: none;
-    width: 220px;
-    /* background-color: #FAFAFA; */
-    padding-left: 5px;
+    width: 270px;
+    height: 40px;
+    background-color: white;
+    padding-left: 10px;
+    font-weight: bold;
     padding-bottom: 5px;
     padding-top: 5px;
+    border-radius: 2px;
+}
+
+.save-button {
+    background-color:  #20A8D8;
+    width: 85px;
+    height:30px;
+    border: none;
+    color: white;
+    font-weight: bold;
+    outline: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.save-button:hover {
+ cursor: pointer; 
+}
+
+.cancel-button {
+    background-color: #F86C6B;
+    width: 85px;
+    height:30px;
+    border: none;
+    color: white;
+    font-weight: bold;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.cancel-button:hover {
+    cursor: pointer;
+}
+
+.input-days-report {
+    border: none;
+    outline: none;
+    background-color: #f4f4f4;
+    width: 250px;
+    height: 40px;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    border-radius: 3px;
+}
+
+.detail-button {
+    background-color: #FEC106;
+    border: none;
+    padding: 5px;
+    border-radius: 3px;
+    width: 60px;
+    font-weight: 600;
+    outline: none;
+}
+
+.detail-button:hover {
+    cursor: pointer;
+}
+
+.edit-button {
+    background-color: #20A8D8;
+    border: none;
+    padding: 5px;
+    color: white;
+    border-radius: 3px;
+    width: 60px;
+    font-weight: 600;
+    outline: none;
+}
+
+.edit-button:hover {
+    cursor: pointer;
+}
+
+.cancel-button-rows {
+    background-color: #F86C6B;
+    border: none;
+    padding: 5px;
+    color: white;
+    border-radius: 3px;
+    width: 60px;
+    font-weight: 600;
+    outline: none;
+}
+
+.cancel-button-rows:hover {
+    cursor: pointer;
+}
+
+.rows-form-edit {
+    height: 30px;
+    outline: none;
+    border: none;
+    background-color: #f4f4f4;
+    font-weight: 600;
+    padding-left: 10px;
+    text-align: center;
+    width: 100px;
+}
+
+.btn-search-report {
+    height: 35px;
+    width: 50px;
+    border: none;
+    outline: none;
+    margin-left: 10px;
+    background-color: #20A8D8;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+}
+
+.btn-delete-rows-kandang {
+    float: right;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border: none;
+    outline: none;
+    background-color: #F86C6B;
+    width: 60px;
+    padding: 5px;
+    font-weight: bold;
+    color: white;
+    border-radius: 3px;
+}
+
+.btn-delete-rows-kandang:hover {
+    cursor: pointer;
 }

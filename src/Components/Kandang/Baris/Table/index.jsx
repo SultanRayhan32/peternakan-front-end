@@ -59,13 +59,11 @@ function TableLocation (props) {
             value={inputData}
             type={"number"}
             style={{
-              paddingLeft : 5,
               paddingTop : 3,
-              marginTop : 2,
-              outline : "none",
-              border : '1px solid black'
+              marginTop : 2
             }}
             onChange={e=>  fn(e.target.value)}
+            className="rows-form-edit"
           />
         </>
       )
@@ -128,7 +126,7 @@ function TableLocation (props) {
             <TableCell>Jumlah Pakan (kg)</TableCell>
             <TableCell>Presentase/%</TableCell>
             <TableCell>FCR</TableCell>
-            <TableCell>Edit/Delete</TableCell>
+            <TableCell>Edit</TableCell>
             <TableCell align="right">DETAIL</TableCell>
           </TableRow>
         </TableHead>
@@ -162,6 +160,7 @@ function TableLocation (props) {
                   <div style={{display : "flex"}}>
                     <button
                       onClick={e=> valueAyam && valuePakan ? editPakanAyam(row.id_rows) : setIsEditClick(true)}
+                      className="edit-button"
                     >
                       {
                         editLoading ?
@@ -173,17 +172,18 @@ function TableLocation (props) {
                     <button 
                       style={{marginLeft : 5}}
                       onClick={e=>setEditedId(null)}
+                      className="cancel-button-rows"
                     >
                       Cancel
                     </button>
                   </div> :
                   <div style={{display : "flex"}}>
                     <button
-                      onClick={e=>[setEditedId(row.id_rows),setValueAyam(row.ayam),setValuePakan(row.pakan)]}
+                      onClick={e=>[setEditedId(row.id_rows),setValueAyam(row.ayam),setValuePakan(row.pakan)]} 
+                      className="edit-button"
                     >
                       Edit
                     </button>
-                    <button style={{marginLeft : 5}}>Delete</button>
                   </div>
                 }
 
@@ -191,7 +191,7 @@ function TableLocation (props) {
               <TableCell align="right">
                 <button 
                   // onClick={e=>history.push(`/unit-kandang/${row.id_location}`)}
-                  onClick={e=>history.push(`/laporan-harian/${idLocation}/${idUnit}/${row.id_rows}`,{ ayam : row.ayam , pakan : row.pakan })}
+                  onClick={e=>history.push(`/laporan-harian/${idLocation}/${idUnit}/${row.id_rows}`,{ ayam : row.ayam , pakan : row.pakan })} className="detail-button"
                 >
                   Detail
                 </button>

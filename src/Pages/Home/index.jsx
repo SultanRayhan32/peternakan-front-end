@@ -8,6 +8,7 @@ import Kandang from '../../Components/Kandang/Lokasi'
 import UnitKandang from '../../Components/Kandang/Unit'
 import BarisKandang from '../../Components/Kandang/Baris'
 import LaporanHarian from '../../Components/Kandang/LaporanHarian'
+import OwnerKandang from '../../Components/Kandang/Owner'
 
 // MATERIAL UI
 import AppBar from "@material-ui/core/AppBar";
@@ -77,20 +78,21 @@ function Home () {
                     className={classes.sidebar}
                     style={
                         {
-                            backgroundColor : route === "/kandang" ? "#00698C" : null
+                            backgroundColor : route === "/owner" ? "#00698C" : null
                         }
                     }
                     // onClick={() => history.push('/settings') }
-                    onClick={() => history.push('/kandang') }
+                    // onClick={() => history.push('/kandang') }
+                    onClick={() => history.push('/owner') }
 
                 >
                     <ListItemIcon>
-                        <ShoppingCartIcon style={{color : route === "/kandang" ? "white" : null}} />
+                        <ShoppingCartIcon style={{color : route === "/owner" ? "white" : null}} />
                     </ListItemIcon>
                     <p 
                         className={classes.sidebarText}
                         // style={{color : cekPathname() ? '#f16821' : "#888888"}}
-                        style={{ color : route === "/kandang" ? 'white' : null }}
+                        style={{ color : route === "/owner" ? 'white' : null }}
                     > 
                         Kandang
                     </p>
@@ -145,6 +147,7 @@ function Home () {
             <main className={classes.content}>
                 <div className={classes.toolbar}/>
                 <Switch>
+                    <Route path="/owner" component={OwnerKandang}/>
                     <Route path="/kandang" component={Kandang}/>
                     <Route path="/unit-kandang/:id" component={UnitKandang}/>
                     <Route path="/:idLocation/baris/:idUnit" component={BarisKandang}/>

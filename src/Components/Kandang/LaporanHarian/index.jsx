@@ -113,18 +113,15 @@ function Kandang (props) {
 
             <ToastContainer />
             
-            <h2>Laporan Harian</h2>
+            <h2>Recording Harian</h2>
 
-            <div className="search-kandang-container">
+            <div
+                style={{
+                    display: "flex"
+                }}>
 
-                <input type="text" className="search-kandang" placeholder="Cari Lokasi"/>
-
-                <button 
-                    className="plus-kandang"
-                    onClick={e=>setShowInput(true)}
-                >
-                    Tambah
-                </button>
+                <input type="text" className="search-kandang" placeholder="Cari Laporan" style={{ height: "35px" }}/>
+                <button className="btn-search-report">Cari</button>
 
             </div>
 
@@ -200,6 +197,52 @@ function Kandang (props) {
                     null
                 }
             </div>
+            {/* <form className="input-kandang-container" onSubmit={e=>saveDaysReport(e)}>
+
+                <h3>Input Recording Harian</h3>
+                <input 
+                    type="number" 
+                    className="input-days-report"
+                    placeholder="Masukkan Berat (kg)"
+                    onChange={e=>setKg(e.target.value)}
+                    style={{
+                        marginBottom: "15px"
+                    }}
+                />
+                <input 
+                    type="number" 
+                    className="input-days-report"
+                    placeholder={"Jumlah Butir"}
+                    onChange={e=>setJumlahButir(e.target.value)}
+                    style={{
+                        marginBottom: "15px"
+                    }}
+                />
+                <input 
+                    type="number" 
+                    className="input-days-report"
+                    placeholder={"Mati Afkir"}
+                    onChange={e=>setMatiAfkir(e.target.value)}
+                />
+
+                <div style={{display : "flex", marginTop : 20}}>
+                    <button
+                        onClick={e=>saveDaysReport(e)}
+                        className="save-button"
+                        style={{
+                            width: "250px"
+                        }}
+                    >
+                        {
+                            isInputLoading ?
+                            <Loader />
+                            :
+                            "Save"
+                        }   
+                    </button>
+                </div>
+
+            </form> */}
 
             {
                 dataRows &&

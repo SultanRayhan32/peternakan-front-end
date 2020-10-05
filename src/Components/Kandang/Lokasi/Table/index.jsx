@@ -64,7 +64,7 @@ function Row(props) {
         </TableCell>
         <TableCell >{row.location_name}</TableCell>
         <TableCell align="right">
-          <button onClick={e=>history.push(`/unit-kandang/${row.id_location}`)}>
+          <button onClick={e=>history.push(`/unit-kandang/${row.id_location}`)} className="detail-button">
             Detail
           </button>
         </TableCell>
@@ -85,7 +85,7 @@ function Row(props) {
                 <TableHead>
                   <TableCell >JUMLAH BUTIR</TableCell>
                   <TableCell>KG</TableCell>
-                  <TableCell>K/P</TableCell>
+                  <TableCell>TRAY</TableCell>
                   <TableCell>TARA</TableCell>
                   <TableCell>NETTO</TableCell>
                   <TableCell>EKOR</TableCell>
@@ -111,6 +111,7 @@ function Row(props) {
                   <TableCell >{row.fcr ? row.fcr : "0"}</TableCell>
                 </TableBody>
               </Table>
+              <button className="btn-delete-rows-kandang">Delete</button>
             </Box>
           </Collapse>
         </TableCell>

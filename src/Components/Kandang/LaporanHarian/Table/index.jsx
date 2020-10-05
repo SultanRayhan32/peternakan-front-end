@@ -146,7 +146,7 @@ function TableLocation (props) {
             <TableCell>JAM</TableCell>
             <TableCell >JUMLAH BUTIR</TableCell>
             <TableCell>KG</TableCell>
-            <TableCell>K/P</TableCell>
+            <TableCell>TRAY</TableCell>
             <TableCell>TARA</TableCell>
             <TableCell>NETTO</TableCell>
             <TableCell>EKOR</TableCell>

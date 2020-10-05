@@ -67,7 +67,7 @@ function Row(props) {
         </TableCell>
         <TableCell >{row.unit_name}</TableCell>
         <TableCell align="right">
-          <button onClick={e=>history.push(`/${idUnit}/baris/${row.id_unit}`)}>
+          <button onClick={e=>history.push(`/${idUnit}/baris/${row.id_unit}`)} className="detail-button">
             Detail
           </button>
         </TableCell>
@@ -88,7 +88,7 @@ function Row(props) {
                 <TableHead>
                   <TableCell >JUMLAH BUTIR</TableCell>
                   <TableCell>KG</TableCell>
-                  <TableCell>K/P</TableCell>
+                  <TableCell>TRAY</TableCell>
                   <TableCell>TARA</TableCell>
                   <TableCell>NETTO</TableCell>
                   <TableCell>EKOR</TableCell>
