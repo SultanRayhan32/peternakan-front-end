@@ -1,8 +1,14 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
+
+// STYLE
+import '../style.css'
 
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 
 export default function Home() {
+    const history = useHistory()
+
     return (
         <div className="owner-container">
 
@@ -69,9 +75,9 @@ export default function Home() {
                 </div>
 
                 <div className="dbc-02-f-2">
-                    Total Barang
+                    Barang
+                <button className="btn-show-dashboard-01" onClick={() => history.push('/stock-barang')}>Show</button>
                 </div>
-
             </div>
 
             <div className="dbc-02-s">
@@ -104,6 +110,7 @@ export default function Home() {
 
                 <div className="dbc-02-f-2">
                     Supplier
+                    <button className="btn-show-dashboard-01" onClick={() => history.push('/supplier')}>Show</button>
                 </div>
 
             </div>

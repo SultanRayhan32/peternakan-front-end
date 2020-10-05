@@ -45,86 +45,86 @@ function TableLocation (props) {
       let month = ''
       let year = new Date(dateParams).getFullYear()
       switch (monthNumber) {
-      // case 0 :
-      //     month = 'Januari'
-      //     break;
-      // case 1 :
-      //     month = 'Februari'
-      //     break;
-      // case 2 :
-      //     month = 'Maret'
-      //     break;
-      // case 3 :
-      //     month = 'April'
-      //     break;
-      // case 4 :
-      //     month = 'mei'
-      //     break;
-      // case 5 :
-      //     month = 'Juni'
-      //     break;
-      // case 6 :
-      //     month = 'Juli'
-      //     break;
-      // case 7 :
-      //     month = 'Agustus'
-      //     break;
-      // case 8 :
-      //     month = 'September'
-      //     break;
-      // case 9 :
-      //     month = 'Oktober'
-      //     break;
-      // case 10 :
-      //     month = 'November'
-      //     break;
-      // case 11 :
-      //     month = 'Desember'
-      //     break;
-      // default:
-      //     month = 'hehe'
-      //     break;
       case 0 :
-          month = '01'
+          month = 'Januari'
           break;
       case 1 :
-          month = '02'
+          month = 'Februari'
           break;
       case 2 :
-          month = '03'
+          month = 'Maret'
           break;
       case 3 :
-          month = '04'
+          month = 'April'
           break;
       case 4 :
-          month = '05'
+          month = 'mei'
           break;
       case 5 :
-          month = '06'
+          month = 'Juni'
           break;
       case 6 :
-          month = '07'
+          month = 'Juli'
           break;
       case 7 :
-          month = '08'
+          month = 'Agustus'
           break;
       case 8 :
-          month = '09'
+          month = 'September'
           break;
       case 9 :
-          month = '10'
+          month = 'Oktober'
           break;
       case 10 :
-          month = '11'
+          month = 'November'
           break;
       case 11 :
-          month = '12'
+          month = 'Desember'
           break;
       default:
           month = 'hehe'
           break;
+      // case 0 :
+      //     month = '01'
+      //     break;
+      // case 1 :
+      //     month = '02'
+      //     break;
+      // case 2 :
+      //     month = '03'
+      //     break;
+      // case 3 :
+      //     month = '04'
+      //     break;
+      // case 4 :
+      //     month = '05'
+      //     break;
+      // case 5 :
+      //     month = '06'
+      //     break;
+      // case 6 :
+      //     month = '07'
+      //     break;
+      // case 7 :
+      //     month = '08'
+      //     break;
+      // case 8 :
+      //     month = '09'
+      //     break;
+      // case 9 :
+      //     month = '10'
+      //     break;
+      // case 10 :
+      //     month = '11'
+      //     break;
+      // case 11 :
+      //     month = '12'
+      //     break;
+      // default:
+      //     month = 'hehe'
+      //     break;
       }
-      return date + '-' + month  + '-' + year
+      return date + ' ' + month  + ' ' + year
   }
 
   let showHour = (hourParams) => {
@@ -142,10 +142,9 @@ function TableLocation (props) {
         <TableHead>
           <TableRow>
             <TableCell>NOMOR</TableCell>
-            <TableCell style={{width : 150}}>TANGGAL</TableCell>
-            <TableCell>JAM</TableCell>
-            <TableCell >JUMLAH BUTIR</TableCell>
-            <TableCell>KG</TableCell>
+            <TableCell style={{width : 200}}>WAKTU LAPORAN</TableCell>
+            <TableCell >JUMLAH</TableCell>
+            <TableCell>BERAT</TableCell>
             <TableCell>TRAY</TableCell>
             <TableCell>TARA</TableCell>
             <TableCell>NETTO</TableCell>
@@ -165,13 +164,10 @@ function TableLocation (props) {
                 {index + 1}
               </TableCell>
               <TableCell >
-                {showDate(row.tanggal)}
+                {showDate(row.tanggal)} | {showHour(row.tanggal)}
               </TableCell>
-              <TableCell>
-                {showHour(row.tanggal)}
-              </TableCell>
-              <TableCell >{row.jumlah_butir}</TableCell>
-              <TableCell >{row.kg}</TableCell>
+              <TableCell >{row.jumlah_butir} Butir</TableCell>
+              <TableCell >{row.kg} kg</TableCell>
               <TableCell >{row.tray}</TableCell>
               <TableCell >{row.tara}</TableCell>
               <TableCell >{ Math.min(row.netto) }</TableCell>

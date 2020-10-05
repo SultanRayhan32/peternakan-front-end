@@ -1,0 +1,38 @@
+.btn-show-dashboard-01 {
+    margin-left: 5px;
+    background-color: black;
+    border: none;
+    outline: none;
+    border-radius: 2px;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    padding: 4px;
+}
+
+.btn-show-dashboard-01:hover {
+    cursor: pointer;
+}
+
+.toko-add-new-01 {
+    margin-left: 5px;
+    background-color: #20A8D8;
+    outline: none;
+    border: none;
+    padding: 5px;
+    font-weight: bold;
+    color: white;
+    border-radius: 4px;
+}
+
+.toko-add-new-01:hover {
+    cursor: pointer;
+}
+
+.toko-input-new-barang {
+    width: 23%;
+    margin-right: 2%;
+    height: 37px;
+    padding-left: 10px;
+    outline: none;
+}

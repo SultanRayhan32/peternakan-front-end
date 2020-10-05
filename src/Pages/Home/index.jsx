@@ -10,6 +10,8 @@ import BarisKandang from '../../Components/Kandang/Baris'
 import LaporanHarian from '../../Components/Kandang/LaporanHarian'
 import OwnerKandang from '../../Components/Kandang/Owner'
 import HomeToko from '../../Components/Toko/Home'
+import StockBarang from '../../Components/Toko/Barang'
+import Supplier from '../../Components/Toko/Supplier'
 
 // MATERIAL UI
 import AppBar from "@material-ui/core/AppBar";
@@ -198,6 +200,9 @@ function Home () {
                 <div className={classes.toolbar}/>
                 <Switch>
                     <Route path="/toko" component={HomeToko} />
+                    <Route path="/stock-barang" component={StockBarang} />
+                    <Route path="/supplier" component={Supplier}/>
+
                     <Route path="/owner" component={OwnerKandang}/>
                     <Route path="/kandang" component={Kandang}/>
                     <Route path="/unit-kandang/:id" component={UnitKandang}/>

@@ -27,8 +27,107 @@ export default function Owner() {
     const [ IOOkg, setIOOkg ] = useState(null)
     const [ countLoc, setCountLoc ] = useState(null)
     const [ countUnit, setCountUnit ] = useState(null)
+    const [ tanggal, setTanggal ] = useState(null)
+    const [ jam, setJam ] = useState(null)
 
     const history = useHistory()
+
+    let showDate = (dateParams) => {
+        let date = new Date(dateParams).getDate() 
+        let monthNumber = new Date(dateParams).getMonth()
+        let month = ''
+        let year = new Date(dateParams).getFullYear()
+        switch (monthNumber) {
+        case 0 :
+            month = 'Januari'
+            break;
+        case 1 :
+            month = 'Februari'
+            break;
+        case 2 :
+            month = 'Maret'
+            break;
+        case 3 :
+            month = 'April'
+            break;
+        case 4 :
+            month = 'mei'
+            break;
+        case 5 :
+            month = 'Juni'
+            break;
+        case 6 :
+            month = 'Juli'
+            break;
+        case 7 :
+            month = 'Agustus'
+            break;
+        case 8 :
+            month = 'September'
+            break;
+        case 9 :
+            month = 'Oktober'
+            break;
+        case 10 :
+            month = 'November'
+            break;
+        case 11 :
+            month = 'Desember'
+            break;
+        default:
+            month = 'hehe'
+            break;
+        // case 0 :
+        //     month = '01'
+        //     break;
+        // case 1 :
+        //     month = '02'
+        //     break;
+        // case 2 :
+        //     month = '03'
+        //     break;
+        // case 3 :
+        //     month = '04'
+        //     break;
+        // case 4 :
+        //     month = '05'
+        //     break;
+        // case 5 :
+        //     month = '06'
+        //     break;
+        // case 6 :
+        //     month = '07'
+        //     break;
+        // case 7 :
+        //     month = '08'
+        //     break;
+        // case 8 :
+        //     month = '09'
+        //     break;
+        // case 9 :
+        //     month = '10'
+        //     break;
+        // case 10 :
+        //     month = '11'
+        //     break;
+        // case 11 :
+        //     month = '12'
+        //     break;
+        // default:
+        //     month = 'hehe'
+        //     break;
+        }
+        return date + ' ' + month  + ' ' + year
+    }
+
+    let showHour = (hourParams) => {
+
+        let hour = new Date(hourParams).getHours()
+        let minutes = new Date(hourParams).getMinutes()
+    
+        return (hour > 9 ? hour : "0" + hour ) + ":" + (minutes > 9 ? minutes : "0" + minutes)
+    
+      }
 
     const getDataOwnerKandang = () => {
         axios({
@@ -42,6 +141,7 @@ export default function Owner() {
             setCountLoc(res.data.countLocation)
             setCountUnit(res.data.countUnit)
             var data = res.data.data[0]
+
             setOwnerName(data.ownername)
             setDataOwner(data)
             setAyam(data.ayam)
@@ -54,6 +154,8 @@ export default function Owner() {
             setNetto(data.netto)
             setMatiAfkir(data.mati_afkir)
             setIOOkg(data["100/kg"])
+            setTanggal(showDate(data.tanggal))
+            setJam(showHour(data.tanggal))
         })
         .catch((err) => {
             console.log(err)
@@ -114,12 +216,12 @@ export default function Owner() {
                     <div className="dbc-02-s-1-c">
                         <AccessTimeIcon style={{ color : "white" , width : 17 , height : 17 }}/>
                         <div className="dbc-02-s-1">
-                            update : 11 Aug 2020
+                            update : {tanggal}
                         </div>
                     </div>
 
                     <div className="dbc-02-s-2">
-                        04:44:59
+                        {jam}
                     </div>
 
                 </div>
@@ -148,12 +250,12 @@ export default function Owner() {
                     <div className="dbc-02-s-1-c">
                         <AccessTimeIcon style={{ color : "white" , width : 17 , height : 17 }}/>
                         <div className="dbc-02-s-1">
-                            update : 11 Aug 2020
+                            update : {tanggal}
                         </div>
                     </div>
 
                     <div className="dbc-02-s-2">
-                        04:44:59
+                        {jam}
                     </div>
 
                 </div>
@@ -182,12 +284,12 @@ export default function Owner() {
                     <div className="dbc-02-s-1-c">
                         <AccessTimeIcon style={{ color : "white" , width : 17 , height : 17 }}/>
                         <div className="dbc-02-s-1">
-                            update : 11 Aug 2020
+                            update : {tanggal}
                         </div>
                     </div>
 
                     <div className="dbc-02-s-2">
-                        04:44:59
+                        {jam}
                     </div>
 
                 </div>
@@ -216,12 +318,12 @@ export default function Owner() {
                     <div className="dbc-02-s-1-c">
                         <AccessTimeIcon style={{ color : "white" , width : 17 , height : 17 }}/>
                         <div className="dbc-02-s-1">
-                            update : 11 Aug 2020
+                            update : {tanggal}
                         </div>
                     </div>
 
                     <div className="dbc-02-s-2">
-                        04:44:59
+                        {jam}
                     </div>
 
                 </div>
@@ -248,7 +350,7 @@ export default function Owner() {
                         <div className="dbc-02-s-1-c">
                             <AccessTimeIcon style={{ color : "white" , width : 17 , height : 17 }}/>
                             <div className="dbc-02-s-1">
-                                last update : 11 Aug 2020
+                                last update : {tanggal} {jam}
                                 
                             </div>
                         </div>

@@ -86,31 +86,29 @@ function Row(props) {
               </Typography>
               <Table size="small" aria-label="purchases">
                 <TableHead>
-                  <TableCell >JUMLAH BUTIR</TableCell>
-                  <TableCell>KG</TableCell>
+                  <TableCell >JUMLAH</TableCell>
+                  <TableCell>BERAT</TableCell>
                   <TableCell>TRAY</TableCell>
                   <TableCell>TARA</TableCell>
                   <TableCell>NETTO</TableCell>
-                  <TableCell>EKOR</TableCell>
+                  <TableCell>AYAM</TableCell>
                   <TableCell>MATI/AFKIR</TableCell>
-                  <TableCell>SISA EKOR</TableCell>
                   <TableCell>PRESENTASE</TableCell>
                   <TableCell>100/KG</TableCell>
                   <TableCell>PAKAN</TableCell>
                   <TableCell>FCR</TableCell>
                 </TableHead>
                 <TableBody>
-                  <TableCell>{row.jumlah_butir?row.jumlah_butir:"0"}</TableCell>
-                  <TableCell >{row.kg?row.kg:"0"}</TableCell>
+                  <TableCell>{row.jumlah_butir?row.jumlah_butir:"0"} Butir</TableCell>
+                  <TableCell >{row.kg?row.kg:"0"} kg</TableCell>
                   <TableCell >{row.tray?row.tray:"0"}</TableCell>
                   <TableCell >{row.tara?row.tara:"0"}</TableCell>
                   <TableCell >{ row.netto ? Math.min(row.netto) : "0" }</TableCell>
-                  <TableCell>{row.ayam ? row.ayam : "0"}</TableCell>
+                  <TableCell>{row.ayam ? row.ayam : "0"} Ekor</TableCell>
                   <TableCell >{row.mati_afkir ? row.mati_afkir : "0"}</TableCell>
-                  <TableCell >{row.sisa_ekor ? row.sisa_ekor : "0"}</TableCell>
-                  <TableCell >{row.presentase ? row.presentase : "0" }</TableCell>
+                  <TableCell >{row.presentase ? row.presentase : "0" } %</TableCell>
                   <TableCell >{row["100/kg"] ? row["100/kg"] : "0"}</TableCell>
-                  <TableCell>{row.pakan ? row.pakan : "0"}</TableCell>
+                  <TableCell>{row.pakan ? row.pakan : "0"} kg</TableCell>
                   <TableCell >{row.fcr ? row.fcr : "0"}</TableCell>
                 </TableBody>
               </Table>
