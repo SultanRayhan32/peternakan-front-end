@@ -106,7 +106,7 @@ function Kandang (props) {
 
             <div className="search-kandang-container">
 
-                <input type="text" className="search-kandang" placeholder="Cari Lokasi"/>
+                <div/>
 
                 <button 
                     className="plus-kandang"

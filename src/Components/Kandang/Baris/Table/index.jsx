@@ -59,13 +59,11 @@ function TableLocation (props) {
             value={inputData}
             type={"number"}
             style={{
-              paddingLeft : 5,
               paddingTop : 3,
-              marginTop : 2,
-              outline : "none",
-              border : '1px solid black'
+              marginTop : 2
             }}
             onChange={e=>  fn(e.target.value)}
+            className="rows-form-edit"
           />
         </>
       )

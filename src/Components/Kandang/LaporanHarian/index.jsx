@@ -117,9 +117,13 @@ function Kandang (props) {
             
             <h2>Recording Harian</h2>
 
-            <div className="search-kandang-container">
+            <div
+                style={{
+                    display: "flex"
+                }}>
 
-                <input type="text" className="search-kandang" placeholder="Cari Lokasi"/>
+                <input type="text" className="search-kandang" placeholder="Cari Laporan" style={{ height: "35px" }}/>
+                <button className="btn-search-report">Cari</button>
 
             </div>
 
@@ -129,7 +133,7 @@ function Kandang (props) {
                 <input 
                     type="number" 
                     className="input-days-report"
-                    placeholder="Masukkan Berat"
+                    placeholder="Masukkan Berat (kg)"
                     onChange={e=>setKg(e.target.value)}
                     style={{
                         marginBottom: "15px"
