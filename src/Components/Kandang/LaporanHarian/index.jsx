@@ -140,31 +140,38 @@ function Kandang (props) {
 
                     <input 
                         type="number" 
-                        className="input-kandang"
+                        className="input-days-report"
                         placeholder="Masukkan Berat"
                         // onChangeT={e=>console.log(e.target)}
+                        style={{ 
+                            marginBottom: "15px"
+                        }}
                         onChange={e=>setKg(e.target.value)}
                     />
 
                     <input 
                         type="number" 
-                        className="input-kandang"
+                        className="input-days-report"
+                        placeholder={"Jumlah Butir"}
+                        // onChangeT={e=>console.log(e.target)}
+                        style={{
+                            marginBottom: "15px"
+                        }}
+                        onChange={e=>setJumlahButir(e.target.value)}
+                    />
+
+                    <input 
+                        type="number" 
+                        className="input-days-report"
                         placeholder={"Mati Afkir"}
                         // onChangeT={e=>console.log(e.target)}
                         onChange={e=>setMatiAfkir(e.target.value)}
                     />
 
-                    <input 
-                        type="number" 
-                        className="input-kandang"
-                        placeholder={"Jumlah Butir"}
-                        // onChangeT={e=>console.log(e.target)}
-                        onChange={e=>setJumlahButir(e.target.value)}
-                    />
-
                     <div style={{display : "flex", marginTop : 20}}>
                         <button
                             onClick={e=>saveDaysReport(e)}
+                            className="save-button"
                             // disabled={ayam === 0 || !ayam || pakan === 0 || !pakan ? true : false }
                         >
                             {
@@ -173,12 +180,6 @@ function Kandang (props) {
                                 :
                                 "Save"
                             }   
-                        </button>
-                        <button 
-                            style={{marginLeft : 10}}
-                            onClick={e=>setShowInput(false)}
-                        >
-                            Cancel
                         </button>
                     </div>
 
