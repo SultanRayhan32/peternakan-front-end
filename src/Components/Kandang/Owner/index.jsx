@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import axios from 'axios'
+import io from 'socket.io-client'
 
 // API
 import SERVER from '../../../helper/server'
@@ -61,6 +62,13 @@ export default function Owner() {
 
     useEffect(() => {
         getDataOwnerKandang()
+        const socket = io(`${SERVER}`)
+        socket.on('input-days-record-kandang', data => {
+            getDataOwnerKandang()
+        })
+        socket.on('edit-ayam-pakan', data => {
+            getDataOwnerKandang()
+        })
     }, [])
     
     return (
@@ -263,40 +271,7 @@ export default function Owner() {
 
                     </div>
                 </div>    
-                
-                <div 
-                className="dashboard-box-content-02"
-                style={{backgroundColor : "#F86C6B"}}
-                >
-
-                <div className="dbc-02-f">
-
-                    <div className="dbc-02-f-1">
-                       {countLoc} Lokasi 
-                    </div>
-
-                    <div className="dbc-02-f-2">
-                        Total Lokasi
-                    </div>
-
-                </div>
-
-                <div className="dbc-02-s">
-
-                    <div className="dbc-02-s-1-c">
-                        <AccessTimeIcon style={{ color : "white" , width : 17 , height : 17 }}/>
-                        <div className="dbc-02-s-1">
-                            update : 11 Aug 2020
-                        </div>
-                    </div>
-
-                    <div className="dbc-02-s-2">
-                        04:44:59
-                    </div>
-
-                </div>
-
-                </div>   
+            
             </div>
 
             

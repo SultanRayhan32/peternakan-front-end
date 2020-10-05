@@ -1,6 +1,7 @@
 // MODULE
 import React , { useEffect , useState } from 'react'
 import axios from 'axios'
+import io from 'socket.io-client'
 
 // TOAST
 import { ToastContainer, toast } from 'react-toastify';
@@ -50,6 +51,10 @@ function Kandang () {
 
     useEffect(()=>{
         getDataLocation()
+        const socket = io(`${SERVER}`)
+        socket.on('add-location-kandang', data => {
+            getDataLocation()
+        })
     },[])
 
     let saveLocationName = () => {

@@ -1,6 +1,7 @@
 // MODULE
 import React , { useEffect , useState } from 'react'
 import axios from 'axios'
+import io from 'socket.io-client'
 
 // COMPONENT
 import Table from './Table'
@@ -50,6 +51,10 @@ function Unit (props) {
 
     useEffect(()=>{
         getDataUnit()
+        const socket = io(`${SERVER}`)
+        socket.on('add-unit-kandang', data => {
+            getDataUnit()
+        })
     },[])
 
     let saveLocationName = () => {

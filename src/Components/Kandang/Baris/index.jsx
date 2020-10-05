@@ -1,6 +1,7 @@
 // MODULE
 import React , { useEffect , useState } from 'react'
 import axios from 'axios'
+import io from 'socket.io-client'
 
 // TOAST
 import { ToastContainer, toast } from 'react-toastify';
@@ -59,8 +60,16 @@ function Kandang (props) {
 
     useEffect(()=>{
         getDataRows()
+        const socket = io(`${SERVER}`)
+        socket.on('add-rows-kandang', data => {
+            getDataRows()
+        })
+        socket.on('edit-ayam-pakan', data => {
+            getDataRows()
+        })
     },[])
 
+    
     let saverowsName = () => {
         setInputLoading(true)
         SetIsClick(true)

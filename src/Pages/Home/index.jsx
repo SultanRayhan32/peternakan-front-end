@@ -9,6 +9,7 @@ import UnitKandang from '../../Components/Kandang/Unit'
 import BarisKandang from '../../Components/Kandang/Baris'
 import LaporanHarian from '../../Components/Kandang/LaporanHarian'
 import OwnerKandang from '../../Components/Kandang/Owner'
+import HomeToko from '../../Components/Toko/Home'
 
 // MATERIAL UI
 import AppBar from "@material-ui/core/AppBar";
@@ -50,6 +51,8 @@ function Home () {
                 </div>
             </div>
 
+            <h1 style={{ textAlign: "center" }}>Farm App</h1>
+
             <List>
                 
                 <ListItem 
@@ -57,17 +60,18 @@ function Home () {
                     className={classes.sidebar}
                     style={
                         {
-                            backgroundColor : route === "/settings" ? "#00698C" : null
+                            backgroundColor : route === "/toko" ? "#00698C" : null
                         }
                     }
+                    onClick={() => history.push('/toko') }
                 >
                     <ListItemIcon>
-                        <ShoppingCartIcon style={{color : route === "/settings" ? "white" : null}} />
+                        <ShoppingCartIcon style={{color : route === "/toko" ? "white" : null}} />
                     </ListItemIcon>
                     <p 
                         className={classes.sidebarText}
                         // style={{color : cekPathname() ? '#f16821' : "#888888"}}
-                        style={{ color : route === "/settings" ? 'white' : null }}
+                        style={{ color : route === "/toko" ? 'white' : null }}
                     > 
                         Toko
                     </p>
@@ -97,6 +101,52 @@ function Home () {
                         Kandang
                     </p>
                 </ListItem>
+
+                <ListItem 
+                    button 
+                    className={classes.sidebar}
+                    style={
+                        {
+                            backgroundColor : route === "/gudang" ? "#00698C" : null
+                        }
+                    }
+
+                >
+                    <ListItemIcon>
+                        <ShoppingCartIcon style={{color : route === "/gudang" ? "white" : null}} />
+                    </ListItemIcon>
+                    <p 
+                        className={classes.sidebarText}
+                        // style={{color : cekPathname() ? '#f16821' : "#888888"}}
+                        style={{ color : route === "/gudang" ? 'white' : null }}
+                    > 
+                        Gudang
+                    </p>
+                </ListItem>
+
+                <ListItem 
+                    button 
+                    className={classes.sidebar}
+                    style={
+                        {
+                            backgroundColor : route === "/doc" ? "#00698C" : null
+                        }
+                    }
+
+                >
+                    <ListItemIcon>
+                        <ShoppingCartIcon style={{color : route === "/doc" ? "white" : null}} />
+                    </ListItemIcon>
+                    <p 
+                        className={classes.sidebarText}
+                        // style={{color : cekPathname() ? '#f16821' : "#888888"}}
+                        style={{ color : route === "/doc" ? 'white' : null }}
+                    > 
+                        DOC
+                    </p>
+                </ListItem>
+
+                
 
 
             </List>
@@ -147,6 +197,7 @@ function Home () {
             <main className={classes.content}>
                 <div className={classes.toolbar}/>
                 <Switch>
+                    <Route path="/toko" component={HomeToko} />
                     <Route path="/owner" component={OwnerKandang}/>
                     <Route path="/kandang" component={Kandang}/>
                     <Route path="/unit-kandang/:id" component={UnitKandang}/>

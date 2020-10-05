@@ -1,6 +1,7 @@
 // MODULE
 import React , { useEffect , useState } from 'react'
 import axios from 'axios'
+import io from 'socket.io-client'
 
 // TOAST
 import { ToastContainer, toast } from 'react-toastify';
@@ -62,6 +63,10 @@ function Kandang (props) {
 
     useEffect(()=>{
         getDataDaysReport()
+        const socket = io(`${SERVER}`)
+        socket.on('input-days-record-kandang', data => {
+            getDataDaysReport()
+        })
     },[])
 
     let saveDaysReport = (e) => {
