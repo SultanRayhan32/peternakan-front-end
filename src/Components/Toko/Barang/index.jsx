@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import io from 'socket.io-client'
 
@@ -8,7 +8,13 @@ import SERVER from '../../../helper/server'
 // STYLE
 import '../style.css'
 
+// COMPONENT
+import Table from './Table'
+
 export default function Barang() {
+
+    const [ dataBarang, setDataBarang ] = useState(null)
+    const [ listSupplier, setListSupplier ] = useState(null)
     const [ showAddBarang, setShowAddBarang ] = useState(false)
     const [ namaBarang, setNamaBarang ] = useState(null)
     const [ hargaBarang, setHargaBarang ] = useState(null)
@@ -52,6 +58,50 @@ export default function Barang() {
         }
     }
 
+    const getDataBarang = () => {
+        axios({
+            method: "GET",
+            url: `${SERVER}barang/get-data-barang`,
+            headers: {
+                token: localStorage.getItem('token')
+            },
+        })
+        .then((res) => {
+            setDataBarang(res.data)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    }
+
+    const getListSupplier = () => {
+        axios({
+            method: "GET",
+            url: `${SERVER}barang/get-list-supplier`,
+            headers: {
+                token: localStorage.getItem('token')
+            }
+        })
+        .then((res) => {
+            setListSupplier(res.data)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    }
+
+    useEffect(() => {
+        getDataBarang()
+        getListSupplier()
+        const socket = io(`${SERVER}`)
+        socket.on('add-barang-toko', data => {
+            getDataBarang()
+        })
+        socket.on('edit-barang-toko', data => {
+            getDataBarang()
+        })
+    }, [])
+
     return (
         <div>
 
@@ -78,6 +128,11 @@ export default function Barang() {
                         <input className="toko-input-new-barang" onChange={(e) => setSatuanBarang(e.target.value)} type="text" placeholder="Satuan Barang"/> <br />
                         <select className="toko-input-new-barang" onChange={(e) => setIdSupplier(e.target.value)} style={{ marginTop: "15px"}}>
                             <option disabled selected>Pilih Supplier</option>
+                            {listSupplier.map((val) => {
+                                return (
+                                    <option value={val.id_supplier}>{val.nama_supplier}</option>
+                                )
+                            })}
                             <option value={1}>Joko Anwar</option>
                             <option value={2}>Ferdi Budiman</option>
                         </select>
@@ -92,6 +147,13 @@ export default function Barang() {
                 :
                 null
             }      
+
+            {
+                dataBarang &&
+                <Table 
+                    dataBarang={dataBarang}
+                />
+            }
 
         </div>
     )

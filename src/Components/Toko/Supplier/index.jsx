@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import io from 'socket.io-client'
 
 // API
 import SERVER from '../../../helper/server'
+
+// COMPONENT
+import Table from './Table'
 
 // STYLE
 import '../style.css'
@@ -14,6 +17,7 @@ export default function Supplier() {
     const [ alamatSupplier, setAlamatSupplier ] = useState(null)
     const [ nomorSupplier, setNomorSupplier ] = useState(null)
  
+    const [ dataSupplier, setDataSupplier ] = useState(null)
 
     const addNewSupplier = () => {
         if(!namaSupplier) {
@@ -44,6 +48,34 @@ export default function Supplier() {
             })
         }
     }
+
+    const getDataSupplier = () => {
+        axios({
+            method: "GET",
+            url: `${SERVER}supplier/get-data-supplier`,
+            headers: {
+                token: localStorage.getItem('token')
+            }
+        })
+        .then((res) => {
+            // console
+            setDataSupplier(res.data)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    }
+
+    useEffect(() => {
+        getDataSupplier()
+        const socket = io(`${SERVER}`)
+        socket.on('add-supplier-toko', data => {
+            getDataSupplier()
+        })
+        socket.on('edit-supplier-toko', data => {
+            getDataSupplier()
+        })
+    }, [])
 
     return (
         <div>
@@ -80,6 +112,14 @@ export default function Supplier() {
                 :
                 null
             }      
+
+            {
+                dataSupplier &&
+                <Table 
+                    dataSupplier={dataSupplier}
+                />
+            }
+
 
         </div>
     )

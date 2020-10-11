@@ -36,3 +36,36 @@
     padding-left: 10px;
     outline: none;
 }
+
+.edit-btn-toko {
+    background-color: #20A8D8;
+    outline: none;
+    border: none;
+    padding: 5px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.delete-btn-toko {
+    background-color: #F86C6B;
+    outline: none;
+    border: none;
+    padding: 5px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.edit-btn-toko:hover {
+    cursor: pointer;
+}
+
+.delete-btn-toko:hover {
+    cursor: pointer;
+}
+
+.input-edit-toko {
+    height: 30px;
+    width: 80px;
+    padding: 10px;
+    font-weight: bold;
+}

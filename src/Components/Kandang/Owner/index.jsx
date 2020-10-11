@@ -19,6 +19,7 @@ export default function Owner() {
     const [ pakan, setPakan ] = useState(null)
     const [ fcr, setFcr ] = useState(null)
     const [ presentase, setPresentase ] = useState(null)
+    const [ jumlah, setJumlah ] = useState(null)
     const [ berat, setBerat ] = useState(null)
     const [ tray, setTray ] = useState(null)
     const [ tara, setTara ] = useState(null)
@@ -141,13 +142,14 @@ export default function Owner() {
             setCountLoc(res.data.countLocation)
             setCountUnit(res.data.countUnit)
             var data = res.data.data[0]
-
+            console.log(data)
             setOwnerName(data.ownername)
             setDataOwner(data)
             setAyam(data.ayam)
             setPakan(data.pakan)
             setFcr(data.fcr)
             setPresentase(data.presentase)
+            setJumlah(data.jumlah_butir)
             setBerat(data.kg)
             setTray(data.tray)
             setTara(data.tara)
@@ -202,11 +204,11 @@ export default function Owner() {
                 <div className="dbc-02-f">
 
                     <div className="dbc-02-f-1">
-                        {ayam}
+                        {ayam} ekor
                     </div>
 
                     <div className="dbc-02-f-2">
-                        Total Ayam
+                        Ayam
                     </div>
 
                 </div>
@@ -236,11 +238,11 @@ export default function Owner() {
                 <div className="dbc-02-f">
 
                     <div className="dbc-02-f-1">
-                        {pakan}
+                        {pakan} kg
                     </div>
 
                     <div className="dbc-02-f-2">
-                        Total Pakan
+                        Pakan
                     </div>
 
                 </div>
@@ -362,6 +364,7 @@ export default function Owner() {
 
                         <div className="dbc-02-s-2" >
                             <div className="dbc-total-data">
+                                <span>Jumlah Telur: {jumlah} butir</span>
                                 <span>Berat Total : {berat}kg</span>
                                 <span>Jumlah Tray : {tray}</span> 
                                 <span>Tara : {tara}</span>
