@@ -51,20 +51,13 @@ export default function NewSale(props) {
     }
 
     const addToCart = (id, name, price) => {
-        var data = {}
-        var dataCar = dataCart
-        if(!dataCart) {
-            const dataNew = {
-                id,
-                name,
-                price
-            }
-        } else {
-
+        var data = {
+            id,
+            name,
+            price
         }
-        return setDataCart(dataCart.push(data))
-        console.log(data, "DATA")
-        console.log(dataCart, "CART")
+        console.log(dataCart)
+        return dataCart.push(data)
     }
 
     useEffect(() => {   
@@ -135,7 +128,14 @@ export default function NewSale(props) {
 
                 {/* CART */}
                 <div>
-                    CART
+                    
+                    {dataCart && dataCart.map((val) => {
+                        return (
+                            <div>
+                                <p>{val.name}cok</p>
+                            </div>
+                        )
+                    })}
                 </div>
                 {/* CART */}
 
