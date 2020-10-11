@@ -90,6 +90,25 @@ export default function Barang() {
         })
     }
 
+    const searchDataBarang = (key) => {
+        axios({
+            method: "POST",
+            url: `${SERVER}barang/search-data-barang`,
+            headers: {
+                token: localStorage.getItem('token')
+            },
+            data: {
+                keyword: key
+            }
+        })
+        .then((res) => {
+            setDataBarang(res.data)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    }
+
     useEffect(() => {
         getDataBarang()
         getListSupplier()
@@ -114,6 +133,9 @@ export default function Barang() {
                     Add +
                 </button> 
             </h2>
+
+            {/* FORM SEARCH BARANG */}
+            <input type="text" placeholder="Search ..." className="input-cari-barang-toko" onKeyUp={(e) => searchDataBarang(e.target.value)}/>
 
             {/* FORM ADD BARANG */}
             {

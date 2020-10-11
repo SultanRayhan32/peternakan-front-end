@@ -178,11 +178,11 @@ function CollapsibleTable(props) {
                     ?
                     <>
                     <TableCell>
-                        <input type="text" placeholder={e.harga_barang} onChange={(e) => editHarga(e.target.value)} className="input-edit-toko"/> /  
+                        <input type="number" placeholder={e.harga_barang} onChange={(e) => editHarga(e.target.value)} className="input-edit-toko"/> /  
                         <input type="text" placeholder={e.satuan_barang} onChange={(e) => satuanEdit2(e.target.value)} className="input-edit-toko"/>
                     </TableCell>
                     <TableCell>
-                        <input type="text" placeholder={e.jumlah_barang} onChange={(e) => editJumlah(e.target.value)} className="input-edit-toko"/> / 
+                        <input type="number" placeholder={e.jumlah_barang} onChange={(e) => editJumlah(e.target.value)} className="input-edit-toko"/> / 
                         {e.satuan_barang}
                     </TableCell>
                     </>

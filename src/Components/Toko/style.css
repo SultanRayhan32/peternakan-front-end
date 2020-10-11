@@ -69,3 +69,53 @@
     padding: 10px;
     font-weight: bold;
 }
+
+.input-cari-barang-toko {
+    height: 30px;
+    padding: 7px;
+    outline: none;
+    font-weight: bold;
+}
+
+.new-sale-box {
+    border: 0.5px solid #c4c4c4;
+    padding: 20px;
+}
+
+.new-sale-big-box {
+    display: flex;
+}
+
+.new-sale-row-box {
+    display: flex;
+    width: 60%;
+}
+
+.new-sale-column-box {
+    margin-top: 20px;
+    width: 24%;
+    border: 1px solid black;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    height: 120px;
+    margin-right: 20px;
+    font-size: small;
+    flex-direction: column;
+}
+
+.sale-qty-btn {
+    height: 18px;
+    width: 24px;
+    margin-top: 10px;
+    text-align: center;
+    font-weight: bold;
+    font-size: small;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+}
+
+.sale-qty-btn:hover {
+    cursor: pointer;
+}

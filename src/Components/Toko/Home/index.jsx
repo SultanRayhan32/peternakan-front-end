@@ -1,5 +1,8 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
+import axios from 'axios'
+import io from 'socket.io-client'
+import SERVER from '../../../helper/server'
 
 // STYLE
 import '../style.css'
@@ -9,10 +12,49 @@ import AccessTimeIcon from '@material-ui/icons/AccessTime';
 export default function Home() {
     const history = useHistory()
 
+    const [ cBarang, setCBarang ] = useState(null)
+    const [ cSupplier, setCSupplier ] = useState(null)
+    const [ owner, setOwner ] = useState(null)
+
+    const countInToko = () => {
+        axios({
+            method: "GET",
+            url: `${SERVER}barang/count-in-toko`,
+            headers: {
+                token: localStorage.getItem('token')
+            }
+        })
+        .then((res) => {
+            setCBarang(res.data.barang)
+            setCSupplier(res.data.supplier)
+            setOwner(res.data.owner)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    }
+
+    useEffect(() => {
+        countInToko()
+        const socket = io(`${SERVER}`)
+        socket.on('add-supplier-toko', data => {
+            countInToko()
+        })
+        socket.on('edit-supplier-toko', data => {
+            countInToko()
+        })
+        socket.on('add-barang-toko', data => {
+            countInToko()
+        })
+        socket.on('edit-barang-toko', data => {
+            countInToko()
+        })
+    }, [])
+
     return (
         <div className="owner-container">
 
-        <h1>Welcome,  !</h1>
+        <h1>Welcome, {owner} !</h1>
         <div style={{ display: "flex" }}>
             <h2>Your Store Overview</h2> 
             <button 
@@ -71,7 +113,7 @@ export default function Home() {
             <div className="dbc-02-f">
 
                 <div className="dbc-02-f-1">
-                    3223
+                    {cBarang}
                 </div>
 
                 <div className="dbc-02-f-2">
@@ -105,7 +147,7 @@ export default function Home() {
             <div className="dbc-02-f">
 
                 <div className="dbc-02-f-1">
-                    2432
+                    {cSupplier}
                 </div>
 
                 <div className="dbc-02-f-2">
@@ -144,7 +186,8 @@ export default function Home() {
                 </div>
 
                 <div className="dbc-02-f-2">
-                    Presentase
+                    Penjualan
+                    <button className="btn-show-dashboard-01" onClick={() => history.push('/sales')}>Show</button>
                 </div>
 
             </div>

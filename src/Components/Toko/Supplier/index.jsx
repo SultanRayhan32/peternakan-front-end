@@ -66,6 +66,25 @@ export default function Supplier() {
         })
     }
 
+    const searchDataSupplier = (key) => {
+        axios({
+            method: "POST",
+            url: `${SERVER}supplier/search-data-supplier`,
+            headers: {
+                token: localStorage.getItem('token')
+            },
+            data: {
+                keyword: key
+            }
+        })
+        .then((res) => {
+            setDataSupplier(res.data)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    }
+
     useEffect(() => {
         getDataSupplier()
         const socket = io(`${SERVER}`)
@@ -89,6 +108,10 @@ export default function Supplier() {
                     Add +
                 </button> 
             </h2>
+
+            {/* FORM SEARCH SUPPLIER */}
+            <input type="text" placeholder="Search ..." className="input-cari-barang-toko" onKeyUp={(e) => searchDataSupplier(e.target.value)}/>
+
 
             {/* FORM ADD BARANG */}
             {
