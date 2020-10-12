@@ -10,6 +10,10 @@ import '../.././style.css'
 
 export default function NewSale(props) {
 
+    const {
+        setSaleIsOpen
+    } = props
+
     const [ item, setItem ] = useState(null)
     const [ dataCart, setDataCart ] = useState([])
     const [ cartTotal, setCartTotal ] = useState(0)
@@ -95,15 +99,12 @@ export default function NewSale(props) {
         // getDataBarang()
     }, [])
 
-    const {
-        setSaleIsOpen
-    } = props
     return (
         <div className="new-sale-box">
 
             {/* SEARCH ITEM */}
             <input type="text" placeholder="Search Item ..." className="input-cari-barang-toko" onKeyUp={(e) => searchItem(e.target.value)}/>
-
+        
             {/* NEW SALE BIG BOX */}
             <div className="new-sale-big-box">
 
@@ -141,7 +142,11 @@ export default function NewSale(props) {
                         Total : Rp, {cartTotal} ,-
                     </h2>
 
-                    <button className="btn-check-out">Check Out</button>
+                    <div style={{ display: "flex" }}>
+                        <button className="btn-check-out">Check Out</button>
+                        <button onClick={() => setSaleIsOpen(false)} className="btn-close-sale" style={{ marginLeft: "10px" }}>Close</button>
+                    </div>
+
                     
                     {renderCart()}
                    
@@ -151,7 +156,6 @@ export default function NewSale(props) {
             </div>
             {/* NEW SALE BIG BOX */}
 
-            <button onClick={() => setSaleIsOpen(false)} className="delete-btn-toko">Close Sale</button>
         </div>
     )
 }
