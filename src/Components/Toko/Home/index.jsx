@@ -12,9 +12,11 @@ import AccessTimeIcon from '@material-ui/icons/AccessTime';
 export default function Home() {
     const history = useHistory()
 
-    const [ cBarang, setCBarang ] = useState(null)
-    const [ cSupplier, setCSupplier ] = useState(null)
-    const [ owner, setOwner ] = useState(null)
+    const [ cBarang, setCBarang ] = useState(0)
+    const [ cSupplier, setCSupplier ] = useState(0)
+    const [ owner, setOwner ] = useState('')
+    const [ cSales, setCSales ] = useState(0)
+    const [ income, setIncome ] = useState(0)
 
     const countInToko = () => {
         axios({
@@ -28,6 +30,8 @@ export default function Home() {
             setCBarang(res.data.barang)
             setCSupplier(res.data.supplier)
             setOwner(res.data.owner)
+            setCSales(res.data.sales)
+            setIncome(res.data.income)
         })
         .catch((err) => {
             console.log(err)
@@ -47,6 +51,9 @@ export default function Home() {
             countInToko()
         })
         socket.on('edit-barang-toko', data => {
+            countInToko()
+        })
+        socket.on('check-out', data => {
             countInToko()
         })
     }, [])
@@ -79,7 +86,7 @@ export default function Home() {
             <div className="dbc-02-f">
 
                 <div className="dbc-02-f-1">
-                    2323
+                    {income}
                 </div>
 
                 <div className="dbc-02-f-2">
@@ -117,7 +124,7 @@ export default function Home() {
                 </div>
 
                 <div className="dbc-02-f-2">
-                    Barang
+                    Item
                 <button className="btn-show-dashboard-01" onClick={() => history.push('/stock-barang')}>Show</button>
                 </div>
             </div>
@@ -182,11 +189,11 @@ export default function Home() {
             <div className="dbc-02-f">
 
                 <div className="dbc-02-f-1">
-                  32232
+                  {cSales}
                 </div>
 
                 <div className="dbc-02-f-2">
-                    Penjualan
+                    Sales
                     <button className="btn-show-dashboard-01" onClick={() => history.push('/sales')}>Show</button>
                 </div>
 

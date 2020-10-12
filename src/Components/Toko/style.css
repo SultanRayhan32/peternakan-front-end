@@ -96,6 +96,8 @@
 .new-sale-row-box {
     display: flex;
     width: 70%;
+    flex-wrap: wrap;
+    position: static;
 }
 
 .new-sale-row-box02 {
@@ -104,7 +106,7 @@
 
 .new-sale-column-box {
     margin-top: 20px;
-    width: 24%;
+    width: 22%;
     border: 1px solid #c4c4c4;
     border-radius: 4px;
     align-items: center;

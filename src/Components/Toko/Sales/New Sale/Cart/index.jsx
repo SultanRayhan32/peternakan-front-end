@@ -5,11 +5,17 @@ import '../../.././style.css'
 
 export default function Cart(props) {
     const {
-        id, name, price, jumlah, total, setTotal, idx, deleteItem
-    }= props
+        id, name, price, jumlah, total, setTotal, idx, deleteItem, arrQty, setArrQty
+    } = props
 
     const [ qty, setQty ] = useState(1)
     const [ harga, setHarga ] = useState(price)
+    const [ arrJumlah, setArrJumlah ] = useState(arrQty)
+
+    // const editArrQty = () => {
+    //     setArrQty
+    //     return arrJumlah[idx] + num
+    // }
 
     const plus = (num) => {
         if(qty === jumlah) {
@@ -20,6 +26,7 @@ export default function Cart(props) {
             setHarga((harga + price) * num)
             setTotal(total + price)
         }
+        console.log(arrJumlah)
     }
 
     const min = () => {
@@ -31,6 +38,10 @@ export default function Cart(props) {
             setHarga(harga - price)
             setTotal(total - price)
         }
+    }
+
+    const deleteItemInCart = (idx, harga) => {
+        deleteItem(idx, harga)
     }
 
 
@@ -55,7 +66,7 @@ export default function Cart(props) {
                         <button 
                             className="sale-qty-btn" 
                             style={{ backgroundColor: "#F86C6B", marginLeft: "5px" }}
-                            onClick={() => deleteItem(idx)}
+                            onClick={() => deleteItemInCart(idx, harga)}
                         >
                             -
                         </button>
@@ -72,7 +83,6 @@ export default function Cart(props) {
                 </div>
             </span>
             <span>Rp. {harga} ,-</span>
-            {idx}
         </div>
     )
 }

@@ -17,6 +17,8 @@ export default function NewSale(props) {
     const [ item, setItem ] = useState(null)
     const [ dataCart, setDataCart ] = useState([])
     const [ cartTotal, setCartTotal ] = useState(0)
+    const [ arrItem, setArrItem ] = useState([])
+    const [ arrQty, setArrQty ] = useState([])
 
     const getDataBarang = () => {
         axios({
@@ -58,39 +60,38 @@ export default function NewSale(props) {
         }
     }
 
-    const addToCart = (id, name, price, jumlah) => {
+    const addToCart = (id, name, price, jumlah, idSup) => {
         var data = {
             id,
             name,
             price,
-            jumlah
+            jumlah,
+            idSup
         }
         var arr = dataCart
         
         function checkId(val) {
             return Number(val.id) === Number(id);
         }
-        
+        console.log(arrQty)
         var arr2 = arr.filter(checkId);
         if(arr2.length < 1) {
             setCartTotal(cartTotal + price)
-            return dataCart.push(data)
+            arrQty.push(1)
+            console.log(arrQty)
+            dataCart.push(data)
         } else {
             return null
         }
     }
 
-    const deleteItemCart = (idx) => {
-        const array = dataCart;
-
-        console.log(array);
-
-        const index = array.indexOf(idx);
-        if (index > -1) {
-        array.splice(index, 1);
+    const deleteItemCart = (idx, harga) => {
+        if(window.confirm("Yakin?")) {
+            const array = dataCart;
+            array.splice(idx, 1)
+            setCartTotal(cartTotal - harga)
         }
-        // array = [2, 9]
-        console.log(array);
+
     }
 
     const renderCart = () => {
@@ -105,8 +106,40 @@ export default function NewSale(props) {
                     setTotal={setCartTotal}
                     idx={idx}
                     deleteItem={deleteItemCart}
+                    arrQty={arrQty}
+                    setArrQty={setArrQty}
                 />
             )
+        })
+    }
+
+    const checkOut = () => {
+        console.log(arrQty)
+        var arrIdItem = []
+        var arrIdSup = []
+        dataCart.forEach((val) => {
+            arrIdItem.push(Number(val.id))
+            arrIdSup.push(Number(val.idSup))
+        })
+        axios({
+            method: "POST",
+            url: `${SERVER}barang/check-out`,
+            headers: {
+                token: localStorage.getItem('token')
+            },
+            data: {
+                id_customer: 1,
+                id_item: arrIdItem,
+                value: cartTotal,
+                jumlah_item: dataCart.length,
+                id_supplier: arrIdSup
+            }
+        })
+        .then(() => {
+            alert("sukses")
+        })
+        .catch((err) => {
+            console.log(err)
         })
     }
 
@@ -138,7 +171,7 @@ export default function NewSale(props) {
                                     <button 
                                         className="sale-qty-btn" 
                                         style={{ backgroundColor: "#20A8D8", width: "70px" }}
-                                        onClick={() => addToCart(val.id_barang, val.nama_barang, val.harga_barang, val.jumlah_barang)}
+                                        onClick={() => addToCart(val.id_barang, val.nama_barang, val.harga_barang, val.jumlah_barang, val.id_supplier)}
                                     >
                                         Tambah
                                     </button>
@@ -158,7 +191,7 @@ export default function NewSale(props) {
                     </h2>
 
                     <div style={{ display: "flex" }}>
-                        <button className="btn-check-out">Check Out</button>
+                        <button className="btn-check-out" onClick={checkOut}>Check Out</button>
                         <button onClick={() => setSaleIsOpen(false)} className="btn-close-sale" style={{ marginLeft: "10px" }}>Close</button>
                     </div>
 
