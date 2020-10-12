@@ -80,8 +80,21 @@ export default function NewSale(props) {
         }
     }
 
+    const deleteItemCart = (idx) => {
+        const array = dataCart;
+
+        console.log(array);
+
+        const index = array.indexOf(idx);
+        if (index > -1) {
+        array.splice(index, 1);
+        }
+        // array = [2, 9]
+        console.log(array);
+    }
+
     const renderCart = () => {
-        return dataCart && dataCart.map((val) => {
+        return dataCart && dataCart.map((val, idx) => {
             return (
                 <Cart
                     id={val.id} 
@@ -90,6 +103,8 @@ export default function NewSale(props) {
                     jumlah={val.jumlah}
                     total={cartTotal}
                     setTotal={setCartTotal}
+                    idx={idx}
+                    deleteItem={deleteItemCart}
                 />
             )
         })

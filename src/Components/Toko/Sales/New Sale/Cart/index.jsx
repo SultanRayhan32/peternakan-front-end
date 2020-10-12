@@ -5,7 +5,7 @@ import '../../.././style.css'
 
 export default function Cart(props) {
     const {
-        id, name, price, jumlah, total, setTotal
+        id, name, price, jumlah, total, setTotal, idx, deleteItem
     }= props
 
     const [ qty, setQty ] = useState(1)
@@ -49,17 +49,30 @@ export default function Cart(props) {
                             +
                     </button>
                     <span>{qty}</span>
-                    <button 
-                        className="sale-qty-btn" 
-                        style={{ backgroundColor: "#F86C6B", marginLeft: "5px" }}
-                        onClick={min}
-                    >
-                        -
-                    </button>
+                    {
+                        qty === 1
+                        ?
+                        <button 
+                            className="sale-qty-btn" 
+                            style={{ backgroundColor: "#F86C6B", marginLeft: "5px" }}
+                            onClick={() => deleteItem(idx)}
+                        >
+                            -
+                        </button>
+                        :
+                        <button 
+                            className="sale-qty-btn" 
+                            style={{ backgroundColor: "#F86C6B", marginLeft: "5px" }}
+                            onClick={min}
+                        >
+                            -
+                        </button>
+
+                    }
                 </div>
             </span>
             <span>Rp. {harga} ,-</span>
-
+            {idx}
         </div>
     )
 }
