@@ -88,7 +88,11 @@
 
 .new-sale-row-box {
     display: flex;
-    width: 60%;
+    width: 70%;
+}
+
+.new-sale-row-box02 {
+    width: 30%;
 }
 
 .new-sale-column-box {
@@ -118,4 +122,38 @@
 
 .sale-qty-btn:hover {
     cursor: pointer;
+}
+
+.cart-item-box {
+    border: 1px solid #c4c4c4;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.cart-item-name {
+    font-size: large;
+}
+
+.cart-item-name input {
+    font-size: small;
+    width: 50px;
+    text-align: center;
+}
+
+.btn-check-out {
+    width: 100%;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    height: 40px;
+    background-color: #20A8D8;
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 15px;
+    transition: 0.5s;
+}
+
+.btn-check-out:hover {
+    cursor: pointer;
+    color: #5e5e5e;
 }

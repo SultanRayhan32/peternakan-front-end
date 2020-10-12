@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import SERVER from '../../../../helper/server'
 
+// COMPONENT
+import Cart from './Cart'
+
 // STYLE 
 import '../.././style.css'
 
@@ -9,6 +12,7 @@ export default function NewSale(props) {
 
     const [ item, setItem ] = useState(null)
     const [ dataCart, setDataCart ] = useState([])
+    const [ cartTotal, setCartTotal ] = useState(0)
 
     const getDataBarang = () => {
         axios({
@@ -50,14 +54,41 @@ export default function NewSale(props) {
         }
     }
 
-    const addToCart = (id, name, price) => {
+    const addToCart = (id, name, price, jumlah) => {
         var data = {
             id,
             name,
-            price
+            price,
+            jumlah
         }
-        console.log(dataCart)
-        return dataCart.push(data)
+        var arr = dataCart
+        
+        function checkId(val) {
+            return Number(val.id) === Number(id);
+        }
+        
+        var arr2 = arr.filter(checkId);
+        if(arr2.length < 1) {
+            setCartTotal(cartTotal + price)
+            return dataCart.push(data)
+        } else {
+            return null
+        }
+    }
+
+    const renderCart = () => {
+        return dataCart && dataCart.map((val) => {
+            return (
+                <Cart
+                    id={val.id} 
+                    name={val.name}
+                    price={val.price}
+                    jumlah={val.jumlah}
+                    total={cartTotal}
+                    setTotal={setCartTotal}
+                />
+            )
+        })
     }
 
     useEffect(() => {   
@@ -82,14 +113,7 @@ export default function NewSale(props) {
                     { item &&
                         item.map((val) => {
                             var qty = 0
-                            const plus = (val) => {
-                                console.log(qty, "QTY")
-                                console.log(val, "VAL")
-                                return qty = qty + val
-                            }
-                            const min = (val) => {
-                                return qty - val
-                            }
+                           
                             return (
                                 <div className="new-sale-column-box">
                                     <p>{val.nama_barang}</p>
@@ -98,26 +122,10 @@ export default function NewSale(props) {
                                     <button 
                                         className="sale-qty-btn" 
                                         style={{ backgroundColor: "#20A8D8", width: "70px" }}
-                                        onClick={() => addToCart(val.id_barang, val.nama_barang, val.harga_barang)}
+                                        onClick={() => addToCart(val.id_barang, val.nama_barang, val.harga_barang, val.jumlah_barang)}
                                     >
                                         Tambah
                                     </button>
-                                    {/* <div>
-                                        <button 
-                                            className="sale-qty-btn" 
-                                            style={{ backgroundColor: "#20A8D8", marginRight: "5px" }}
-                                            onClick={() => plus(1)}
-                                        >
-                                                +
-                                        </button>
-                                        {qty}
-                                        <button 
-                                            className="sale-qty-btn" 
-                                            style={{ backgroundColor: "#F86C6B", marginLeft: "5px" }}
-                                        >
-                                            -
-                                        </button>
-                                    </div> */}
                                 </div>
                             ) 
                         })
@@ -127,15 +135,16 @@ export default function NewSale(props) {
                 {/* HASIL SEARCH ITEM BOX */}
 
                 {/* CART */}
-                <div>
+                <div className="new-sale-row-box02">
                     
-                    {dataCart && dataCart.map((val) => {
-                        return (
-                            <div>
-                                <p>{val.name}cok</p>
-                            </div>
-                        )
-                    })}
+                    <h2>
+                        Total : Rp, {cartTotal} ,-
+                    </h2>
+
+                    <button className="btn-check-out">Check Out</button>
+                    
+                    {renderCart()}
+                   
                 </div>
                 {/* CART */}
 
