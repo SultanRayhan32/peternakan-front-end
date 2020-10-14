@@ -16,6 +16,7 @@ export default function Home() {
     const [ cSupplier, setCSupplier ] = useState(0)
     const [ owner, setOwner ] = useState('')
     const [ cSales, setCSales ] = useState(0)
+    const [ cCustomer, setCCustomer ] = useState(0)
     const [ income, setIncome ] = useState(0)
 
     const countInToko = () => {
@@ -31,6 +32,7 @@ export default function Home() {
             setCSupplier(res.data.supplier)
             setOwner(res.data.owner)
             setCSales(res.data.sales)
+            setCCustomer(res.data.customer)
             setIncome(res.data.income)
         })
         .catch((err) => {
@@ -218,7 +220,116 @@ export default function Home() {
 
         </div>
 
-      
+        
+        <div className="dashboard-content-02">
+
+            <div 
+            className="dashboard-box-content-02"
+            style={{backgroundColor : "#20A8D8"}}
+        >
+
+            <div className="dbc-02-f">
+
+                <div className="dbc-02-f-1">
+                    {cCustomer}
+                </div>
+
+                <div className="dbc-02-f-2">
+                    Customer
+                    <button className="btn-show-dashboard-01" onClick={() => history.push('/customer')}>Show</button>
+                </div>
+
+            </div>
+
+            <div className="dbc-02-s">
+
+                <div className="dbc-02-s-1-c">
+                    <AccessTimeIcon style={{ color : "white" , width : 17 , height : 17 }}/>
+                    <div className="dbc-02-s-1">
+                        update : 11 Aug 2020
+                    </div>
+                </div>
+
+                <div className="dbc-02-s-2">
+                    04:44:59
+                </div>
+
+            </div>
+
+        </div>
+{/* 
+        <div 
+            className="dashboard-box-content-02"
+            style={{backgroundColor : "#63C2DE"}}
+            >
+
+            <div className="dbc-02-f">
+
+                <div className="dbc-02-f-1">
+                    {cBarang}
+                </div>
+
+                <div className="dbc-02-f-2">
+                    Item
+                <button className="btn-show-dashboard-01" onClick={() => history.push('/stock-barang')}>Show</button>
+                </div>
+            </div>
+
+            <div className="dbc-02-s">
+
+                <div className="dbc-02-s-1-c">
+                    <AccessTimeIcon style={{ color : "white" , width : 17 , height : 17 }}/>
+                    <div className="dbc-02-s-1">
+                        update : 11 Aug 2020
+                    </div>
+                </div>
+
+                <div className="dbc-02-s-2">
+                    04:44:59
+                </div>
+
+            </div>
+
+            </div> */}
+
+            {/* <div 
+            className="dashboard-box-content-02"
+            style={{backgroundColor : "#FEC106"}}
+            >
+
+            <div className="dbc-02-f">
+
+                <div className="dbc-02-f-1">
+                    {cSupplier}
+                </div>
+
+                <div className="dbc-02-f-2">
+                    Supplier
+                    <button className="btn-show-dashboard-01" onClick={() => history.push('/supplier')}>Show</button>
+                </div>
+
+            </div>
+
+            <div className="dbc-02-s">
+
+                <div className="dbc-02-s-1-c">
+                    <AccessTimeIcon style={{ color : "white" , width : 17 , height : 17 }}/>
+                    <div className="dbc-02-s-1">
+                        update : 11 Aug 2020
+                    </div>
+                </div>
+
+                <div className="dbc-02-s-2">
+                    04:44:59
+                </div>
+
+            </div>
+
+            </div> */}
+ 
+
+        </div>
+
 
         
     </div>

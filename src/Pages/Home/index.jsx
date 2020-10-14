@@ -13,6 +13,7 @@ import HomeToko from '../../Components/Toko/Home'
 import StockBarang from '../../Components/Toko/Barang'
 import Supplier from '../../Components/Toko/Supplier'
 import Sales from '../../Components/Toko/Sales'
+import Customer from '../../Components/Toko/Customer'
 
 // MATERIAL UI
 import AppBar from "@material-ui/core/AppBar";
@@ -204,6 +205,7 @@ function Home () {
                     <Route path="/stock-barang" component={StockBarang} />
                     <Route path="/supplier" component={Supplier}/>
                     <Route path="/sales" component={Sales}/>
+                    <Route path="/customer" component={Customer}/>
 
                     <Route path="/owner" component={OwnerKandang}/>
                     <Route path="/kandang" component={Kandang}/>

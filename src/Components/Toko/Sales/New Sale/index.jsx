@@ -140,6 +140,7 @@ export default function NewSale(props) {
             setCartTotal(0)
             setArrQty(0)
             setItem(null)
+            setSaleIsOpen(false)
             alert("sukses")
         })
         .catch((err) => {

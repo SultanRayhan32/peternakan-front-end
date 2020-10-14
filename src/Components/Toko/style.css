@@ -109,10 +109,12 @@
     margin-top: 20px;
     width: 22%;
     border: 1px solid #c4c4c4;
-    border-radius: 4px;
+    border-radius: 10px;
     align-items: center;
     justify-content: center;
+    background-color: #303030;
     display: flex;
+    color: white;
     height: 120px;
     margin-right: 20px;
     font-size: small;

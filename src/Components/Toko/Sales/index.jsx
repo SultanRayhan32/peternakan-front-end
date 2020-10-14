@@ -67,6 +67,9 @@ export default function Sales() {
                 null
             }
 
+             {/* SEARCH ITEM */}
+             <input type="text" placeholder="Cari Transaksi ..." className="input-cari-barang-toko"  style={{ marginTop: "18px" }}/>
+
             <Table 
                 dataSale={dataSale}
             />
