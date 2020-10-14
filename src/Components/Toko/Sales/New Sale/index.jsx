@@ -17,7 +17,6 @@ export default function NewSale(props) {
     const [ item, setItem ] = useState(null)
     const [ dataCart, setDataCart ] = useState([])
     const [ cartTotal, setCartTotal ] = useState(0)
-    const [ arrItem, setArrItem ] = useState([])
     const [ arrQty, setArrQty ] = useState([])
 
     const getDataBarang = () => {
@@ -73,12 +72,13 @@ export default function NewSale(props) {
         function checkId(val) {
             return Number(val.id) === Number(id);
         }
-        console.log(arrQty)
         var arr2 = arr.filter(checkId);
-        if(arr2.length < 1) {
+        console.log(arrQty)
+        if(jumlah < 1) {
+            return null
+        } else if(arr2.length < 1) {
             setCartTotal(cartTotal + price)
-            arrQty.push(1)
-            console.log(arrQty)
+            arrQty.push(1)  
             dataCart.push(data)
         } else {
             return null
@@ -114,7 +114,6 @@ export default function NewSale(props) {
     }
 
     const checkOut = () => {
-        console.log(arrQty)
         var arrIdItem = []
         var arrIdSup = []
         dataCart.forEach((val) => {
@@ -132,10 +131,15 @@ export default function NewSale(props) {
                 id_item: arrIdItem,
                 value: cartTotal,
                 jumlah_item: dataCart.length,
-                id_supplier: arrIdSup
+                id_supplier: arrIdSup,
+                qty_item: arrQty
             }
         })
         .then(() => {
+            setDataCart([])
+            setCartTotal(0)
+            setArrQty(0)
+            setItem(null)
             alert("sukses")
         })
         .catch((err) => {
@@ -190,13 +194,14 @@ export default function NewSale(props) {
                         Total : Rp, {cartTotal} ,-
                     </h2>
 
-                    <div style={{ display: "flex" }}>
+                    <div className="check-out-box">
                         <button className="btn-check-out" onClick={checkOut}>Check Out</button>
                         <button onClick={() => setSaleIsOpen(false)} className="btn-close-sale" style={{ marginLeft: "10px" }}>Close</button>
                     </div>
 
-                    
-                    {renderCart()}
+                    <div className="cart-box">
+                        {renderCart()}
+                    </div>
                    
                 </div>
                 {/* CART */}

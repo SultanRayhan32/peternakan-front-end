@@ -18,15 +18,19 @@ export default function Cart(props) {
     // }
 
     const plus = (num) => {
+        console.log(qty)
         if(qty === jumlah) {
             setQty(qty)
             setHarga(harga)
+            arrJumlah[idx] = qty
         } else {
             setQty(qty + num)
             setHarga((harga + price) * num)
             setTotal(total + price)
+            arrJumlah[idx] = qty + num
         }
         console.log(arrJumlah)
+        setArrQty(arrJumlah)
     }
 
     const min = () => {

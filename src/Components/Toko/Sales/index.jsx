@@ -1,14 +1,43 @@
 import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import SERVER from '../../.././helper/server'
+import io from 'socket.io-client'
 
 // COMPONENTS
 import NewSale from './New Sale'
+import Table from './Table'
 
 // STYLE 
 import '.././style.css'
 
 export default function Sales() {
-
     const [ saleIsOpen, setSaleIsOpen ] = useState(false)
+    const [ dataSale, setDataSale ] = useState([])
+
+    const getDataSales = () => {
+        axios({
+            method: "GET",
+            url: `${SERVER}barang/get-data-sales`,
+            headers: {
+                token: localStorage.getItem('token')
+            }
+        })
+        .then((res) => {
+            console.log(res.data)
+            setDataSale(res.data)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    }
+
+    useEffect(() => {
+        getDataSales()
+        const socket = io(`${SERVER}`)
+        socket.on('check-out', data => {
+            getDataSales()
+        })
+    }, [])
 
     return (
         <div>
@@ -37,6 +66,10 @@ export default function Sales() {
                 :
                 null
             }
+
+            <Table 
+                dataSale={dataSale}
+            />
 
         </div>
     )
