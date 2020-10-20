@@ -23,7 +23,6 @@ export default function Sales() {
             }
         })
         .then((res) => {
-            console.log(res.data)
             setDataSale(res.data)
         })
         .catch((err) => {

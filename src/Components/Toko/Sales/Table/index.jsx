@@ -156,7 +156,7 @@ function CollapsibleTable(props) {
                             {e.nama_supplier.length} Orang
                         </div>
                     </TableCell> */}
-                    <TableCell>jonny</TableCell>
+                    <TableCell>{e.customer_name} - {e.customer_address}</TableCell>
                 </TableBody>
             )
         })

@@ -21,6 +21,7 @@ export default function Barang() {
     const [ jumlahBarang, setJumlahBarang ] = useState(null)
     const [ satuanBarang, setSatuanBarang ] = useState(null)
     const [ idSupplier, setIdSupplier ] = useState(null)
+    const [ saldo, setSaldo ] = useState(0)
 
     const addNewBarang = () => {
         if(!satuanBarang) {
@@ -67,7 +68,8 @@ export default function Barang() {
             },
         })
         .then((res) => {
-            setDataBarang(res.data)
+            setSaldo(res.data.income)
+            setDataBarang(res.data.data)
         })
         .catch((err) => {
             console.log(err)

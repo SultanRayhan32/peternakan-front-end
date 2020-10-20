@@ -18,7 +18,6 @@ export default function Cart(props) {
     // }
 
     const plus = (num) => {
-        console.log(qty)
         if(qty === jumlah) {
             setQty(qty)
             setHarga(harga)
@@ -27,25 +26,29 @@ export default function Cart(props) {
             setQty(qty + num)
             setHarga((harga + price) * num)
             setTotal(total + price)
-            arrJumlah[idx] = qty + num
+            arrQty[idx] = qty + num
+            setArrQty(arrQty)
         }
-        console.log(arrJumlah)
+        // console.log(arrJumlah)
         setArrQty(arrJumlah)
     }
 
-    const min = () => {
-        if(qty === 1) {
+    const min = (index) => {
+        if(arrQty[idx] === 1) {
             setQty(1)
-            setHarga(harga)
+            setHarga(price)
+            deleteItemInCart(index, harga)
         } else {
             setQty(qty - 1)
             setHarga(harga - price)
             setTotal(total - price)
+            arrQty[idx] = qty - 1
+            setArrQty(arrQty)
         }
     }
 
-    const deleteItemInCart = (idx, harga) => {
-        deleteItem(idx, harga)
+    const deleteItemInCart = (index, harga) => {
+        deleteItem(index, harga)
     }
 
 
@@ -53,7 +56,7 @@ export default function Cart(props) {
         <div className="cart-item-box">
 
             <span className="cart-item-name"> 
-                {name} X {qty}
+                {name} <span style={{ fontSize: "small" }}>{price}</span>  X {qty}
                 <div>
                     <button 
                         className="sale-qty-btn" 
@@ -86,7 +89,7 @@ export default function Cart(props) {
                     }
                 </div>
             </span>
-            <span>Rp. {harga} ,-</span>
+            <span>Rp. {price} ,-</span>
         </div>
     )
 }

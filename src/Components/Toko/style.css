@@ -95,10 +95,20 @@
 }
 
 .new-sale-row-box {
-    display: flex;
     width: 70%;
+}
+
+.new-sale-row-box-002 {
+    display: flex;
     flex-wrap: wrap;
-    position: static;
+    overflow-y: scroll;
+    height: 500px;
+    width: 97%;
+    margin-top: 20px;
+    border: 1px solid #c4c4c4;
+    border-radius: 2px;
+    padding: 10px;
+
 }
 
 .new-sale-row-box02 {
@@ -106,7 +116,7 @@
 }
 
 .new-sale-column-box {
-    margin-top: 20px;
+    margin-bottom: 15px;
     width: 22%;
     border: 1px solid #c4c4c4;
     border-radius: 10px;
@@ -200,4 +210,23 @@
     border-radius: 4px;
     border: 1px solid;
     margin-bottom: 15px;
+}
+
+.customer-list-box {
+    overflow-y: scroll;
+    height: 200px;
+    background-color: #303030;
+    margin-top: 10px;
+    color: white;
+    border-radius: 10px;
+}
+
+.customer-list-content {
+    padding: 12px;
+    transition: 0.3s;
+}
+
+.customer-list-content:hover {
+    background-color: #6e6e6e;
+    cursor: pointer;
 }

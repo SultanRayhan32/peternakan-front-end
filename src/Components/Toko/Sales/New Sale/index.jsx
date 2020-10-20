@@ -18,6 +18,9 @@ export default function NewSale(props) {
     const [ dataCart, setDataCart ] = useState([])
     const [ cartTotal, setCartTotal ] = useState(0)
     const [ arrQty, setArrQty ] = useState([])
+    const [ dataCustomer, setDataCustomer ] = useState([])
+    const [ customer, setCustomer ] = useState("")
+    const [ customerId, setCustomerId ] = useState(0)
 
     const getDataBarang = () => {
         axios({
@@ -37,7 +40,6 @@ export default function NewSale(props) {
 
     const searchItem = (key) => {
         if(key.length === 0) {
-            // getDataBarang()
             setItem(null)
         } else {
             axios({
@@ -59,6 +61,31 @@ export default function NewSale(props) {
         }
     }
 
+    const searchCustomer = (key) => {
+        setItem(null)
+        if(key.length === 0) {
+            setDataCustomer([])
+        } else {
+
+            axios({
+                method: "POST",
+                url: `${SERVER}customer/searc-customer`,
+                headers: {
+                    token: localStorage.getItem("token")
+                },
+                data: {
+                    keyword: key
+                }
+            })
+            .then((res) => {
+                setDataCustomer(res.data)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+        }
+    }
+
     const addToCart = (id, name, price, jumlah, idSup) => {
         var data = {
             id,
@@ -73,7 +100,7 @@ export default function NewSale(props) {
             return Number(val.id) === Number(id);
         }
         var arr2 = arr.filter(checkId);
-        console.log(arrQty)
+       
         if(jumlah < 1) {
             return null
         } else if(arr2.length < 1) {
@@ -87,8 +114,10 @@ export default function NewSale(props) {
 
     const deleteItemCart = (idx, harga) => {
         if(window.confirm("Yakin?")) {
-            const array = dataCart;
-            array.splice(idx, 1)
+            dataCart.splice(idx, 1)
+            arrQty.splice(idx, 1)
+            setDataCart(dataCart)
+            setArrQty(arrQty)
             setCartTotal(cartTotal - harga)
         }
 
@@ -114,37 +143,60 @@ export default function NewSale(props) {
     }
 
     const checkOut = () => {
-        var arrIdItem = []
-        var arrIdSup = []
-        dataCart.forEach((val) => {
-            arrIdItem.push(Number(val.id))
+        // console.log(cartTotal, "CH")
+        // console.log(dataCart, "CH")
+        // console.log(arrQty, "ARR QTY")
+        if(customerId === 0) {
+            alert("Pilih Customer!")
+        } else {
+            var arrIdItem = []
+            var arrIdSup = []
+            dataCart.forEach((val) => {
+                arrIdItem.push(Number(val.id))
             arrIdSup.push(Number(val.idSup))
-        })
-        axios({
-            method: "POST",
-            url: `${SERVER}barang/check-out`,
-            headers: {
-                token: localStorage.getItem('token')
-            },
-            data: {
-                id_customer: 1,
-                id_item: arrIdItem,
-                value: cartTotal,
-                jumlah_item: dataCart.length,
-                id_supplier: arrIdSup,
-                qty_item: arrQty
-            }
-        })
-        .then(() => {
-            setDataCart([])
-            setCartTotal(0)
-            setArrQty(0)
-            setItem(null)
-            setSaleIsOpen(false)
-            alert("sukses")
-        })
-        .catch((err) => {
-            console.log(err)
+            })
+            axios({
+                method: "POST",
+                url: `${SERVER}barang/check-out`,
+                headers: {
+                    token: localStorage.getItem('token')
+                },
+                data: {
+                    id_customer: customerId,
+                    id_item: arrIdItem,
+                    value: cartTotal,
+                    jumlah_item: dataCart.length,
+                    id_supplier: arrIdSup,
+                    qty_item: arrQty
+                }
+            })
+            .then(() => {
+                setDataCart([])
+                setCartTotal(0)
+                setArrQty(0)
+                setItem(null)
+                setSaleIsOpen(false)
+                alert("sukses")
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+        }
+    }
+
+    const fillCustomer = (name, id) => {
+        setCustomer(name)
+        setCustomerId(id)
+        setDataCustomer([])
+    }
+
+    const renderDataCustomer = () => {
+        return dataCustomer.map((val) => {
+            return (
+                <div className="customer-list-content" onClick={() => fillCustomer(val.customer_name, val.id_customer)}>
+                    {val.customer_name}
+                </div>
+            )
         })
     }
 
@@ -155,8 +207,6 @@ export default function NewSale(props) {
     return (
         <div className="new-sale-box">
 
-            {/* SEARCH ITEM */}
-            <input type="text" placeholder="Search Item ..." className="input-cari-barang-toko" onKeyUp={(e) => searchItem(e.target.value)}/>
         
             {/* NEW SALE BIG BOX */}
             <div className="new-sale-big-box">
@@ -164,26 +214,59 @@ export default function NewSale(props) {
                 {/* HASIL SEARCH ITEM ROW*/}
                 <div className="new-sale-row-box">
 
-                    { item &&
-                        item.map((val) => {
-                            var qty = 0
-                           
-                            return (
-                                <div className="new-sale-column-box">
-                                    <p>{val.nama_barang}</p>
-                                    <span>Price: {val.harga_barang}</span>
+                      {/* ROW */}
+                        <div style={{ display: "flex" }}>
 
-                                    <button 
-                                        className="sale-qty-btn" 
-                                        style={{ backgroundColor: "#20A8D8", width: "70px" }}
-                                        onClick={() => addToCart(val.id_barang, val.nama_barang, val.harga_barang, val.jumlah_barang, val.id_supplier)}
-                                    >
-                                        Tambah
-                                    </button>
-                                </div>
-                            ) 
-                        })
-                    }
+                            {/* COLUMN 1 */}
+                            <div>
+                                {/* SEARCH ITEM */}
+                                <input type="text" placeholder="Search Item ..." className="input-cari-barang-toko" onKeyUp={(e) => searchItem(e.target.value)}/>
+                            </div>
+
+                            {/* COLUMN 2 */}
+                            <div style={{ marginLeft: "20px" }}>
+                            {/* SEARCH CUSTOMER */}
+                                <input type="text" 
+                                    placeholder="Search Customer ..." 
+                                    className="input-cari-barang-toko" 
+                                    onKeyUp={(e) => searchCustomer(e.target.value)}
+                                />
+                                {
+                                    dataCustomer.length === 0
+                                    ?
+                                    null
+                                    :
+                                    <div className="customer-list-box">
+                                        {renderDataCustomer()}
+                                    </div>
+                                }
+                                
+                            </div>
+
+                        </div>
+
+                        <div className="new-sale-row-box-002"> 
+                            { item &&
+                                item.map((val) => {
+                                    var qty = 0
+                                    
+                                    return (
+                                        <div className="new-sale-column-box">
+                                            <p>{val.nama_barang}</p>
+                                            <span>Price: {val.harga_barang}</span>
+
+                                            <button 
+                                                className="sale-qty-btn" 
+                                                style={{ backgroundColor: "#20A8D8", width: "70px" }}
+                                                onClick={() => addToCart(val.id_barang, val.nama_barang, val.harga_barang, val.jumlah_barang, val.id_supplier)}
+                                                >
+                                                Tambah
+                                            </button>
+                                        </div>
+                                    ) 
+                                })
+                            }
+                        </div>
 
                 </div>
                 {/* HASIL SEARCH ITEM BOX */}
@@ -191,6 +274,9 @@ export default function NewSale(props) {
                 {/* CART */}
                 <div className="new-sale-row-box02">
                     
+                    <h2>
+                        Customer: {customer}
+                    </h2>
                     <h2>
                         Total : Rp, {cartTotal} ,-
                     </h2>
