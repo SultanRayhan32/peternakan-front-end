@@ -4,6 +4,9 @@ import axios from 'axios'
 import io from 'socket.io-client'
 import SERVER from '../../../helper/server'
 
+
+import CurrencyFormat from 'react-currency-format'
+
 // STYLE
 import '../style.css'
 
@@ -66,16 +69,6 @@ export default function Home() {
         <h1>Welcome, {owner} !</h1>
         <div style={{ display: "flex" }}>
             <h2>Your Store Overview</h2> 
-            <button 
-                style={{ 
-                    height: "30px",
-                    width: "70px",
-                    marginTop: "18px",
-                    marginLeft: "5px"
-                }}
-                className="detail-button">
-                    Manage
-            </button>
         </div>
 
         <div className="dashboard-content-02">
@@ -88,7 +81,7 @@ export default function Home() {
             <div className="dbc-02-f">
 
                 <div className="dbc-02-f-1">
-                    {income}
+                    <CurrencyFormat value={income} displayType={'text'} thousandSeparator={true} prefix={'Rp. '} />
                 </div>
 
                 <div className="dbc-02-f-2">

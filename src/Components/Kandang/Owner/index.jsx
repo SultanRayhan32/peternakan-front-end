@@ -142,7 +142,6 @@ export default function Owner() {
             setCountLoc(res.data.countLocation)
             setCountUnit(res.data.countUnit)
             var data = res.data.data[0]
-            console.log(data)
             setOwnerName(data.ownername)
             setDataOwner(data)
             setAyam(data.ayam)

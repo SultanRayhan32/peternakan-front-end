@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import SERVER from '../../../../helper/server'
+import CurrencyFormat from 'react-currency-format'
 
 // COMPONENT
 import Cart from './Cart'
@@ -22,21 +23,21 @@ export default function NewSale(props) {
     const [ customer, setCustomer ] = useState("")
     const [ customerId, setCustomerId ] = useState(0)
 
-    const getDataBarang = () => {
-        axios({
-            method: "GET",
-            url: `${SERVER}barang/get-data-barang`,
-            headers: {
-                token: localStorage.getItem('token')
-            },
-        })
-        .then((res) => {
-            setItem(res.data)
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-    }
+    // const getDataBarang = () => {
+    //     axios({
+    //         method: "GET",
+    //         url: `${SERVER}barang/get-data-barang`,
+    //         headers: {
+    //             token: localStorage.getItem('token')
+    //         },
+    //     })
+    //     .then((res) => {
+    //         setItem(res.data)
+    //     })
+    //     .catch((err) => {
+    //         console.log(err)
+    //     })
+    // }
 
     const searchItem = (key) => {
         if(key.length === 0) {
@@ -144,9 +145,11 @@ export default function NewSale(props) {
 
     const checkOut = () => {
         // console.log(cartTotal, "CH")
-        // console.log(dataCart, "CH")
+        // console.log(dataCart.length, "CH")
         // console.log(arrQty, "ARR QTY")
-        if(customerId === 0) {
+        if(dataCart.length === 0) {
+            alert("Pilih Item !")
+        } else if(customerId === 0) {
             alert("Pilih Customer!")
         } else {
             var arrIdItem = []
@@ -253,7 +256,7 @@ export default function NewSale(props) {
                                     return (
                                         <div className="new-sale-column-box">
                                             <p>{val.nama_barang}</p>
-                                            <span>Price: {val.harga_barang}</span>
+                                            <span>Price: <CurrencyFormat value={val.harga_barang} displayType={'text'} thousandSeparator={true} prefix={'Rp. '} /></span>
 
                                             <button 
                                                 className="sale-qty-btn" 
@@ -278,7 +281,7 @@ export default function NewSale(props) {
                         Customer: {customer}
                     </h2>
                     <h2>
-                        Total : Rp, {cartTotal} ,-
+                        Total : <CurrencyFormat value={cartTotal} displayType={'text'} thousandSeparator={true} prefix={'Rp. '} /> ,-
                     </h2>
 
                     <div className="check-out-box">

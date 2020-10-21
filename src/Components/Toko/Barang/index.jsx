@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import io from 'socket.io-client'
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import CurrencyFormat from 'react-currency-format'
 
 // API
 import SERVER from '../../../helper/server'
@@ -9,19 +17,26 @@ import SERVER from '../../../helper/server'
 import '../style.css'
 
 // COMPONENT
-import Table from './Table'
+import TableComponent from './Table'
 
 export default function Barang() {
 
     const [ dataBarang, setDataBarang ] = useState(null)
     const [ listSupplier, setListSupplier ] = useState(null)
+    const [ dataTelur, setDataTelur ] = useState([])
     const [ showAddBarang, setShowAddBarang ] = useState(false)
+    const [ showEditBarang, setShowEditBarang ] = useState(false)
     const [ namaBarang, setNamaBarang ] = useState(null)
     const [ hargaBarang, setHargaBarang ] = useState(null)
     const [ jumlahBarang, setJumlahBarang ] = useState(null)
     const [ satuanBarang, setSatuanBarang ] = useState(null)
     const [ idSupplier, setIdSupplier ] = useState(null)
     const [ saldo, setSaldo ] = useState(0)
+    const [ showEditHargaTelur, setShowEditHargaTelur ] = useState(false)
+    const [ hargaTelur, setHargaTelur ] = useState(null)
+    const [ dataBarangBySupplier, setDataBarangBySupplier] = useState([])
+    const [ dataBarangSupplierChoosed, setDataBarangSupplierChoosed ] = useState({})
+    const [ plusJumlahValue, setPlusJumlahValue ] = useState(0)
 
     const addNewBarang = () => {
         if(!satuanBarang) {
@@ -68,6 +83,7 @@ export default function Barang() {
             },
         })
         .then((res) => {
+            setDataTelur(res.data.telur)
             setSaldo(res.data.income)
             setDataBarang(res.data.data)
         })
@@ -111,6 +127,81 @@ export default function Barang() {
         })
     }
 
+    const editHargaTelur = () => {
+        if(!hargaTelur) {
+            alert("Masukkan Value")
+        } else {
+            axios({
+                method: "POST",
+                url: `${SERVER}barang/edit-harga-telur`,
+                headers: {
+                    token: localStorage.getItem('token')
+                },
+                data: {
+                    harga_telur: hargaTelur
+                }
+            })
+            .then(() => {
+                setShowEditHargaTelur(false)
+                alert("Harga di update")
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+        }
+    }
+
+    const getBarangBySupplier = (id) => {
+        axios({
+            method: "POST",
+            url: `${SERVER}barang/get-data-barang-by-supplier`,
+            headers: {
+                token: localStorage.getItem('token')
+            },
+            data: {
+                id_supplier: id
+            }
+        })
+        .then((res) => {
+           setDataBarangBySupplier(res.data)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    }
+
+    const handleChangeBarangUpdate = (data) => {
+        console.log(JSON.parse(data))
+        setDataBarangSupplierChoosed(JSON.parse(data))
+    }
+
+    const plusJumlahBarang = () => {
+        if(!plusJumlahValue) {
+            alert("Masukkan Value !")
+        } else {
+            axios({
+                method: "POST",
+                url: `${SERVER}barang/plus-jumlah-barang`,
+                headers: {
+                    token: localStorage.getItem('token')
+                },
+                data: {
+                    value: plusJumlahValue,
+                    id_barang: dataBarangSupplierChoosed.id_barang,
+                    total: Number(dataBarangSupplierChoosed.harga_barang) * plusJumlahValue
+                }
+            })
+            .then(() => {
+                setShowEditBarang(false)
+                setPlusJumlahValue(null)
+                alert("Update Jumlah Barang Success")
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+        }
+    }
+
     useEffect(() => {
         getDataBarang()
         getListSupplier()
@@ -119,6 +210,15 @@ export default function Barang() {
             getDataBarang()
         })
         socket.on('edit-barang-toko', data => {
+            getDataBarang()
+        })
+        socket.on('edit-harga-telur', data => {
+            getDataBarang()
+        })
+        socket.on('plus-jumlah-barang', data => {
+            getDataBarang()
+        })
+        socket.on('delete-barang', data => {
             getDataBarang()
         })
     }, [])
@@ -134,6 +234,13 @@ export default function Barang() {
                 >
                     Add +
                 </button> 
+
+                <button
+                    className="toko-add-new-01"
+                    onClick={() => setShowEditBarang(!showEditBarang)}
+                >
+                    Update
+                </button>
             </h2>
 
             {/* FORM SEARCH BARANG */}
@@ -157,8 +264,6 @@ export default function Barang() {
                                     <option value={val.id_supplier}>{val.nama_supplier}</option>
                                 )
                             })}
-                            <option value={1}>Joko Anwar</option>
-                            <option value={2}>Ferdi Budiman</option>
                         </select>
                     </div>
                     <button className="toko-add-new-01" style={{ marginTop: "15px", width: "55px" }} onClick={addNewBarang}>Add</button>
@@ -170,11 +275,118 @@ export default function Barang() {
                 </div>
                 :
                 null
-            }      
+            } 
+
+            {/* FORM UPDATE BARANG */}
+            {
+                showEditBarang
+                ?
+                <div>
+                    <h4 style={{ marginTop: "50px" }}>Update Barang</h4> 
+                    <div style={{ marginBottom: "15px" }}>
+                        <select className="toko-input-new-barang" onChange={(e) => getBarangBySupplier(e.target.value)}>
+                            <option disabled selected>Pilih Supplier</option>
+                            {listSupplier.map((val) => {
+                                return (
+                                    <option value={val.id_supplier}>{val.nama_supplier}</option>
+                                    )
+                                })}
+                        </select>
+                        <select className="toko-input-new-barang" onChange={(e) => handleChangeBarangUpdate(e.target.value)}>
+                            <option disabled selected>Pilih Barang</option>
+                            {dataBarangBySupplier.map((val, idx) => {
+                                var data = dataBarangBySupplier[idx]
+                                return (
+                                    <option value={JSON.stringify(val,2,3)}>{val.nama_barang}</option>
+                                )
+                            })}
+                        </select>
+                    </div>
+                    <div>
+                        <input className="toko-input-new-barang" value={dataBarangSupplierChoosed.nama_barang} type="text"/>
+                        <input className="toko-input-new-barang" value={dataBarangSupplierChoosed.harga_barang} type="text"/>
+                        <input className="toko-input-new-barang" value={dataBarangSupplierChoosed.jumlah_barang} type="text"/>
+                        <input className="toko-input-new-barang"  placeholder="Tambah Jumlah Barang" onChange={(e) => setPlusJumlahValue(e.target.value)} type="number"/>
+                    </div>
+                    <button className="toko-add-new-01" style={{ marginTop: "15px", width: "55px" }} onClick={plusJumlahBarang}>
+                        Add
+                    </button>
+                    <button 
+                        className="toko-add-new-01" 
+                        style={{ backgroundColor: "red" }}
+                        onClick={() => setShowEditBarang(false)}    
+                    >Cancel</button>
+                </div>
+                :
+                null
+            }     
+
+            <TableContainer component={Paper} style={{marginTop : 40,marginBottom : 40}}>
+                <Table aria-label="collapsible table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell >BERAT TELUR</TableCell>
+                            <TableCell>JUMLAH BUTIR</TableCell>
+                            <TableCell>HARGA TELUR</TableCell>
+                            <TableCell>EDIT HARGA</TableCell>
+                        </TableRow>
+                    </TableHead>
+
+                    <TableBody>
+
+                    {
+                        dataTelur.map((val) => {
+                            return (
+                                <>
+                                <TableCell>
+                                    <CurrencyFormat value={val.kg} displayType={'text'} thousandSeparator={true} prefix={''} /> Kg
+                                </TableCell>
+                                <TableCell>
+                                    <CurrencyFormat value={val.jumlah_butir} displayType={'text'} thousandSeparator={true} prefix={''} /> butir
+                                </TableCell>
+                                <TableCell>
+                                    {
+                                        showEditHargaTelur
+                                        ?
+                                        <>
+                                        Rp. <input placeholder={val.harga_telur}  
+                                            style={{ 
+                                                width: "100px", padding: "5px", outline: "none", borderRadius: "2px", border: "1px solid black" 
+                                            }}
+                                            onChange={(e) => setHargaTelur(e.target.value)}
+                                        /> / Kg
+                                        </> 
+                                        :
+                                        <>
+                                            <CurrencyFormat value={val.harga_telur} displayType={'text'} thousandSeparator={true} prefix={'Rp. '} /> / Kg
+                                        </>
+                                    }
+                                </TableCell>
+                                <TableCell> 
+                                    {
+                                        showEditHargaTelur
+                                        ?
+                                        <>
+                                        <button className="edit-btn-toko" onClick={editHargaTelur} style={{ marginRight: "5px" }}>Save</button>
+                                        <button className="delete-btn-toko" onClick={() => setShowEditHargaTelur(false)}>Cancel</button>
+                                        </>
+                                        :
+                                        <button className="edit-btn-toko" onClick={() => setShowEditHargaTelur(true)}>Edit</button>
+                                    }
+                                </TableCell>
+                                </>
+                            )
+                        })
+                    }
+                    </TableBody>
+                
+
+                </Table>
+            </TableContainer>
 
             {
                 dataBarang &&
-                <Table 
+                <TableComponent
                     dataBarang={dataBarang}
                 />
             }

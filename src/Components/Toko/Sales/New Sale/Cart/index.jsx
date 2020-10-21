@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import CurrencyFormat from 'react-currency-format'
 
 // STYLE
 import '../../.././style.css'
@@ -11,21 +12,29 @@ export default function Cart(props) {
     const [ qty, setQty ] = useState(1)
     const [ harga, setHarga ] = useState(price)
     const [ arrJumlah, setArrJumlah ] = useState(arrQty)
-
-    // const editArrQty = () => {
-    //     setArrQty
-    //     return arrJumlah[idx] + num
-    // }
+    const [ showDiskon, setShowDiskon ] = useState(false)
+    const [ diskon, setDiskon ] = useState(0)
 
     const plus = (num) => {
+        // console.log(diskon)
+        // console.log(harga)
+        var disc = 0
+        if(diskon === 0) {
+            disc = 0
+        } else {
+            disc = diskon
+        }
+
         if(qty === jumlah) {
             setQty(qty)
             setHarga(harga)
             arrJumlah[idx] = qty
         } else {
+            var harg = harga -  (harga * (disc/100))
             setQty(qty + num)
-            setHarga((harga + price) * num)
-            setTotal(total + price)
+            console.log(harg)
+            // setHarga((harg + price) * num)
+            setTotal(total + harg)
             arrQty[idx] = qty + num
             setArrQty(arrQty)
         }
@@ -51,12 +60,30 @@ export default function Cart(props) {
         deleteItem(index, harga)
     }
 
+    const handleDiscount = () => {
+        if(!showDiskon) {
+            setShowDiskon(true)
+        } else {
+            var disc = Number(diskon)
+            var harg = harga -  (harga * (disc/100))
+            setTotal(total - harga + harg)
+        }
+    }
+
+    const cancelDiscount = () => {
+        var disc = Number(diskon)
+        var harg = harga - (harga * (disc/100))
+      
+        setTotal(total - harg + harga)
+        setDiskon(0)
+        setShowDiskon(false)
+    }
 
     return (
         <div className="cart-item-box">
 
             <span className="cart-item-name"> 
-                {name} <span style={{ fontSize: "small" }}>{price}</span>  X {qty}
+                {name} X {qty}
                 <div>
                     <button 
                         className="sale-qty-btn" 
@@ -87,9 +114,44 @@ export default function Cart(props) {
                         </button>
 
                     }
+
+                    {
+                        showDiskon
+                        ?
+                        <>
+                            <input type="number" className="sale-input-diskon" onChange={(e) => setDiskon(e.target.value)}/>
+                        </>
+                        :
+                        null
+                    }
+                        <button 
+                            className="sale-diskon-btn"
+                            onClick={handleDiscount}
+                        >   
+                        {
+                            showDiskon
+                            ?
+                            "Add"
+                            :
+                            "Diskon %"
+                        }
+                        </button>
+                    {
+                        diskon === 0
+                        ?
+                        null
+                        :
+                        <button
+                            className="sale-qty-btn" 
+                            style={{ backgroundColor: "#F86C6B", marginLeft: "5px" }}
+                            onClick={cancelDiscount}
+                        >
+                            x
+                        </button>
+                    }
                 </div>
             </span>
-            <span>Rp. {price} ,-</span>
+            <span><CurrencyFormat value={price} displayType={'text'} thousandSeparator={true} prefix={'Rp. '} /></span>
         </div>
     )
 }

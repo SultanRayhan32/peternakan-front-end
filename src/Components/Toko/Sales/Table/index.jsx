@@ -2,6 +2,7 @@ import React, { isValidElement, useState } from 'react';
 import { useHistory } from 'react-router-dom'
 import axios from 'axios'
 import SERVER from '../../../../helper/server'
+import CurrencyFormat from 'react-currency-format'
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -116,15 +117,11 @@ function CollapsibleTable(props) {
     const Rows = () => {
         return dataSale.map((e, idx) => {
             var showItem = false
-            const showItemBtn = () => {
-                showItem = !showItem
-                console.log(showItem)
-            }
             return (
                 <TableBody>
                     <TableCell>{idx + 1}</TableCell>
                     <TableCell>{ showDate(e.tanggal) }</TableCell>
-                    <TableCell>Rp. {e.value} ,-</TableCell>
+                    <TableCell><CurrencyFormat value={e.value} displayType={'text'} thousandSeparator={true} prefix={'Rp. '} /> ,-</TableCell>
                     {/* <TableCell>{e.jumlah_item}</TableCell> */}
                     <TableCell>
                         {

@@ -3,6 +3,8 @@ import { useHistory } from 'react-router-dom'
 import axios from 'axios'
 import SERVER from '../../../../helper/server'
 
+import CurrencyFormat from 'react-currency-format'
+
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -132,17 +134,14 @@ function CollapsibleTable(props) {
         var satuanEdit = e.satuan_barang
 
         const editHarga = (val) => {
-          console.log(val)
           hargaEdit = val
         }
 
         const editJumlah = (val) => {
-          console.log(val)
           jumlahEdit = val
         }
 
         const satuanEdit2 = (val) => {
-            console.log(val)
             satuanEdit = val
         }
 
@@ -155,9 +154,10 @@ function CollapsibleTable(props) {
             },
             data: {
                 harga: hargaEdit, 
-                jumlah: jumlahEdit,
+                jumlah: Number(jumlahEdit),
                 satuan: satuanEdit,
-                id_barang: e.id_barang
+                id_barang: e.id_barang,
+                jumlah_old: e.jumlah_barang
             }
           })
           .then(() => {
@@ -167,6 +167,24 @@ function CollapsibleTable(props) {
           .catch((err) => {
             alert("Edit Failed")
           })
+        }
+
+        const deleteBarang = (id) => {
+          if(window.confirm("Are you sure to Delete this item?")) {
+            axios({
+            url: `${SERVER}barang/delete-barang/${id}`,
+            method: "DELETE",
+              headers: {
+                token: localStorage.getItem('token')
+              }
+            })
+            .then(() => {
+              alert("Delete Success")
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+          } 
         }
     
           return (
@@ -188,7 +206,8 @@ function CollapsibleTable(props) {
                     </>
                     :
                     <>
-                    <TableCell>{e.harga_barang} per {e.satuan_barang}</TableCell>
+                    <TableCell>
+                      <CurrencyFormat value={e.harga_barang} displayType={'text'} thousandSeparator={true} prefix={'Rp. '} /> / {e.satuan_barang}</TableCell>
                     <TableCell>{e.jumlah_barang} {e.satuan_barang}</TableCell>
                     </>
                 }
@@ -204,7 +223,7 @@ function CollapsibleTable(props) {
                         :
                         <>
                             <button className="edit-btn-toko" style={{ marginRight: "10px" }} onClick={() => setShowEdit(e.id_barang)}>Edit</button>
-                            <button className="delete-btn-toko">Delete</button>
+                            <button className="delete-btn-toko" onClick={() => deleteBarang(e.id_barang)}>Delete</button>
                         </>
                     }
                 </TableCell>

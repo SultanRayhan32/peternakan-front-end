@@ -11,7 +11,7 @@ import Table from './Table'
 import '.././style.css'
 
 export default function Sales() {
-    const [ saleIsOpen, setSaleIsOpen ] = useState(false)
+    const [ saleIsOpen, setSaleIsOpen ] = useState(true)
     const [ dataSale, setDataSale ] = useState([])
 
     const getDataSales = () => {
