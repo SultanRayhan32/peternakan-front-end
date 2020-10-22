@@ -13,7 +13,9 @@ export default function Cart(props) {
     const [ harga, setHarga ] = useState(price)
     const [ arrJumlah, setArrJumlah ] = useState(arrQty)
     const [ showDiskon, setShowDiskon ] = useState(false)
+    const [ showAddDiskon, setShowAddDiskon ] = useState(true)
     const [ diskon, setDiskon ] = useState(0)
+    const [ diskonStatus, setDiskonStatus ] = useState(0)
 
     const plus = (num) => {
         var disc = 0
@@ -68,16 +70,20 @@ export default function Cart(props) {
         const arrLength = Number(arrQty.length)
         var disc = Number(diskon)
         var harg = harga -  (harga * (disc/100))
-        if(!showDiskon) {
-            setShowDiskon(true)
+        if(diskonStatus === 0) {
+            setDiskonStatus(1)
         } else if(qty > 1 && arrLength === 1) {
             setTotal(harg * qty)
+            setDiskonStatus(2)
         } else if(qty === 1 && arrLength === 1) {
             setTotal(total - harga + harg)
+            setDiskonStatus(2)
         } else if(qty === 1 && arrLength > 1) {
             setTotal(total - harga + harg)
+            setDiskonStatus(2)
         } else if(arrLength > 1) {
             setTotal(total - (harga * qty) + (harg * qty))
+            setDiskonStatus(2)
         }
     }
 
@@ -89,19 +95,41 @@ export default function Cart(props) {
         if(qty === 1 && arrLength === 1) {
             setTotal(total - harg + harga)
             setDiskon(0)
-            setShowDiskon(false)
+            setDiskonStatus(0)
         } else if(qty > 1 && arrLength === 1) {
             setTotal(total - total + (harga * qty))
             setDiskon(0)
-            setShowDiskon(false)
+            setDiskonStatus(0)
         } else if(qty === 1 && arrLength > 1) {
             setTotal(total - harg + harga)
             setDiskon(0)
-            setShowDiskon(false)
+            setDiskonStatus(0)
         } else if(qty > 1 && arrLength > 1) {
             setTotal(total - (harg * qty) + (harga * qty))
             setDiskon(0)
-            setShowDiskon(false)
+            setDiskonStatus(0)
+        }
+    }
+
+    const renderDiskonStatus = () => {
+        if(diskonStatus === 0) {
+            return (
+                <button 
+                className="sale-diskon-btn"
+                onClick={handleDiscount}
+                >   
+                %
+            </button>
+            )
+        } else if(diskonStatus === 1) {
+            return (
+                <button 
+                    className="sale-diskon-btn"
+                    onClick={handleDiscount}
+                    >  
+                    Add
+                </button>
+            )
         }
     }
 
@@ -110,6 +138,24 @@ export default function Cart(props) {
 
             <span className="cart-item-name"> 
                 {name} X {qty}
+                {
+                    diskonStatus === 2
+                    ?
+                        <>
+                          <span
+                          className="sale-discount-label" 
+                          style={{ backgroundColor: "#F86C6B", marginLeft: "5px", width: "20px" }}
+                          onClick={cancelDiscount}
+                        >
+                            x
+                        </span>
+                        <span className='sale-discount-label'>
+                            {diskon} %
+                        </span>
+                        </>
+                        :
+                    null
+                }
                 <div>
                     <button 
                         className="sale-qty-btn" 
@@ -142,42 +188,33 @@ export default function Cart(props) {
                     }
 
                     {
-                        showDiskon
+                        diskonStatus === 1
                         ?
-                        <>
                             <input type="number" className="sale-input-diskon" onChange={(e) => setDiskon(e.target.value)}/>
-                        </>
                         :
-                        null
+                            null
                     }
-                        <button 
-                            className="sale-diskon-btn"
-                            onClick={handleDiscount}
-                        >   
-                        {
-                            showDiskon
-                            ?
-                            "Add"
-                            :
-                            "Diskon %"
-                        }
-                        </button>
-                    {
-                        diskon === 0
-                        ?
-                        null
-                        :
-                        <button
-                            className="sale-qty-btn" 
-                            style={{ backgroundColor: "#F86C6B", marginLeft: "5px" }}
-                            onClick={cancelDiscount}
-                        >
-                            x
-                        </button>
-                    }
+
+                    {renderDiskonStatus()}
+
                 </div>
             </span>
-            <span><CurrencyFormat value={price} displayType={'text'} thousandSeparator={true} prefix={'Rp. '} /></span>
+            {
+                diskonStatus === 2
+                ?
+                <strike style={{ color: "red" }}><CurrencyFormat value={price} displayType={'text'} thousandSeparator={true} prefix={'Rp. '} /></strike>
+                :
+                <span><CurrencyFormat value={price} displayType={'text'} thousandSeparator={true} prefix={'Rp. '} /></span>
+            }
+            {
+                diskonStatus === 2
+                ?
+                <span style={{ marginLeft: "7px" }}>
+                    <CurrencyFormat value={harga - (harga * (Number(diskon)/100))} displayType={'text'} thousandSeparator={true} prefix={'Rp. '} />
+                </span>
+                :
+                null
+            }
         </div>
     )
 }
