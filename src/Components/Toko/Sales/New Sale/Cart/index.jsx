@@ -16,8 +16,6 @@ export default function Cart(props) {
     const [ diskon, setDiskon ] = useState(0)
 
     const plus = (num) => {
-        // console.log(diskon)
-        // console.log(harga)
         var disc = 0
         if(diskon === 0) {
             disc = 0
@@ -32,51 +30,79 @@ export default function Cart(props) {
         } else {
             var harg = harga -  (harga * (disc/100))
             setQty(qty + num)
-            console.log(harg)
-            // setHarga((harg + price) * num)
             setTotal(total + harg)
             arrQty[idx] = qty + num
             setArrQty(arrQty)
         }
-        // console.log(arrJumlah)
         setArrQty(arrJumlah)
     }
 
     const min = (index) => {
+        var disc = Number(diskon)
+        var harg = harga -  (harga * (disc/100))
         if(arrQty[idx] === 1) {
             setQty(1)
             setHarga(price)
             deleteItemInCart(index, harga)
+        } else if(Number(arrQty.length) === 1) {
+            setQty(qty - 1)
+            setTotal(harg * (qty - 1))
+            arrQty[idx] = qty - 1
+            setArrQty(arrQty)
         } else {
             setQty(qty - 1)
-            setHarga(harga - price)
-            setTotal(total - price)
+            setTotal(total - harg)
             arrQty[idx] = qty - 1
             setArrQty(arrQty)
         }
     }
 
     const deleteItemInCart = (index, harga) => {
-        deleteItem(index, harga)
+        var disc = Number(diskon)
+        var harg = harga -  (harga * (disc/100))
+
+        deleteItem(index, harg)
     }
 
     const handleDiscount = () => {
+        const arrLength = Number(arrQty.length)
+        var disc = Number(diskon)
+        var harg = harga -  (harga * (disc/100))
         if(!showDiskon) {
             setShowDiskon(true)
-        } else {
-            var disc = Number(diskon)
-            var harg = harga -  (harga * (disc/100))
+        } else if(qty > 1 && arrLength === 1) {
+            setTotal(harg * qty)
+        } else if(qty === 1 && arrLength === 1) {
             setTotal(total - harga + harg)
+        } else if(qty === 1 && arrLength > 1) {
+            setTotal(total - harga + harg)
+        } else if(arrLength > 1) {
+            setTotal(total - (harga * qty) + (harg * qty))
         }
     }
 
     const cancelDiscount = () => {
+        const arrLength = arrQty.length
         var disc = Number(diskon)
         var harg = harga - (harga * (disc/100))
-      
-        setTotal(total - harg + harga)
-        setDiskon(0)
-        setShowDiskon(false)
+
+        if(qty === 1 && arrLength === 1) {
+            setTotal(total - harg + harga)
+            setDiskon(0)
+            setShowDiskon(false)
+        } else if(qty > 1 && arrLength === 1) {
+            setTotal(total - total + (harga * qty))
+            setDiskon(0)
+            setShowDiskon(false)
+        } else if(qty === 1 && arrLength > 1) {
+            setTotal(total - harg + harga)
+            setDiskon(0)
+            setShowDiskon(false)
+        } else if(qty > 1 && arrLength > 1) {
+            setTotal(total - (harg * qty) + (harga * qty))
+            setDiskon(0)
+            setShowDiskon(false)
+        }
     }
 
     return (
