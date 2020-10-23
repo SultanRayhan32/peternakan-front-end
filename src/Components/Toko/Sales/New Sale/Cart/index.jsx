@@ -67,23 +67,30 @@ export default function Cart(props) {
     }
 
     const handleDiscount = () => {
+        
         const arrLength = Number(arrQty.length)
         var disc = Number(diskon)
         var harg = harga -  (harga * (disc/100))
-        if(diskonStatus === 0) {
-            setDiskonStatus(1)
-        } else if(qty > 1 && arrLength === 1) {
-            setTotal(harg * qty)
-            setDiskonStatus(2)
-        } else if(qty === 1 && arrLength === 1) {
-            setTotal(total - harga + harg)
-            setDiskonStatus(2)
-        } else if(qty === 1 && arrLength > 1) {
-            setTotal(total - harga + harg)
-            setDiskonStatus(2)
-        } else if(arrLength > 1) {
-            setTotal(total - (harga * qty) + (harg * qty))
-            setDiskonStatus(2)
+
+        console.log(disc, "%")
+        if(disc > 100) {
+            alert("Max 100 %")
+        } else {
+            if(diskonStatus === 0) {
+                setDiskonStatus(1)
+            } else if(qty > 1 && arrLength === 1) {
+                setTotal(harg * qty)
+                setDiskonStatus(2)
+            } else if(qty === 1 && arrLength === 1) {
+                setTotal(total - harga + harg)
+                setDiskonStatus(2)
+            } else if(qty === 1 && arrLength > 1) {
+                setTotal(total - harga + harg)
+                setDiskonStatus(2)
+            } else if(arrLength > 1) {
+                setTotal(total - (harga * qty) + (harg * qty))
+                setDiskonStatus(2)
+            }
         }
     }
 

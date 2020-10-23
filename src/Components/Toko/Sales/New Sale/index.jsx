@@ -248,7 +248,10 @@ export default function NewSale(props) {
 
                         </div>
 
-                        <div className="new-sale-row-box-002"> 
+                        <div 
+                            className="new-sale-row-box-002" 
+                            // style={{overflowY : item && item.length <= 8 ? "visible" : null  }}
+                        > 
                             { item &&
                                 item.map((val) => {
                                     var qty = 0
