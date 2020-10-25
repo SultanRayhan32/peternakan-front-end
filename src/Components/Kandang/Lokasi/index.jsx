@@ -49,6 +49,25 @@ function Kandang () {
         })
     }
 
+    const searchDataLocation = (key) => {
+        axios({
+            method: "POST",
+            url: `${SERVER}kandang/search-data-location`,
+            headers: {
+                token: localStorage.getItem('token')
+            },
+            data: {
+                keyword: key
+            }
+        })
+        .then((res) => {
+            setDataLocation(res.data)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    }
+
     useEffect(()=>{
         getDataLocation()
         const socket = io(`${SERVER}`)
@@ -104,7 +123,7 @@ function Kandang () {
 
             <div className="search-kandang-container">
 
-                <input type="text" className="search-kandang" placeholder="Cari Lokasi"/>
+                <input type="text" className="search-kandang" placeholder="Cari Lokasi" onKeyUp={(e) => searchDataLocation(e.target.value)}/>
 
                 <button 
                     className="plus-kandang"

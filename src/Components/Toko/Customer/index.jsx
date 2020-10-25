@@ -55,7 +55,25 @@ export default function Customer() {
             }
         })
         .then((res) => {
-            console.log(res.data)
+            setDataCustomer(res.data)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    }
+
+    const searchCustomer = (key) => {
+        axios({
+            method: "POST",
+            url: `${SERVER}customer/search-customer-2`,
+            headers: {
+                token: localStorage.getItem('token')
+            },
+            data: {
+                keyword: key
+            }
+        })
+        .then((res) => {
             setDataCustomer(res.data)
         })
         .catch((err) => {
@@ -83,6 +101,9 @@ export default function Customer() {
                     Add +
                 </button> 
             </h2>
+
+            {/* FORM SEARCH SUPPLIER */}
+            <input type="text" placeholder="Search ..." className="input-cari-barang-toko" onKeyUp={(e) => searchCustomer(e.target.value)}/>
 
              {/* FORM ADD BARANG */}
              {

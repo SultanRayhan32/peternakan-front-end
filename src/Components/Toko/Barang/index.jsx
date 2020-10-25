@@ -204,6 +204,16 @@ export default function Barang() {
         }
     }
 
+    const handleOpenAdd = () => {
+        setShowAddBarang(!showAddBarang)
+        setShowEditBarang(false)
+    }
+
+    const handleOpenUpdate = () => {
+        setShowEditBarang(!showEditBarang)
+        setShowAddBarang(false)
+    }
+
     useEffect(() => {
         getDataBarang()
         getListSupplier()
@@ -232,14 +242,14 @@ export default function Barang() {
             <h2>Manage Stocking Barang 
                 <button 
                     className="toko-add-new-01"
-                    onClick={() => setShowAddBarang(!showAddBarang)}
+                    onClick={handleOpenAdd}
                 >
                     Add +
                 </button> 
 
                 <button
                     className="toko-add-new-01"
-                    onClick={() => setShowEditBarang(!showEditBarang)}
+                    onClick={handleOpenUpdate}
                 >
                     Update
                 </button>
@@ -304,11 +314,15 @@ export default function Barang() {
                             })}
                         </select>
                     </div>
-                    <div>
-                        <input className="toko-input-new-barang" value={dataBarangSupplierChoosed.nama_barang} type="text"/>
-                        <input className="toko-input-new-barang" value={dataBarangSupplierChoosed.harga_barang} type="text"/>
-                        <input className="toko-input-new-barang" value={dataBarangSupplierChoosed.jumlah_barang} type="text"/>
-                        <input className="toko-input-new-barang"  placeholder="Tambah Jumlah Barang" onChange={(e) => setPlusJumlahValue(e.target.value)} type="number"/>
+                    <div className="form-update-jumlah-barang">
+                        <span>Nama Barang: {dataBarangSupplierChoosed.nama_barang}</span> 
+                        <span>
+                            Jumlah Barang: {dataBarangSupplierChoosed.jumlah_barang}
+                        </span> 
+                        <span>
+                            Harga Barang: <CurrencyFormat value={dataBarangSupplierChoosed.harga_barang} displayType={'text'} thousandSeparator={true} prefix={'Rp. '} />
+                        </span> 
+                        <input placeholder="Tambah Jumlah Barang" onChange={(e) => setPlusJumlahValue(e.target.value)} type="number"/>
                     </div>
                     <button className="toko-add-new-01" style={{ marginTop: "15px", width: "55px" }} onClick={plusJumlahBarang}>
                         Add
