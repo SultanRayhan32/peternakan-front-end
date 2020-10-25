@@ -23,22 +23,6 @@ export default function NewSale(props) {
     const [ customer, setCustomer ] = useState("")
     const [ customerId, setCustomerId ] = useState(0)
 
-    // const getDataBarang = () => {
-    //     axios({
-    //         method: "GET",
-    //         url: `${SERVER}barang/get-data-barang`,
-    //         headers: {
-    //             token: localStorage.getItem('token')
-    //         },
-    //     })
-    //     .then((res) => {
-    //         setItem(res.data)
-    //     })
-    //     .catch((err) => {
-    //         console.log(err)
-    //     })
-    // }
-
     const searchItem = (key) => {
         if(key.length === 0) {
             setItem(null)
@@ -138,6 +122,7 @@ export default function NewSale(props) {
                     deleteItem={deleteItemCart}
                     arrQty={arrQty}
                     setArrQty={setArrQty}
+                    dataCart={dataCart}
                 />
             )
         })
@@ -218,16 +203,16 @@ export default function NewSale(props) {
                 <div className="new-sale-row-box">
 
                       {/* ROW */}
-                        <div style={{ display: "flex" }}>
+                        <div className="new-sale-search-row">
 
                             {/* COLUMN 1 */}
-                            <div>
+                            <div className="new-sale-search-column">
                                 {/* SEARCH ITEM */}
                                 <input type="text" placeholder="Search Item ..." className="input-cari-barang-toko" onKeyUp={(e) => searchItem(e.target.value)}/>
                             </div>
 
                             {/* COLUMN 2 */}
-                            <div style={{ marginLeft: "20px" }}>
+                            <div style={{ marginLeft: "20px" }} className="new-sale-search-column">
                             {/* SEARCH CUSTOMER */}
                                 <input type="text" 
                                     placeholder="Search Customer ..." 

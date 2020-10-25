@@ -31,12 +31,12 @@ export default function Barang() {
     const [ jumlahBarang, setJumlahBarang ] = useState(null)
     const [ satuanBarang, setSatuanBarang ] = useState(null)
     const [ idSupplier, setIdSupplier ] = useState(null)
-    const [ saldo, setSaldo ] = useState(0)
     const [ showEditHargaTelur, setShowEditHargaTelur ] = useState(false)
     const [ hargaTelur, setHargaTelur ] = useState(null)
     const [ dataBarangBySupplier, setDataBarangBySupplier] = useState([])
     const [ dataBarangSupplierChoosed, setDataBarangSupplierChoosed ] = useState({})
     const [ plusJumlahValue, setPlusJumlahValue ] = useState(0)
+    const [ saldo, setSaldo ] = useState(0)
 
     const addNewBarang = () => {
         if(!satuanBarang) {
@@ -49,6 +49,8 @@ export default function Barang() {
             alert("Masukkan Satuan Barang")
         } else if(!idSupplier) {
             alert("Pilih Supplier")
+        } else if(saldo < Number(hargaBarang) * Number(jumlahBarang)) {
+            alert("Saldo anda tidak mencukupi")
         } else {
             axios({
                 method: "POST",
@@ -84,7 +86,7 @@ export default function Barang() {
         })
         .then((res) => {
             setDataTelur(res.data.telur)
-            setSaldo(res.data.income)
+            setSaldo(res.data.saldo)
             setDataBarang(res.data.data)
         })
         .catch((err) => {

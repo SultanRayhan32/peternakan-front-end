@@ -6,7 +6,7 @@ import '../../.././style.css'
 
 export default function Cart(props) {
     const {
-        id, name, price, jumlah, total, setTotal, idx, deleteItem, arrQty, setArrQty
+        id, name, price, jumlah, total, setTotal, idx, deleteItem, arrQty, setArrQty, dataCart
     } = props
 
     const [ qty, setQty ] = useState(1)
@@ -60,19 +60,26 @@ export default function Cart(props) {
     }
 
     const deleteItemInCart = (index, harga) => {
+      
         var disc = Number(diskon)
-        var harg = harga -  (harga * (disc/100))
-
-        deleteItem(index, harg)
+        var harg = ""
+        
+        if(dataCart.length === 1) {
+            var harg = harga -  (harga * (disc/100))
+            setHarga(harga)
+            deleteItem(index, harg)
+        } else {
+            var rego = dataCart[idx + 1].price
+            setHarga(rego)
+            deleteItem(index, harga)
+        }
     }
 
     const handleDiscount = () => {
-        
         const arrLength = Number(arrQty.length)
         var disc = Number(diskon)
         var harg = harga -  (harga * (disc/100))
 
-        console.log(disc, "%")
         if(disc > 100) {
             alert("Max 100 %")
         } else {

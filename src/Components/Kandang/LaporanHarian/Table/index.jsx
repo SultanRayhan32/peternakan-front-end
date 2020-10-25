@@ -37,8 +37,6 @@ function TableLocation (props) {
 
   const history = useHistory()
 
-  console.log(props.match , ' << VALUE PROPS')
-
   let showDate = (dateParams) => {
       let date = new Date(dateParams).getDate() 
       let monthNumber = new Date(dateParams).getMonth()

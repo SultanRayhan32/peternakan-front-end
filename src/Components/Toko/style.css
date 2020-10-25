@@ -86,7 +86,7 @@
 .new-sale-box {
     padding: 20px;
     border-radius: 4px;
-    background-color: #f0f0f0;
+    background-color: #FAFAFA;
     margin-bottom: 100px;
 }
 
@@ -114,6 +114,22 @@
 
 .new-sale-row-box02 {
     width: 30%;
+}
+
+
+.new-sale-search-row {
+    display: flex;
+}
+
+.new-sale-search-column {
+    /* background-color: lawngreen; */
+    width: 50%;
+}
+
+.new-sale-search-column input {
+    width: 75%;
+    background-color: white;
+    color: black;
 }
 
 .new-sale-column-box {
