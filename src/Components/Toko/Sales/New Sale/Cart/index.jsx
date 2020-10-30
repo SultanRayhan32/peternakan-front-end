@@ -16,6 +16,7 @@ export default function Cart(props) {
     const [ showAddDiskon, setShowAddDiskon ] = useState(true)
     const [ diskon, setDiskon ] = useState(0)
     const [ diskonStatus, setDiskonStatus ] = useState(0)
+    const [ trayQty, setTrayQty ] = useState(0)
 
     const plus = (num) => {
         var disc = 0
@@ -145,6 +146,30 @@ export default function Cart(props) {
                 </button>
             )
         }
+    }   
+
+    const renderAddTrayEgg = () => {
+        return (
+            <div>
+                <button
+                    className="sale-qty-btn" 
+                    style={{ backgroundColor: "#20A8D8", marginRight: "5px" }}
+                >
+                    +
+                </button>
+                1 Tray
+                <button
+                    className="sale-qty-btn" 
+                    style={{ backgroundColor: "#F86C6B", marginLeft: "5px" }}
+                >
+                    -
+                </button>
+            </div>
+        )
+    }
+
+    const plusTray = () => {
+        
     }
 
     return (
@@ -179,7 +204,9 @@ export default function Cart(props) {
                     >
                             +
                     </button>
-                    <span>{qty}</span>
+                    <span>{qty} 
+                    
+                    { name === 'Telur' ? ' Kg' : null }</span>
                     {
                         qty === 1
                         ?
@@ -212,6 +239,13 @@ export default function Cart(props) {
                     {renderDiskonStatus()}
 
                 </div>
+                {
+                    name === 'Telur'
+                    ?
+                    renderAddTrayEgg()
+                    :
+                    null
+                }
             </span>
             {
                 diskonStatus === 2

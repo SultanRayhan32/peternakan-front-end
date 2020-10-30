@@ -146,6 +146,10 @@ function CollapsibleTable(props) {
         }
 
         const editBarang = () => {
+          var statusEgg = false
+          if(e.nama_barang === 'Telur') {
+            statusEgg = true
+          }
           axios({
             method: "POST",
             url: `${SERVER}barang/edit-data-barang`,
@@ -157,6 +161,7 @@ function CollapsibleTable(props) {
                 jumlah: Number(jumlahEdit),
                 satuan: satuanEdit,
                 id_barang: e.id_barang,
+                status_egg: statusEgg,
                 jumlah_old: e.jumlah_barang
             }
           })

@@ -10,10 +10,12 @@ function App () {
 
   return (
     <div style={{width : "100%"}}>
+
       <Switch>
         <Route path="/login" component={LoginScreen} />
         <Route path="/" component={HomeScreen} />
       </Switch>
+
     </div>
   )
 

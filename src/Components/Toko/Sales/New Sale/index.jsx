@@ -130,7 +130,15 @@ export default function NewSale(props) {
 
     const checkOut = () => {
         // console.log(cartTotal, "CH")
-        // console.log(dataCart.length, "CH")
+        var statusEgg = false
+        var dataEgg = {}
+        dataCart.forEach((val, idx) => {
+            if(val.name === 'Telur') {
+                statusEgg = true
+                dataEgg = val
+                dataEgg.index = idx
+            }
+        })
         // console.log(arrQty, "ARR QTY")
         if(dataCart.length === 0) {
             alert("Pilih Item !")
@@ -155,7 +163,9 @@ export default function NewSale(props) {
                     value: cartTotal,
                     jumlah_item: dataCart.length,
                     id_supplier: arrIdSup,
-                    qty_item: arrQty
+                    qty_item: arrQty,
+                    status_egg: statusEgg,
+                    data_egg: dataEgg
                 }
             })
             .then(() => {
