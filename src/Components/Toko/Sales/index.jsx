@@ -13,6 +13,8 @@ import '.././style.css'
 export default function Sales() {
     const [ saleIsOpen, setSaleIsOpen ] = useState(true)
     const [ dataSale, setDataSale ] = useState([])
+    const [ beratEgg, setBeratEgg ] = useState(0)
+    const [ butirEgg, setButirEgg ] = useState(0)
 
     const getDataSales = () => {
         axios({
@@ -23,7 +25,9 @@ export default function Sales() {
             }
         })
         .then((res) => {
-            setDataSale(res.data)
+            setDataSale(res.data.data)
+            setBeratEgg(Number(res.data.egg[0].kg))
+            setButirEgg(Number(res.data.egg[0].jumlah_butir))
         })
         .catch((err) => {
             console.log(err)
@@ -60,7 +64,8 @@ export default function Sales() {
                 ?
                 <NewSale 
                     setSaleIsOpen={setSaleIsOpen}
-                
+                    berat={beratEgg}
+                    butir={butirEgg}
                 />
                 :
                 null

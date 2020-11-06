@@ -271,7 +271,7 @@ export default function Barang() {
                         <input className="toko-input-new-barang" onChange={(e) => setSatuanBarang(e.target.value)} type="text" placeholder="Satuan Barang"/> <br />
                         <select className="toko-input-new-barang" onChange={(e) => setIdSupplier(e.target.value)} style={{ marginTop: "15px"}}>
                             <option disabled selected>Pilih Supplier</option>
-                            {listSupplier.map((val) => {
+                            {listSupplier && listSupplier.map((val) => {
                                 return (
                                     <option value={val.id_supplier}>{val.nama_supplier}</option>
                                 )

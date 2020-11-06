@@ -12,7 +12,7 @@ import '../.././style.css'
 export default function NewSale(props) {
 
     const {
-        setSaleIsOpen
+        setSaleIsOpen, berat, butir
     } = props
 
     const [ item, setItem ] = useState(null)
@@ -22,6 +22,7 @@ export default function NewSale(props) {
     const [ dataCustomer, setDataCustomer ] = useState([])
     const [ customer, setCustomer ] = useState("")
     const [ customerId, setCustomerId ] = useState(0)
+    const [ qtyButir, setQtyButir ] = useState(0)
 
     const searchItem = (key) => {
         if(key.length === 0) {
@@ -89,7 +90,7 @@ export default function NewSale(props) {
         if(jumlah < 1) {
             return null
         } else if(arr2.length < 1) {
-            setCartTotal(cartTotal + price)
+            setCartTotal(cartTotal + Number(price))
             arrQty.push(1)  
             dataCart.push(data)
         } else {
@@ -123,13 +124,16 @@ export default function NewSale(props) {
                     arrQty={arrQty}
                     setArrQty={setArrQty}
                     dataCart={dataCart}
+                    qtyButir={qtyButir}
+                    setQtyButir={setQtyButir}
+                    berat={berat}
+                    butir={butir}
                 />
             )
         })
     }
 
     const checkOut = () => {
-        // console.log(cartTotal, "CH")
         var statusEgg = false
         var dataEgg = {}
         dataCart.forEach((val, idx) => {
@@ -139,7 +143,6 @@ export default function NewSale(props) {
                 dataEgg.index = idx
             }
         })
-        // console.log(arrQty, "ARR QTY")
         if(dataCart.length === 0) {
             alert("Pilih Item !")
         } else if(customerId === 0) {
@@ -165,7 +168,8 @@ export default function NewSale(props) {
                     id_supplier: arrIdSup,
                     qty_item: arrQty,
                     status_egg: statusEgg,
-                    data_egg: dataEgg
+                    data_egg: dataEgg,
+                    qty_butir: qtyButir
                 }
             })
             .then(() => {

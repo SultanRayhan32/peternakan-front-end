@@ -1,3 +1,4 @@
+import Axios from 'axios'
 import React, { useState } from 'react'
 import CurrencyFormat from 'react-currency-format'
 
@@ -6,17 +7,20 @@ import '../../.././style.css'
 
 export default function Cart(props) {
     const {
-        id, name, price, jumlah, total, setTotal, idx, deleteItem, arrQty, setArrQty, dataCart
+        id, name, price, jumlah, total, setTotal, idx, deleteItem, arrQty, setArrQty, dataCart, setQtyButir, berat, butir
     } = props
 
     const [ qty, setQty ] = useState(1)
-    const [ harga, setHarga ] = useState(price)
+    const [ harga, setHarga ] = useState(Number(price))
     const [ arrJumlah, setArrJumlah ] = useState(arrQty)
     const [ showDiskon, setShowDiskon ] = useState(false)
     const [ showAddDiskon, setShowAddDiskon ] = useState(true)
     const [ diskon, setDiskon ] = useState(0)
     const [ diskonStatus, setDiskonStatus ] = useState(0)
-    const [ trayQty, setTrayQty ] = useState(0)
+    const [ kgEgg, setKgEgg ] = useState(0)
+    const [ qtyEgg, setQtyEgg ] = useState(0)
+    const [ showEgg, setShowEgg ] = useState(false)
+    const [ priceEgg, setPriceEgg ] = useState(0)
 
     const plus = (num) => {
         var disc = 0
@@ -33,7 +37,7 @@ export default function Cart(props) {
         } else {
             var harg = harga -  (harga * (disc/100))
             setQty(qty + num)
-            setTotal(total + harg)
+            setTotal(Number(total) + Number(harg))
             arrQty[idx] = qty + num
             setArrQty(arrQty)
         }
@@ -60,19 +64,24 @@ export default function Cart(props) {
         }
     }
 
-    const deleteItemInCart = (index, harga) => {
-      
+    const deleteItemInCart = (index) => {
+        var priceNum = Number(price)
         var disc = Number(diskon)
         var harg = ""
-        
-        if(dataCart.length === 1) {
-            var harg = harga -  (harga * (disc/100))
-            setHarga(harga)
+        if(name === "Telur") {
+            priceNum = priceEgg
+        }
+
+        if(dataCart.length > 0) {
+            var harg = priceNum -  (priceNum * (disc/100))
+            setHarga(priceNum)
+            setQty(arrQty[idx + 1])
             deleteItem(index, harg)
         } else {
             var rego = dataCart[idx + 1].price
             setHarga(rego)
-            deleteItem(index, harga)
+            console.log("SINI ELSE")
+            deleteItem(index, priceNum)
         }
     }
 
@@ -148,29 +157,89 @@ export default function Cart(props) {
         }
     }   
 
-    const renderAddTrayEgg = () => {
-        return (
-            <div>
-                <button
-                    className="sale-qty-btn" 
-                    style={{ backgroundColor: "#20A8D8", marginRight: "5px" }}
-                >
-                    +
-                </button>
-                1 Tray
-                <button
-                    className="sale-qty-btn" 
-                    style={{ backgroundColor: "#F86C6B", marginLeft: "5px" }}
-                >
-                    -
-                </button>
-            </div>
-        )
+    const renderInputButir = () => {
+        if(!showEgg) {
+                return (
+                    <div>
+                    <input type="number" placeholder="Berat (kg)" className="input-butir-sales" style={{ width: "80px" }} onChange={(e) => setKgEgg(e.target.value)}/>
+                    <input type="number" placeholder="Butir" className="input-butir-sales" style={{ width: "80px" }} onChange={(e) => setQtyEgg(e.target.value)}/>
+                    <button
+                        className="add-butir-btn-sales"
+                        style={{ backgroundColor: "#20A8D8" }}
+                        onClick={handleEggSales}
+                        >
+                        Add
+                    </button>
+                    <button
+                      className="sale-qty-btn" 
+                      style={{ backgroundColor: "#F86C6B", marginLeft: "7px" }}
+                      onClick={() => deleteItemInCart(idx, harga)}
+                    >
+                        Delete
+                    </button>
+                </div>
+            )
+        } else {
+            return (
+                <div>
+                    <span>{kgEgg} Kg</span> || <span>{qtyEgg} Butir</span>
+                    <button
+                        className="add-butir-btn-sales"
+                        style={{ backgroundColor: "#20A8D8", marginLeft: "7px" }}
+                        onClick={() => setShowEgg(false)}
+                    >
+                        Edit
+                    </button>
+                    <button
+                        className="sale-qty-btn" 
+                        style={{ backgroundColor: "#F86C6B", marginLeft: "7px" }}
+                        onClick={() => deleteItemInCart(idx, harga)}
+                    >
+                        Delete
+                    </button>
+                </div>
+            )
+        }
     }
 
-    const plusTray = () => {
-        
+    const handleEggSales = (num) => {
+        if(kgEgg === 0) {
+           alert("Masukkan Berat Telur!")
+        } else if(qtyEgg === 0) {
+            alert("Masukkan jumlah telur!")
+        } else if(Number(kgEgg) >= berat) {
+            alert("Berat Telur kurang!")
+        } else if(Number(qtyEgg >= butir)) {
+            alert("Jumlah Telur kurang!")
+        } else {
+            var disc = 0
+            if(diskon === 0) {
+                disc = 0
+            } else {
+                disc = diskon
+            }
+            var hargaTelur = Number(price) * Number(kgEgg)
+            var harg = hargaTelur -  (hargaTelur * (disc/100)) 
+            setPriceEgg(Number(price) * kgEgg)
+     
+            if(arrQty.length === 1) {
+                setQty(kgEgg)
+                setTotal(Number(harg))
+                arrQty[idx] = kgEgg
+                setArrQty(arrQty)
+                setQtyButir(qtyEgg)
+                setShowEgg(true)
+            } else {    
+                setQtyButir(qtyEgg)
+                setQty(kgEgg)
+                setTotal(Number(total) + Number(harg) - (Number(price) * arrQty[idx]))
+                arrQty[idx] = kgEgg
+                setArrQty(arrQty)
+                setShowEgg(true)
+            }
+        }
     }
+
 
     return (
         <div className="cart-item-box">
@@ -195,7 +264,13 @@ export default function Cart(props) {
                         :
                     null
                 }
-                <div>
+                
+                {
+                    name === 'Telur'
+                    ?
+                    renderInputButir()
+                    :
+                    <div>
                     <button 
                         className="sale-qty-btn" 
                         style={{ backgroundColor: "#20A8D8", marginRight: "5px" }}
@@ -239,12 +314,6 @@ export default function Cart(props) {
                     {renderDiskonStatus()}
 
                 </div>
-                {
-                    name === 'Telur'
-                    ?
-                    renderAddTrayEgg()
-                    :
-                    null
                 }
             </span>
             {
