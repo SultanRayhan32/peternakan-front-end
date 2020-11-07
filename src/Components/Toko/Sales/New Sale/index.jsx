@@ -23,6 +23,7 @@ export default function NewSale(props) {
     const [ customer, setCustomer ] = useState("")
     const [ customerId, setCustomerId ] = useState(0)
     const [ qtyButir, setQtyButir ] = useState(0)
+    const [ priceEgg, setPriceEgg ] = useState(0)
 
     const searchItem = (key) => {
         if(key.length === 0) {
@@ -81,7 +82,6 @@ export default function NewSale(props) {
             idSup
         }
         var arr = dataCart
-        
         function checkId(val) {
             return Number(val.id) === Number(id);
         }
@@ -90,6 +90,9 @@ export default function NewSale(props) {
         if(jumlah < 1) {
             return null
         } else if(arr2.length < 1) {
+            if(data.name === 'Telur') {
+                setPriceEgg(data.price)
+            }
             setCartTotal(cartTotal + Number(price))
             arrQty.push(1)  
             dataCart.push(data)
@@ -102,7 +105,8 @@ export default function NewSale(props) {
         if(window.confirm("Yakin?")) {
             dataCart.splice(idx, 1)
             arrQty.splice(idx, 1)
-            setDataCart(dataCart)
+            var data = [...dataCart]
+            setDataCart(data)
             setArrQty(arrQty)
             setCartTotal(cartTotal - harga)
         }
@@ -128,6 +132,8 @@ export default function NewSale(props) {
                     setQtyButir={setQtyButir}
                     berat={berat}
                     butir={butir}
+                    priceEgg={priceEgg}
+                    setPriceEgg={setPriceEgg}
                 />
             )
         })

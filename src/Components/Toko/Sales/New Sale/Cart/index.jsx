@@ -7,7 +7,7 @@ import '../../.././style.css'
 
 export default function Cart(props) {
     const {
-        id, name, price, jumlah, total, setTotal, idx, deleteItem, arrQty, setArrQty, dataCart, setQtyButir, berat, butir
+        id, name, price, jumlah, total, setTotal, idx, deleteItem, arrQty, setArrQty, dataCart, setQtyButir, berat, butir, priceEgg, setPriceEgg
     } = props
 
     const [ qty, setQty ] = useState(1)
@@ -20,7 +20,7 @@ export default function Cart(props) {
     const [ kgEgg, setKgEgg ] = useState(0)
     const [ qtyEgg, setQtyEgg ] = useState(0)
     const [ showEgg, setShowEgg ] = useState(false)
-    const [ priceEgg, setPriceEgg ] = useState(0)
+
 
     const plus = (num) => {
         var disc = 0
@@ -35,8 +35,10 @@ export default function Cart(props) {
             setHarga(harga)
             arrJumlah[idx] = qty
         } else {
-            var harg = harga -  (harga * (disc/100))
+            var harg = Number(price) -  (Number(price) * (disc/100))
             setQty(qty + num)
+            console.log(harg)
+            console.log(price)
             setTotal(Number(total) + Number(harg))
             arrQty[idx] = qty + num
             setArrQty(arrQty)
@@ -46,7 +48,8 @@ export default function Cart(props) {
 
     const min = (index) => {
         var disc = Number(diskon)
-        var harg = harga -  (harga * (disc/100))
+        var harg = Number(price) -  (Number(price) * (disc/100))
+        console.log(harg)
         if(arrQty[idx] === 1) {
             setQty(1)
             setHarga(price)
@@ -80,7 +83,6 @@ export default function Cart(props) {
         } else {
             var rego = dataCart[idx + 1].price
             setHarga(rego)
-            console.log("SINI ELSE")
             deleteItem(index, priceNum)
         }
     }
@@ -88,23 +90,28 @@ export default function Cart(props) {
     const handleDiscount = () => {
         const arrLength = Number(arrQty.length)
         var disc = Number(diskon)
-        var harg = harga -  (harga * (disc/100))
+        var harg = Number(price) -  (Number(price) * (disc/100))
 
         if(disc > 100) {
             alert("Max 100 %")
         } else {
             if(diskonStatus === 0) {
                 setDiskonStatus(1)
+                console.log("SINI 1")
             } else if(qty > 1 && arrLength === 1) {
+                console.log("SINI 2")
                 setTotal(harg * qty)
                 setDiskonStatus(2)
             } else if(qty === 1 && arrLength === 1) {
-                setTotal(total - harga + harg)
+                console.log("SINI 3")
+                setTotal(total - Number(price) + harg)
                 setDiskonStatus(2)
             } else if(qty === 1 && arrLength > 1) {
+                console.log("SINI 4")
                 setTotal(total - harga + harg)
                 setDiskonStatus(2)
             } else if(arrLength > 1) {
+                console.log("SINI 5")
                 setTotal(total - (harga * qty) + (harg * qty))
                 setDiskonStatus(2)
             }
@@ -114,22 +121,25 @@ export default function Cart(props) {
     const cancelDiscount = () => {
         const arrLength = arrQty.length
         var disc = Number(diskon)
-        var harg = harga - (harga * (disc/100))
-
+        var harg = Number(price) - (Number(price) * (disc/100))
+        const rego = Number(price)
         if(qty === 1 && arrLength === 1) {
-            setTotal(total - harg + harga)
+            setTotal(total - harg + rego)
             setDiskon(0)
             setDiskonStatus(0)
         } else if(qty > 1 && arrLength === 1) {
-            setTotal(total - total + (harga * qty))
+            console.log("SINI 2")
+            setTotal(total - total + (rego * qty))
             setDiskon(0)
             setDiskonStatus(0)
         } else if(qty === 1 && arrLength > 1) {
-            setTotal(total - harg + harga)
+            console.log("SINI 3")
+            setTotal(total - harg + rego)
             setDiskon(0)
             setDiskonStatus(0)
         } else if(qty > 1 && arrLength > 1) {
-            setTotal(total - (harg * qty) + (harga * qty))
+            console.log("SINI 4")
+            setTotal(total - (harg * qty) + (rego * qty))
             setDiskon(0)
             setDiskonStatus(0)
         }
