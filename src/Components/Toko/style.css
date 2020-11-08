@@ -124,14 +124,12 @@
 }
 
 .new-sale-search-column {
-    /* background-color: lawngreen; */
-    width: 50%;
+    width: 100%;
+
 }
 
 .new-sale-search-column input {
-    width: 75%;
-    background-color: white;
-    color: black;
+    width: 90%;
 }
 
 .new-sale-column-box {
@@ -358,3 +356,12 @@
     background-color: #f4f4f4;
 }
 
+.search-item-sales {
+    height: 45px;
+    outline: none;
+    border: none;
+    box-shadow: 2px 2px 1px #c4c4c4;
+    padding-left: 10px;
+    font-weight: bold;
+    border-radius: 7px;
+}

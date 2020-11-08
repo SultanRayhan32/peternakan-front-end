@@ -244,7 +244,7 @@ export default function NewSale(props) {
                             {/* COLUMN 1 */}
                             <div className="new-sale-search-column">
                                 {/* SEARCH ITEM */}
-                                <input type="text" placeholder="Search Item ..." className="input-cari-barang-toko" onKeyUp={(e) => searchItem(e.target.value)}/>
+                                <input type="text" placeholder="Search Item ..." className="search-item-sales" onKeyUp={(e) => searchItem(e.target.value)}/>
                             </div>
 
                             {/* COLUMN 2 */}
@@ -252,7 +252,7 @@ export default function NewSale(props) {
                             {/* SEARCH CUSTOMER */}
                                 <input type="text" 
                                     placeholder="Search Customer ..." 
-                                    className="input-cari-barang-toko" 
+                                    className="search-item-sales" 
                                     onKeyUp={(e) => searchCustomer(e.target.value)}
                                 />
                                 {

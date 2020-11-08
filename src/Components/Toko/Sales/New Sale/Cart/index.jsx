@@ -194,34 +194,14 @@ export default function Cart(props) {
                         >
                             Delete
                         </button>
-                        {
-                            diskonStatus === 0
-                            ?
-                            <button
-                                className="add-butir-btn-sales" 
-                                style={{ backgroundColor: "#FEC106", marginLeft: "7px", color: "black" }}
-                                onClick={handleDiscount}
-                            >
-                                %
-                            </button>
-                            :
-                            <>
-                            <input type="number" className="input-butir-sales" style={{ marginLeft: "7px" }} onChange={(e) => setDiskon(e.target.value)}/>
-                            <button
-                                className="add-butir-btn-sales" 
-                                style={{ backgroundColor: "#FEC106", marginLeft: "7px", color: "black" }}
-                                onClick={handleDiscount}
-                            >
-                                Add
-                            </button>
-                            </>
-                        }
                     </div>
             )
         } else {
             return (
                 <div>
-                    <span>{kgEgg} Kg</span> || <span>{qtyEgg} Butir</span>
+                    <div style={{ display: "flex" }}>
+                        <span>{kgEgg} Kg</span> || <span>{qtyEgg} Butir</span>
+                    </div>
                     <button
                         className="add-butir-btn-sales"
                         style={{ backgroundColor: "#20A8D8", marginLeft: "7px" }}
@@ -236,6 +216,28 @@ export default function Cart(props) {
                     >
                         Delete
                     </button>
+                    {
+                        diskonStatus === 0
+                        ?
+                        <button
+                            className="add-butir-btn-sales" 
+                            style={{ backgroundColor: "#FEC106", marginLeft: "7px", color: "black" }}
+                            onClick={handleDiscount}
+                        >
+                            %
+                        </button>
+                        :
+                        <>
+                        <input type="number" className="input-butir-sales" style={{ marginLeft: "7px" }} onChange={(e) => setDiskon(e.target.value)}/>
+                        <button
+                            className="add-butir-btn-sales" 
+                            style={{ backgroundColor: "#FEC106", marginLeft: "7px", color: "black" }}
+                            onClick={handleDiscount}
+                        >
+                            Add
+                        </button>
+                        </>
+                    }
                 </div>
             )
         }
@@ -259,9 +261,12 @@ export default function Cart(props) {
             } else {
                 disc = diskon
             }
+            var tara = Math.ceil(Number(qtyEgg) / 30)
+            var beratTara = Number((0.14 * tara).toFixed(2))
             var hargaTelur = Number(price) * Number(kgEgg)
+            // console.log(Number(price) * (Number(kgEgg) - beratTara))
             var harg = hargaTelur -  (hargaTelur * (disc/100)) 
-         
+        
             setPriceEgg(Number(price) * kgEgg)
             if(arrQty.length === 1) {
                 setIsEgg(true)
@@ -301,7 +306,7 @@ export default function Cart(props) {
                             x
                         </span>
                         <span className='sale-discount-label'>
-                            Save {diskon} %
+                            Discount {diskon} %
                         </span>
                         </>
                         :
