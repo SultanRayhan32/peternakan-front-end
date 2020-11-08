@@ -7,7 +7,8 @@ import '../../.././style.css'
 
 export default function Cart(props) {
     const {
-        id, name, price, jumlah, total, setTotal, idx, deleteItem, arrQty, setArrQty, dataCart, setQtyButir, berat, butir, priceEgg, setPriceEgg
+        id, name, price, jumlah, total, setTotal, idx, deleteItem, arrQty, setArrQty, dataCart, setQtyButir, berat, butir, priceEgg, setPriceEgg,
+        kgEgg, setKgEgg, qtyEgg, setQtyEgg
     } = props
 
     const [ qty, setQty ] = useState(1)
@@ -17,9 +18,8 @@ export default function Cart(props) {
     const [ showAddDiskon, setShowAddDiskon ] = useState(true)
     const [ diskon, setDiskon ] = useState(0)
     const [ diskonStatus, setDiskonStatus ] = useState(0)
-    const [ kgEgg, setKgEgg ] = useState(0)
-    const [ qtyEgg, setQtyEgg ] = useState(0)
     const [ showEgg, setShowEgg ] = useState(false)
+    const [ isEgg, setIsEgg ] = useState(false)
 
 
     const plus = (num) => {
@@ -49,7 +49,7 @@ export default function Cart(props) {
     const min = (index) => {
         var disc = Number(diskon)
         var harg = Number(price) -  (Number(price) * (disc/100))
-        console.log(harg)
+        // console.log(harg)
         if(arrQty[idx] === 1) {
             setQty(1)
             setHarga(price)
@@ -71,10 +71,19 @@ export default function Cart(props) {
         var priceNum = Number(price)
         var disc = Number(diskon)
         var harg = ""
-        if(name === "Telur") {
-            priceNum = priceEgg
+      
+        if(name === "Telur" && Number(kgEgg) > 0 && qtyEgg === 0 && !isEgg) {
+            priceNum = 0
+        } else if(name === "Telur" && kgEgg === 0 && Number(qtyEgg) > 0 && !isEgg) {
+            priceNum = 0
         }
-
+        
+        if(name === "Telur" && Number(kgEgg) > 0 && Number(qtyEgg) > 0 && isEgg) {
+            priceNum = priceEgg
+        } else if(name === "Telur" && kgEgg === 0 && !isEgg) {
+            priceNum = 0
+        } 
+   
         if(dataCart.length > 0) {
             var harg = priceNum -  (priceNum * (disc/100))
             setHarga(priceNum)
@@ -85,6 +94,7 @@ export default function Cart(props) {
             setHarga(rego)
             deleteItem(index, priceNum)
         }
+        
     }
 
     const handleDiscount = () => {
@@ -97,21 +107,16 @@ export default function Cart(props) {
         } else {
             if(diskonStatus === 0) {
                 setDiskonStatus(1)
-                console.log("SINI 1")
             } else if(qty > 1 && arrLength === 1) {
-                console.log("SINI 2")
                 setTotal(harg * qty)
                 setDiskonStatus(2)
             } else if(qty === 1 && arrLength === 1) {
-                console.log("SINI 3")
                 setTotal(total - Number(price) + harg)
                 setDiskonStatus(2)
             } else if(qty === 1 && arrLength > 1) {
-                console.log("SINI 4")
                 setTotal(total - harga + harg)
                 setDiskonStatus(2)
             } else if(arrLength > 1) {
-                console.log("SINI 5")
                 setTotal(total - (harga * qty) + (harg * qty))
                 setDiskonStatus(2)
             }
@@ -171,23 +176,47 @@ export default function Cart(props) {
         if(!showEgg) {
                 return (
                     <div>
-                    <input type="number" placeholder="Berat (kg)" className="input-butir-sales" style={{ width: "80px" }} onChange={(e) => setKgEgg(e.target.value)}/>
-                    <input type="number" placeholder="Butir" className="input-butir-sales" style={{ width: "80px" }} onChange={(e) => setQtyEgg(e.target.value)}/>
-                    <button
-                        className="add-butir-btn-sales"
-                        style={{ backgroundColor: "#20A8D8" }}
-                        onClick={handleEggSales}
+                        <div className="input-butir-sales-box">
+                            <input type="number" placeholder="Berat (kg)" style={{ width: "48%" }} className="input-butir-sales" onChange={(e) => setKgEgg(e.target.value)}/>
+                            <input type="number" placeholder="Butir" style={{ width: "48%" }} className="input-butir-sales" onChange={(e) => setQtyEgg(e.target.value)}/>
+                        </div>
+                        <button
+                            className="add-butir-btn-sales"
+                            style={{ backgroundColor: "#20A8D8" }}
+                            onClick={handleEggSales}
+                            >
+                            Save
+                        </button>
+                        <button
+                            className="add-butir-btn-sales" 
+                            style={{ backgroundColor: "#F86C6B", marginLeft: "7px" }}
+                            onClick={() => deleteItemInCart(idx, harga)}
                         >
-                        Add
-                    </button>
-                    <button
-                      className="sale-qty-btn" 
-                      style={{ backgroundColor: "#F86C6B", marginLeft: "7px" }}
-                      onClick={() => deleteItemInCart(idx, harga)}
-                    >
-                        Delete
-                    </button>
-                </div>
+                            Delete
+                        </button>
+                        {
+                            diskonStatus === 0
+                            ?
+                            <button
+                                className="add-butir-btn-sales" 
+                                style={{ backgroundColor: "#FEC106", marginLeft: "7px", color: "black" }}
+                                onClick={handleDiscount}
+                            >
+                                %
+                            </button>
+                            :
+                            <>
+                            <input type="number" className="input-butir-sales" style={{ marginLeft: "7px" }} onChange={(e) => setDiskon(e.target.value)}/>
+                            <button
+                                className="add-butir-btn-sales" 
+                                style={{ backgroundColor: "#FEC106", marginLeft: "7px", color: "black" }}
+                                onClick={handleDiscount}
+                            >
+                                Add
+                            </button>
+                            </>
+                        }
+                    </div>
             )
         } else {
             return (
@@ -201,7 +230,7 @@ export default function Cart(props) {
                         Edit
                     </button>
                     <button
-                        className="sale-qty-btn" 
+                        className="add-butir-btn-sales" 
                         style={{ backgroundColor: "#F86C6B", marginLeft: "7px" }}
                         onClick={() => deleteItemInCart(idx, harga)}
                     >
@@ -221,6 +250,8 @@ export default function Cart(props) {
             alert("Berat Telur kurang!")
         } else if(Number(qtyEgg >= butir)) {
             alert("Jumlah Telur kurang!")
+        } else if(Number(kgEgg) === 0 && Number(qtyEgg) > 0 )  {
+            alert("Masukkan berat telur!")
         } else {
             var disc = 0
             if(diskon === 0) {
@@ -230,9 +261,10 @@ export default function Cart(props) {
             }
             var hargaTelur = Number(price) * Number(kgEgg)
             var harg = hargaTelur -  (hargaTelur * (disc/100)) 
+         
             setPriceEgg(Number(price) * kgEgg)
-     
             if(arrQty.length === 1) {
+                setIsEgg(true)
                 setQty(kgEgg)
                 setTotal(Number(harg))
                 arrQty[idx] = kgEgg
@@ -240,9 +272,10 @@ export default function Cart(props) {
                 setQtyButir(qtyEgg)
                 setShowEgg(true)
             } else {    
+                setIsEgg(true)
                 setQtyButir(qtyEgg)
                 setQty(kgEgg)
-                setTotal(Number(total) + Number(harg) - (Number(price) * arrQty[idx]))
+                setTotal(Number(total) + Number(harg))
                 arrQty[idx] = kgEgg
                 setArrQty(arrQty)
                 setShowEgg(true)
@@ -268,7 +301,7 @@ export default function Cart(props) {
                             x
                         </span>
                         <span className='sale-discount-label'>
-                            {diskon} %
+                            Save {diskon} %
                         </span>
                         </>
                         :
@@ -331,12 +364,12 @@ export default function Cart(props) {
                 ?
                 <strike style={{ color: "red" }}><CurrencyFormat value={price} displayType={'text'} thousandSeparator={true} prefix={'Rp. '} /></strike>
                 :
-                <span><CurrencyFormat value={price} displayType={'text'} thousandSeparator={true} prefix={'Rp. '} /></span>
+                <span className="price-in-cart" ><CurrencyFormat value={price} displayType={'text'} thousandSeparator={true} prefix={'Rp. '} /></span>
             }
             {
                 diskonStatus === 2
                 ?
-                <span style={{ marginLeft: "7px" }}>
+                <span style={{ marginLeft: "7px" }} className="price-in-cart" >
                     <CurrencyFormat value={harga - (harga * (Number(diskon)/100))} displayType={'text'} thousandSeparator={true} prefix={'Rp. '} />
                 </span>
                 :

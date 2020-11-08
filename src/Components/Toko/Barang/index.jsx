@@ -39,7 +39,7 @@ export default function Barang() {
     const [ saldo, setSaldo ] = useState(0)
 
     const addNewBarang = () => {
-        if(!satuanBarang) {
+        if(!namaBarang) {
             alert("Masukkan Nama Barang")
         } else if(!hargaBarang) {
             alert("Masukkan Harga Barang")
@@ -51,6 +51,8 @@ export default function Barang() {
             alert("Pilih Supplier")
         } else if(saldo < Number(hargaBarang) * Number(jumlahBarang)) {
             alert("Saldo anda tidak mencukupi")
+        } else if(namaBarang === "Telur") {
+            alert("Telur tidak bisa!")
         } else {
             axios({
                 method: "POST",

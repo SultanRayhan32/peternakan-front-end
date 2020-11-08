@@ -24,6 +24,8 @@ export default function NewSale(props) {
     const [ customerId, setCustomerId ] = useState(0)
     const [ qtyButir, setQtyButir ] = useState(0)
     const [ priceEgg, setPriceEgg ] = useState(0)
+    const [ kgEgg, setKgEgg ] = useState(0)
+    const [ qtyEgg, setQtyEgg ] = useState(0)
 
     const searchItem = (key) => {
         if(key.length === 0) {
@@ -91,11 +93,16 @@ export default function NewSale(props) {
             return null
         } else if(arr2.length < 1) {
             if(data.name === 'Telur') {
+                setCartTotal(cartTotal)
                 setPriceEgg(data.price)
-            }
-            setCartTotal(cartTotal + Number(price))
-            arrQty.push(1)  
-            dataCart.push(data)
+                arrQty.push(1)  
+                dataCart.push(data)
+            } else {
+                setCartTotal(cartTotal + Number(price))
+                arrQty.push(1)  
+                dataCart.push(data)
+            } 
+           
         } else {
             return null
         }
@@ -134,6 +141,10 @@ export default function NewSale(props) {
                     butir={butir}
                     priceEgg={priceEgg}
                     setPriceEgg={setPriceEgg}
+                    kgEgg={kgEgg}
+                    setKgEgg={setKgEgg}
+                    qtyEgg={qtyEgg}
+                    setQtyEgg={setQtyEgg}
                 />
             )
         })
@@ -149,11 +160,16 @@ export default function NewSale(props) {
                 dataEgg.index = idx
             }
         })
+        
         if(dataCart.length === 0) {
             alert("Pilih Item !")
         } else if(customerId === 0) {
             alert("Pilih Customer!")
-        } else {
+        } else if(kgEgg === 0 && statusEgg) {
+            alert("Masukkan berat telur!")
+        } else if(qtyEgg === 0 && statusEgg) {
+            alert("Masukkan jumlah telur!")
+        }  else {
             var arrIdItem = []
             var arrIdSup = []
             dataCart.forEach((val) => {
@@ -264,14 +280,13 @@ export default function NewSale(props) {
                                     return (
                                         <div className="new-sale-column-box">
                                             <p>{val.nama_barang}</p>
-                                            <span>Price: <CurrencyFormat value={val.harga_barang} displayType={'text'} thousandSeparator={true} prefix={'Rp. '} /></span>
+                                            <span><CurrencyFormat value={val.harga_barang} displayType={'text'} thousandSeparator={true} prefix={'Rp. '} /></span>
 
                                             <button 
-                                                className="sale-qty-btn" 
-                                                style={{ backgroundColor: "#20A8D8", width: "70px" }}
+                                                className="sale-qty-btn-add-cart" 
                                                 onClick={() => addToCart(val.id_barang, val.nama_barang, val.harga_barang, val.jumlah_barang, val.id_supplier)}
                                                 >
-                                                Tambah
+                                                + Tambah
                                             </button>
                                         </div>
                                     ) 
@@ -293,8 +308,8 @@ export default function NewSale(props) {
                     </h2>
 
                     <div className="check-out-box">
-                        <button className="btn-check-out" onClick={checkOut}>Check Out</button>
-                        <button onClick={() => setSaleIsOpen(false)} className="btn-close-sale" style={{ marginLeft: "10px" }}>Close</button>
+                        <button className="btn-check-out" onClick={checkOut}>Checkout</button>
+                        <button onClick={() => setSaleIsOpen(false)} className="btn-close-sale" style={{ marginLeft: "10px" }}>X</button>
                     </div>
 
                     <div className="cart-box">

@@ -109,11 +109,13 @@
     border: 1px solid #c4c4c4;
     border-radius: 2px;
     padding: 10px;
+    
 
 }
 
 .new-sale-row-box02 {
     width: 30%;
+    padding: 2%;
 }
 
 
@@ -140,12 +142,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #303030;
-    color: white;
     height: 120px;
     margin-right: 20px;
     font-size: small;
     flex-direction: column;
+    box-shadow: 2px 2px 1px #c4c4c4;
+}
+
+.new-sale-column-box p {
+    font-size: 15px;
+}
+
+.new-sale-column-box span {
+    font-size: 12px;
 }
 
 .sale-qty-btn {
@@ -158,6 +167,7 @@
     border: none;
     outline: none;
     border-radius: 4px;
+    color: white;
 }
 
 .sale-qty-btn:hover {
@@ -167,8 +177,11 @@
 .cart-item-box {
     border: 1px solid #c4c4c4;
     padding: 10px;
-    border-radius: 4px;
+    width: 95%;
+    border-radius: 7px;
     margin-bottom: 10px;
+    box-shadow: 2px 2px 1px #c4c4c4;
+    
 }
 
 .cart-item-name {
@@ -182,7 +195,7 @@
 }
 
 .btn-check-out {
-    width: 70%;
+    width: 80%;
     border: none;
     outline: none;
     border-radius: 5px;
@@ -191,11 +204,12 @@
     font-weight: bold;
     font-size: 16px;
     transition: 0.5s;
+    color: white;
 }
 
 .btn-check-out:hover {
     cursor: pointer;
-    color: #5e5e5e;
+    color: #f4f4f4;
 }
 
 .btn-close-sale:hover {
@@ -204,7 +218,7 @@
 }
 
 .btn-close-sale {
-    width: 25%;
+    width: 15%;
     border: none;
     outline: none;
     border-radius: 5px;
@@ -222,10 +236,6 @@
 
 .check-out-box {
     display: flex;
-    background-color: #303030;
-    padding: 15px;
-    border-radius: 4px;
-    border: 1px solid;
     margin-bottom: 15px;
 }
 
@@ -296,11 +306,19 @@
 }
 
 .input-butir-sales {
-    margin-top: 10px;
-    margin-right: 7px;
-    width: 400px;
-    height: 22px;
+    height: 27px;
     outline: none;
+    border: 1px solid #c4c4c4;
+    outline: none;
+    border-radius: 2px;
+    padding: 5px;
+}
+
+.input-butir-sales-box {
+    margin-top: 10px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
 }
 
 .add-butir-btn-sales {
@@ -312,8 +330,31 @@
     border: none;
     outline: none;
     border-radius: 4px;
+    color: white;
+    font-size: 11px;
 }
 
 .add-butir-btn-sales:hover {
     cursor: pointer;
 }
+
+.sale-qty-btn-add-cart {
+    width: 90%;
+    height: 30px;
+    margin-top: 10px;
+    background: none;
+    outline: none;
+    border: 0.5px solid #20A8D8;
+    border-radius: 7px;
+    font-weight: bold;
+    font-size: 11px;
+    color: #20A8D8;
+    transition: 0.5s;
+}
+
+
+.sale-qty-btn-add-cart:hover {
+    cursor: pointer;
+    background-color: #f4f4f4;
+}
+
