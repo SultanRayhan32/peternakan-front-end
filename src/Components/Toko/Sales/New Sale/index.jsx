@@ -151,6 +151,10 @@ export default function NewSale(props) {
     }
 
     const checkOut = () => {
+        var dataGudang = []
+        if(customer.toLowerCase() === "gudang") {
+            dataGudang = dataCart
+        }
         var statusEgg = false
         var dataEgg = {}
         dataCart.forEach((val, idx) => {
@@ -191,7 +195,9 @@ export default function NewSale(props) {
                     qty_item: arrQty,
                     status_egg: statusEgg,
                     data_egg: dataEgg,
-                    qty_butir: qtyButir
+                    qty_butir: qtyButir,
+                    customer_name: customer,
+                    data_gudang: dataGudang
                 }
             })
             .then(() => {

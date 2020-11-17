@@ -37,8 +37,6 @@ export default function Cart(props) {
         } else {
             var harg = Number(price) -  (Number(price) * (disc/100))
             setQty(qty + num)
-            console.log(harg)
-            console.log(price)
             setTotal(Number(total) + Number(harg))
             arrQty[idx] = qty + num
             setArrQty(arrQty)
@@ -85,11 +83,15 @@ export default function Cart(props) {
         } 
    
         if(dataCart.length > 0) {
+            setDiskonStatus(0)
+            setDiskon(0)
             var harg = priceNum -  (priceNum * (disc/100))
             setHarga(priceNum)
             setQty(arrQty[idx + 1])
             deleteItem(index, harg)
         } else {
+            setDiskonStatus(0)
+            setDiskon(0)
             var rego = dataCart[idx + 1].price
             setHarga(rego)
             deleteItem(index, priceNum)
@@ -101,7 +103,7 @@ export default function Cart(props) {
         const arrLength = Number(arrQty.length)
         var disc = Number(diskon)
         var harg = Number(price) -  (Number(price) * (disc/100))
-
+       
         if(disc > 100) {
             alert("Max 100 %")
         } else {
@@ -133,17 +135,14 @@ export default function Cart(props) {
             setDiskon(0)
             setDiskonStatus(0)
         } else if(qty > 1 && arrLength === 1) {
-            console.log("SINI 2")
             setTotal(total - total + (rego * qty))
             setDiskon(0)
             setDiskonStatus(0)
         } else if(qty === 1 && arrLength > 1) {
-            console.log("SINI 3")
             setTotal(total - harg + rego)
             setDiskon(0)
             setDiskonStatus(0)
         } else if(qty > 1 && arrLength > 1) {
-            console.log("SINI 4")
             setTotal(total - (harg * qty) + (rego * qty))
             setDiskon(0)
             setDiskonStatus(0)

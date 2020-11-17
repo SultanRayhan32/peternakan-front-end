@@ -176,11 +176,14 @@ export default function Barang() {
     }
 
     const handleChangeBarangUpdate = (data) => {
-        console.log(JSON.parse(data))
         setDataBarangSupplierChoosed(JSON.parse(data))
     }
 
     const plusJumlahBarang = () => {
+        var status = false
+        if(dataBarangSupplierChoosed.nama_barang === "Telur") {
+            status = true
+        }
         if(!plusJumlahValue) {
             alert("Masukkan Value !")
         } else {
@@ -193,7 +196,8 @@ export default function Barang() {
                 data: {
                     value: plusJumlahValue,
                     id_barang: dataBarangSupplierChoosed.id_barang,
-                    total: Number(dataBarangSupplierChoosed.harga_barang) * plusJumlahValue
+                    total: Number(dataBarangSupplierChoosed.harga_barang) * plusJumlahValue,
+                    status
                 }
             })
             .then(() => {
