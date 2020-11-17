@@ -9,6 +9,7 @@ import CurrencyFormat from 'react-currency-format'
 
 // STYLE
 import '../style.css'
+import '../../../App.css'
 
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 

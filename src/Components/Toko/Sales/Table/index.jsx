@@ -114,13 +114,28 @@ function CollapsibleTable(props) {
         return date + ' ' + month  + ' ' + year
     }
 
+    let showHour = (hourParams) => {
+
+        let hour = new Date(hourParams).getHours()
+        let minutes = new Date(hourParams).getMinutes()
+    
+        return (hour > 9 ? hour : "0" + hour ) + ":" + (minutes > 9 ? minutes : "0" + minutes)
+    }
+
     const Rows = () => {
         return dataSale.map((e, idx) => {
             var showItem = false
             return (
                 <TableBody>
                     <TableCell>{idx + 1}</TableCell>
-                    <TableCell>{ showDate(e.tanggal) }</TableCell>
+                    <TableCell >
+                        <div>
+                        { showDate(e.tanggal) }
+                        </div>
+                        <div>
+                        {  showHour(e.tanggal) }
+                        </div>
+                    </TableCell>
                     <TableCell><CurrencyFormat value={e.value} displayType={'text'} thousandSeparator={true} prefix={'Rp. '} /> ,-</TableCell>
                     {/* <TableCell>{e.jumlah_item}</TableCell> */}
                     <TableCell>

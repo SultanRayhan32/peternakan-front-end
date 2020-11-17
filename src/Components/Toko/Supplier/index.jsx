@@ -7,26 +7,41 @@ import SERVER from '../../../helper/server'
 
 // COMPONENT
 import Table from './Table'
+import Loader from '../../Loader'
 
 // STYLE
 import '../style.css'
 
 export default function Supplier() {
+
     const [ showAddSupplier, setShowAddSupplier ] = useState(false)
     const [ namaSupplier, setNamaSupplier ] = useState(null)
     const [ alamatSupplier, setAlamatSupplier ] = useState(null)
     const [ nomorSupplier, setNomorSupplier ] = useState(null)
  
     const [ dataSupplier, setDataSupplier ] = useState(null)
+    const [ isLoading,setIsLoading] = useState(false)
 
-    const addNewSupplier = () => {
+    let checkName = (name) => {
+        if (name.toLowerCase() === "kandang" || name.toLowerCase() === "gudang" || name.toLowerCase() === "doc" ) {
+            return false
+        }else {
+            return true
+        }
+    }
+
+    const addNewSupplier = (e) => {
+        e.preventDefault()
         if(!namaSupplier) {
             alert("Masukkan Nama Supplier")
         } else if(!alamatSupplier) {
             alert("Masukkan Alamat Supplier")
         } else if(!nomorSupplier) {
             alert("Masukkan Nomor HP Supplier")
-        } else {
+        }else if (!checkName(namaSupplier)) {
+            alert("Nama sudah tersedia")
+        }else {
+            setIsLoading(true)
             axios({
                 method: "POST",
                 url: `${SERVER}supplier/add-new-supplier`,
@@ -41,10 +56,12 @@ export default function Supplier() {
             })
             .then(() => {
                 alert('input success')
+                setIsLoading(false)
             })
             .catch((err) => {
                 console.log(err)
                 alert('input failed')
+                setIsLoading(false)
             })
         }
     }
@@ -117,7 +134,7 @@ export default function Supplier() {
             {
                 showAddSupplier
                 ?
-                <div>
+                <form onSubmit={e=>addNewSupplier(e)} style={{marginTop : 15,display : "flex",flexDirection : "column"}}>
                     <h4 style={{ marginTop: "50px" }}>Add New Supplier</h4> 
                     <div>
                         <input className="toko-input-new-barang" onChange={(e) => setNamaSupplier(e.target.value)} type="text" placeholder="Nama Supplier"/>
@@ -125,13 +142,29 @@ export default function Supplier() {
                         <input className="toko-input-new-barang" onChange={(e) => setNomorSupplier(e.target.value)} type="text" placeholder="Nomor Supplier"/>
                         
                     </div>
-                    <button className="toko-add-new-01" style={{ marginTop: "15px", width: "55px" }} onClick={addNewSupplier}>Add</button>
-                    <button 
-                        className="toko-add-new-01" 
-                        style={{ backgroundColor: "red" }}
-                        onClick={() => setShowAddSupplier(false)}    
-                    >Cancel</button>
-                </div>
+                    <div style={{display : "flex"}}>
+
+                        <button 
+                            // className="toko-add-new-01" 
+                            className="save-button"
+                            style={{ marginTop: 15  }} 
+                            onClick={e=>addNewSupplier(e)}
+                        >
+                            {
+                                isLoading ?
+                                <Loader/>:
+                                "Add"
+                            }
+                        </button>
+                        <button 
+                            // className="toko-add-new-01" 
+                            className="save-button" 
+                            style={{ backgroundColor: "red",marginLeft : 7 , marginTop : 15 }}
+                            onClick={() => setShowAddSupplier(false)}    
+                        >Cancel</button>
+
+                    </div>
+                </form>
                 :
                 null
             }      
