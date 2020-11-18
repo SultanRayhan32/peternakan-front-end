@@ -5,7 +5,7 @@ import SERVER from '../../../helper/server'
 
 // COMPONENTS
 import Table from './Table'
-export default function Item() {
+export default function Item(props) {
     const [ dataItem, setDataItem ] = useState([])
 
     const getDataItem = () => {
@@ -16,7 +16,7 @@ export default function Item() {
                 token: localStorage.getItem('token')
             },
             data: {
-                id_location: 2
+                id_location: props.match.params.id
             }
         })
         .then((res) => {
@@ -35,7 +35,7 @@ export default function Item() {
                 token: localStorage.getItem('token')
             },
             data: {
-                id_location: 2,
+                id_location: props.match.params.id,
                 keyword
             }
         })

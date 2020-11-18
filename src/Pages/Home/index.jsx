@@ -28,6 +28,7 @@ import GudangItem from '../../Components/Gudang/Item'
 import SupplierGudang from '../../Components/Gudang/Supplier'
 import SalesGudang from '../../Components/Gudang/Sales'
 import CustomerGudang from '../../Components/Gudang/Customer'
+import GudangCampuran from '../../Components/Gudang/Campuran'
 
 // MATERIAL UI
 import AppBar from "@material-ui/core/AppBar";
@@ -228,7 +229,8 @@ function Home () {
                     <Route path="/gudang/supplier" component={SupplierGudang}/>
                     <Route path="/gudang/sales" component={SalesGudang}/>
                     <Route path="/gudang/customer" component={CustomerGudang}/>
-                    <Route path="/gudang/item" component={GudangItem} />
+                    <Route path="/gudang/item/:id" component={GudangItem} />
+                    <Route path="/gudang/campuran/:id" component={GudangCampuran} />
 
                     <Route path="/owner" component={OwnerKandang}/>
                     <Route path="/kandang" component={Kandang}/>

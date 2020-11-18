@@ -13,7 +13,7 @@ import '../../../App.css'
 
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 
-export default function Home() {
+export default function Home(props) {
     const history = useHistory()
 
     const [ cBarang, setCBarang ] = useState(0)
@@ -222,7 +222,7 @@ export default function Home() {
 
                 <div className="dbc-02-f-2">
                     Item
-                <button className="btn-show-dashboard-01" onClick={() => history.push('/gudang/item')}>Show</button>
+                <button className="btn-show-dashboard-01" onClick={() => history.push(`/gudang/item/${props.match.params.id}`)}>Show</button>
                 </div>
             </div>
 
@@ -255,8 +255,8 @@ export default function Home() {
                 </div>
 
                 <div className="dbc-02-f-2">
-                    Supplier
-                    <button className="btn-show-dashboard-01" onClick={() => history.push('/supplier')}>Show</button>
+                    Campuran
+                    <button className="btn-show-dashboard-01" onClick={() => history.push(`/gudang/campuran/${props.match.params.id}`)}>Show</button>
                 </div>
 
             </div>
@@ -295,7 +295,7 @@ export default function Home() {
                 </div>
 
             </div>
-
+    
             <div className="dbc-02-s">
 
                 <div className="dbc-02-s-1-c">
