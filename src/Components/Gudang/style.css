@@ -1,0 +1,46 @@
+.gudang-campuran-item-box {
+    height: 300px;
+    width: 60%;
+    border: 0.5px solid #c4c4c4;
+    border-radius: 5px;
+    margin-top: 40px;
+    overflow-y: scroll;
+}
+
+.gudang-campuran-item-content {
+    height: 60px;
+    border-bottom: 1px solid #c4c4c4;
+    align-items: center;
+    display: flex;
+    padding: 10px;
+    transition: 0.3s;
+    justify-content: space-between;
+}
+
+.gudang-campuran-item-content:hover {
+    cursor: pointer;
+    background-color: #d4d4d4;
+}
+
+.gudang-campuran-input-box input {
+    height: 30px;
+    margin-right: 10px;
+    outline: none;
+    border: 0.5px solid #c4c4c4;
+    padding-left: 8px;
+    border-radius: 5px;
+}
+
+.gudang-campuran-item-box button {
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    height: 30px;
+    background-color: #03a100;
+    color: white;
+    font-weight: bold;
+}
+
+.gudang-campuran-item-box button:hover {
+    cursor: pointer;
+}
