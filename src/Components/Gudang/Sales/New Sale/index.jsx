@@ -153,7 +153,7 @@ export default function NewSale(props) {
 
     const checkOut = () => {
         var dataGudang = []
-        if(isGudang) {
+        if(customer.toLowerCase() === "gudang") {
             dataGudang = dataCart
         }
         var statusEgg = false
@@ -307,15 +307,13 @@ export default function NewSale(props) {
 
                 {/* CART */}
                 <div className="new-sale-row-box02">
-                    
+            
                     <h2>
                         Customer: {customer}
                     </h2>
                     <h2>
                         Total : <CurrencyFormat value={cartTotal} displayType={'text'} thousandSeparator={true} prefix={'Rp. '} /> ,-
                     </h2>
-                        <input type="radio" onChange={() => setIsGudang(true)} style={{ width: "20px", marginBottom: "20px" }}/>
-                        <label style={{ marginLeft: "7px" }}>Masukkan ke Gudang</label>
                     <div className="check-out-box">
                         <button className="btn-check-out" onClick={checkOut}>Checkout</button>
                         <button onClick={() => setSaleIsOpen(false)} className="btn-close-sale" style={{ marginLeft: "10px" }}>X</button>

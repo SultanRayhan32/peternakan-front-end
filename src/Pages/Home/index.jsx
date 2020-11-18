@@ -4,16 +4,30 @@ import { Switch, Route ,  useHistory } from 'react-router-dom'
 
 // COMPONENTS
 import Navbar from '../../Components/Navbar'
+
+// KANDANG
 import Kandang from '../../Components/Kandang/Lokasi'
 import UnitKandang from '../../Components/Kandang/Unit'
 import BarisKandang from '../../Components/Kandang/Baris'
 import LaporanHarian from '../../Components/Kandang/LaporanHarian'
 import OwnerKandang from '../../Components/Kandang/Owner'
+
+// TOKO
 import HomeToko from '../../Components/Toko/Home'
 import StockBarang from '../../Components/Toko/Barang'
 import Supplier from '../../Components/Toko/Supplier'
 import Sales from '../../Components/Toko/Sales'
 import Customer from '../../Components/Toko/Customer'
+
+// GUDANG
+import GudangOwner from '../../Components/Gudang/Owner'
+import GudangLokasi from '../../Components/Gudang/Lokasi'
+import HomeGudang from '../../Components/Gudang/Home'
+import StockBarangGudang from '../../Components/Gudang/Barang'
+import GudangItem from '../../Components/Gudang/Item'
+import SupplierGudang from '../../Components/Gudang/Supplier'
+import SalesGudang from '../../Components/Gudang/Sales'
+import CustomerGudang from '../../Components/Gudang/Customer'
 
 // MATERIAL UI
 import AppBar from "@material-ui/core/AppBar";
@@ -111,18 +125,18 @@ function Home () {
                     className={classes.sidebar}
                     style={
                         {
-                            backgroundColor : route === "/gudang" ? "#00698C" : null
+                            backgroundColor : route === "/gudang/owner" ? "#00698C" : null
                         }
                     }
-
+                    onClick={() => history.push('/gudang/owner') }
                 >
                     <ListItemIcon>
-                        <ShoppingCartIcon style={{color : route === "/gudang" ? "white" : null}} />
+                        <ShoppingCartIcon style={{color : route === "/gudang/owner" ? "white" : null}} />
                     </ListItemIcon>
                     <p 
                         className={classes.sidebarText}
                         // style={{color : cekPathname() ? '#f16821' : "#888888"}}
-                        style={{ color : route === "/gudang" ? 'white' : null }}
+                        style={{ color : route === "/gudang/owner" ? 'white' : null }}
                     > 
                         Gudang
                     </p>
@@ -206,6 +220,15 @@ function Home () {
                     <Route path="/supplier" component={Supplier}/>
                     <Route path="/sales" component={Sales}/>
                     <Route path="/customer" component={Customer}/>
+                    
+                    <Route path="/gudang/owner" component={GudangOwner}/>
+                    <Route path="/gudang/lokasi" component={GudangLokasi}/>
+                    <Route path="/gudang/toko/:id" component={HomeGudang} />
+                    <Route path="/gudang/stock-barang" component={StockBarangGudang} />
+                    <Route path="/gudang/supplier" component={SupplierGudang}/>
+                    <Route path="/gudang/sales" component={SalesGudang}/>
+                    <Route path="/gudang/customer" component={CustomerGudang}/>
+                    <Route path="/gudang/item" component={GudangItem} />
 
                     <Route path="/owner" component={OwnerKandang}/>
                     <Route path="/kandang" component={Kandang}/>

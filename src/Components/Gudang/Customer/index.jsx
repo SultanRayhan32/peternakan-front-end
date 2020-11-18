@@ -18,7 +18,6 @@ export default function Customer() {
     const [ name, setName ] = useState('')
     const [ address, setAddress] = useState('')
     const [ phone, setPhone ] = useState('')
-    const [ isGudang, setIsGudang ] = useState(false)
 
     const addNewCustomer = () => {
         if(!name) {
@@ -35,7 +34,7 @@ export default function Customer() {
                     token: localStorage.getItem('token')
                 },
                 data: {
-                    name, address, phone, isGudang
+                    name, address, phone
                 }
             })
             .then(() => {
@@ -105,7 +104,7 @@ export default function Customer() {
 
             {/* FORM SEARCH SUPPLIER */}
             <input type="text" placeholder="Search ..." className="input-cari-barang-toko" onKeyUp={(e) => searchCustomer(e.target.value)}/>
-      
+
              {/* FORM ADD BARANG */}
              {
                 showAddCustomer
@@ -116,8 +115,6 @@ export default function Customer() {
                         <input className="toko-input-new-barang" onChange={(e) => setName(e.target.value)} type="text" placeholder="Nama Customer"/>
                         <input className="toko-input-new-barang" onChange={(e) => setAddress(e.target.value)} type="text" placeholder="Alamat Customer"/>
                         <input className="toko-input-new-barang" onChange={(e) => setPhone(e.target.value)} type="text" placeholder="Nomor HP Customer"/>
-                        <input type="radio" onChange={() => setIsGudang(true)} style={{ width: "20px" }}/>
-                        <label style={{ marginLeft: "7px"}}>Jadikan Sebagai Gudang</label>
                     </div>
                     <button className="toko-add-new-01" style={{ marginTop: "15px", width: "55px" }} onClick={addNewCustomer}>Add</button>
                     <button 
