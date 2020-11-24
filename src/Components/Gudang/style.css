@@ -44,3 +44,21 @@
 .gudang-campuran-item-box button:hover {
     cursor: pointer;
 }
+
+.gudang-campuran-table-mix {
+    margin-top: 50px;
+}
+
+.gudang-campuran-table-mix th {
+    width: 180px;
+    height: 50px;
+    border: 0.5px solid #c4c4c4;
+}
+
+.gudang-campuran-table-row {
+    text-align: center;
+}
+
+.gudang-campuran-table-row td {
+    padding: 10px;
+}

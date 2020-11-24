@@ -9,6 +9,7 @@ export default function Box(props) {
     } = props
 
     const [ value, setValue ] = useState(0)
+    const [ showButton, setShowButton ] = useState(false)
     
     const addToMix = () => {
         if(value < 1) {
@@ -20,8 +21,11 @@ export default function Box(props) {
                 name: data.nama_barang,
                 value: Number(value)
             }
-            mix.push(dataMix)
-            setMix(mix)
+       
+            let result = [...mix]
+            result.push(dataMix)
+            setShowButton(true)
+            setMix(result)
         }
     }
 
@@ -31,7 +35,13 @@ export default function Box(props) {
             
             <div className="gudang-campuran-input-box">
                 <input type="number" onChange={(e) => setValue(e.target.value)}/>
-                <button onClick={addToMix}>Tambah</button>
+                {
+                    showButton
+                    ?
+                    <button style={{ backgroundColor: "red" }}>Delete</button>
+                    :
+                    <button onClick={addToMix}>Tambah</button>
+                }
             </div>
         </div>
     )

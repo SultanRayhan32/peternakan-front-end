@@ -6,6 +6,7 @@ import SERVER from '../../../helper/server'
 
 // COMPONENTS
 import Box from './Box'
+import Mix from './Mix'
 
 // STYLE
 import '../style.css'
@@ -34,6 +35,21 @@ export default function Campuran(props) {
         })
     }
 
+    const renderMix = () => {
+        return mix && mix.map((val) => {
+            return (
+                <tbody className='gudang-campuran-table-mix'>
+                    
+                    <Mix 
+                        name={val.name}
+                        value={val.value}
+                    />
+
+                </tbody>
+            )
+        })
+    }
+
     return (
         <div>
             <h2>Campuran</h2>
@@ -52,15 +68,17 @@ export default function Campuran(props) {
                 })}
             </div>
 
-            <div>
-                {mix && mix.map((val) => {
-                    return (
-                        <div>
-                            {val.name}
-                        </div>
-                    )
-                })}
-            </div>
+        
+            <table className="gudang-campuran-table-mix">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                {renderMix()}
+            </table>
+            
 
         </div>
     )
